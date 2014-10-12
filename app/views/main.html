@@ -1,40 +1,67 @@
 <div class="row">
-    <div ng-hide="scDefinitions" class="text-center col-md-12">
-        <p>Loading StateChart definitions</p>
+    <div ng-hide="stateCharts" class="text-center col-md-12">
+        <p>Loading StateCharts</p>
     </div>
-    <div ng-class="scDefinitions ? '' : 'hide'" class="sidebar hide col-md-2">
-        <div class="row">
-            <div class="col-md-10">
-                <h4>{{Session.username}}'s Statecharts</h4>
+    <div ng-class="stateCharts ? (instances ? 'col-md-4' : 'col-md-2') : 'hide'" class="sidebar hide ">
+        <div ng-class="instances ? 'col-md-6' : 'col-md-12'">
+            <div class="row">
+                <div class="col-md-10">
+                    <h4>{{Session.username}}'s Statecharts</h4>
+                </div>
+                <div class="col-md-2">
+                    <a ng-click="createChart()" title="Create new statechart">
+                        <span class="glyphicon glyphicon-plus"></span>         
+                    </a>
+                </div>
             </div>
-            <div class="col-md-2">
-                <a href="#/statechart/new">
-                    <span class="glyphicon glyphicon-plus"></span>         
-                </a>
-            </div>
+            <ul>
+                <li ng-repeat="chart in stateCharts">
+                    <a ng-click="selectStateChart(chart.id)">
+                        {{chart.name}}
+                    </a>
+                </li>
+            </ul>
         </div>
-        <ul>
-            <li ng-repeat="definition in scDefinitions">
-                <a href="#/statechart/{{definition.id}}">{{definition.name}}</a>
-            </li>
-        </ul>
-        
+        <div ng-show="instances" class="col-md-6">
+            <div class="row">
+                <div class="col-md-10">
+                    <h4>Active Instances</h4>
+                </div>
+                <div class="col-md-2">
+                    <a ng-click="createInstance()"  title="Create new instance">
+                        <span class="glyphicon glyphicon-plus"></span>         
+                    </a>
+                </div>
+            </div>
+            <ul>
+                <li ng-repeat="instance in instances">
+                    <a ng-click="selectInstance(instance.id)">
+                        {{instance.id}}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-10 text-center">
-        <div class="row text-center" ng-hide="definition">
+
+
+    <div ng-class="stateCharts ? 'col-md-8' : 'col-md-10'">
+        <div class="row text-center" ng-hide="stateChart || isCreating">
                 <a href="#/statechart/new" class="btn btn-primary">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
         </div>
-        <div class="row" ng-show="definition">
-            <div class="col-md-12">
-                <h3 class="text-left"><span class="text-muted">#{{definition.id}}</span> Statechart {{definition.name}}</h3>
+
+        <div class="row" ng-show="stateChart || isCreating">
+            <div class="row">
+                <h3 class="col-md-6 text-left">{{stateChart.name}}</h3>
+                <h3 class="col-md-6 text-right text-muted">#{{stateChart.activeinstances}} instances</h3>
             </div>
-            <div class="col-md-6">
-                {{prettify(definition.content)}}
+            <div class="col-md-6 code" ng-class="instance ? 'hidden' : ''">
+                <textarea>{{prettify(stateChart.content)}}</textarea>
             </div>
-            <div class="col-md-6">
+            <div class="visual" ng-class="instance ? 'col-md-12' : 'col-md-6'">
                 Visual
+                <img class="img-responsive" src="images/visual.png" alt="Visual result">
             </div>
         </div>
 

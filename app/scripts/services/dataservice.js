@@ -14,13 +14,18 @@ angular.module('deusExStateMachinePortalApp')
 
     // Public API here
     return {
-      getAllDefinitions: function (username) { // jshint ignore:line
+      getAllStateCharts: function (username) { // jshint ignore:line
         //TODO Query with username.
         return $resource('scripts/mocks/definitions.json');
       },
-      getDefinition: function () { // jshint ignore:line
+      getStateChart: function () { // jshint ignore:line
         //TODO Query with definitionId
-        return $resource('scripts/mocks/definition/:definitionId.json', { definitionId: '@definitionId' });
+        return $resource('scripts/mocks/definition/:stateChartId.json', { stateChartId: '@stateChartId' });
+      },
+      getInstances: function () { // jshint ignore:line
+        //TODO Query with definitionId
+        // return $resource('scripts/mocks/instances/:stateChartId.json', { stateChartId: '@stateChartId' });
+        return $resource('scripts/mocks/instances.json');
       }
     };
   });

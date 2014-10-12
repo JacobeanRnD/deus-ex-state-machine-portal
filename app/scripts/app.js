@@ -50,14 +50,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     loggedin: checkLoggedin
                 }
             })
-            .when('/statechart/:definitionId', {
+            .when('/statechart/:stateChartId', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
-            .when('/statechart/:definitionId/instance/:instanceId', {
+            .when('/statechart/:stateChartId/instance/:instanceId', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
                 resolve: {
