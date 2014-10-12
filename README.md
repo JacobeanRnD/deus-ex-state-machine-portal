@@ -1,4 +1,18 @@
-deus-ex-state-machine-portal
-============================
+## deus-ex-state-machine-portal
+=====================================
 
-We portal for Deus Ex State Machine project
+### Development
+Install dependencies, then run grunt:
+
+    npm install
+    grunt serve
+
+##  Adding files
+Adding all angular related files with angular generators is recommended.
+https://github.com/yeoman/generator-angular#generators
+
+### Build
+
+    grunt
+
+Check https://github.com/yeoman/generator-angular for more details
