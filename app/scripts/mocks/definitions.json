@@ -1,0 +1,36 @@
+[{
+    "id": "23",
+    "content": "asdsadsa",
+    "name": "Some scxml",
+    "activeinstances": 3
+}, {
+    "id": "12",
+    "content": "asdsadsa",
+    "name": "test and test",
+    "activeinstances": 31
+}, {
+    "id": "213",
+    "content": "asdsadsa",
+    "name": "nameless scxml",
+    "activeinstances": 0
+}, {
+    "id": "47",
+    "content": "asdsadsa",
+    "name": "cant name these",
+    "activeinstances": 23
+}, {
+    "id": "213",
+    "content": "asdsadsa",
+    "name": "something else",
+    "activeinstances": 230
+}, {
+    "id": "4242",
+    "content": "asdsadsa",
+    "name": "advanced sc",
+    "activeinstances": 2
+}, {
+    "id": "4242",
+    "content": "asdsadsa",
+    "name": "Hello world",
+    "activeinstances": 4
+}]

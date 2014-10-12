@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name deusExStateMachinePortalApp.controller:MainCtrl
+ * @name deusExStateMachinePortalApp.controller:DefinitionCtrl
  * @description
- * # MainCtrl
+ * # DefinitionCtrl
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('DefinitionCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
