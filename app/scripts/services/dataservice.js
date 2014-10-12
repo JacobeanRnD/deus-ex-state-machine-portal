@@ -8,24 +8,26 @@
  * Factory in the deusExStateMachinePortalApp.
  */
 angular.module('deusExStateMachinePortalApp')
-  .factory('dataService', function ($resource) {
+  .factory('dataService', function ($resource, $http) {
     // Service logic
     // ...
 
+    var hostname = 'http://localhost:3000';
+    var username = 'jake';
+
     // Public API here
     return {
-      getAllStateCharts: function (username) { // jshint ignore:line
+      getAllStateCharts: function () { // jshint ignore:line
         //TODO Query with username.
-        return $resource('scripts/mocks/definitions.json');
+        return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
       },
-      getStateChart: function () { // jshint ignore:line
+      getStateChart: function (stateChartId) { // jshint ignore:line
         //TODO Query with definitionId
-        return $resource('scripts/mocks/definition/:stateChartId.json', { stateChartId: '@stateChartId' });
+        return $http.get(hostname + '/api/' + username + '/' + stateChartId);
       },
-      getInstances: function () { // jshint ignore:line
+      getInstances: function (stateChartId) { // jshint ignore:line
         //TODO Query with definitionId
-        // return $resource('scripts/mocks/instances/:stateChartId.json', { stateChartId: '@stateChartId' });
-        return $resource('scripts/mocks/instances.json');
+        return $http.get(hostname + '/api/' + username + '/' + stateChartId + '/_all_instances');
       }
     };
   });

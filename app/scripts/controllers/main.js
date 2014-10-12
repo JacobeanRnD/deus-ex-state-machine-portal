@@ -10,39 +10,37 @@
 angular.module('deusExStateMachinePortalApp')
     .controller('MainCtrl', function($scope, $routeParams, dataService) {
 
-        
-
-
-        dataService.getAllStateCharts().query().$promise.then(function(stateCharts) {
-            $scope.stateCharts = stateCharts;
+        dataService.getAllStateCharts().then(function(response) {
+            $scope.stateChartIds = response.data;
         });
-        
 
         $scope.prettify = function(scxml) {
             return htmlDecode(scxml);
         };
 
-        $scope.selectStateChart = function(chartId) {
+        $scope.selectStateChart = function(chartName) {
+            $scope.selectedChartName = chartName;
             $scope.instance = null;
 
-            dataService.getStateChart().get({ stateChartId: chartId }, function(stateChart) {
-                $scope.stateChart = stateChart;
+            dataService.getStateChart(chartName).then(function(response) {
+                $scope.stateChartContent = response.data;
 
-                dataService.getInstances().query().$promise.then(function(instances) {
-                    $scope.instances = instances;
+                dataService.getInstances(chartName).then(function(response) {
+                    $scope.instances = response.data;
                 });
             });
         };
 
         $scope.selectInstance = function(instanceId) {
-            $scope.instance = { id: instanceId };
+            $scope.selectedInstanceId = instanceId;
         };
         
         $scope.createChart = function() {
-            $scope.instance = null;
+            $scope.stateChartContent = null;
+            $scope.stateChartName  = null;
             $scope.instances = null;
-            $scope.stateChart = null;
-            $scope.isCreating = true;             
+            $scope.selectedInstanceId = null;
+            $scope.isCreating = true;
         };
 
         function htmlDecode(input){

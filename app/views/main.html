@@ -1,8 +1,8 @@
 <div class="row">
-    <div ng-hide="stateCharts" class="text-center col-md-12">
+    <div ng-hide="stateChartIds" class="text-center col-md-12">
         <p>Loading StateCharts</p>
     </div>
-    <div ng-class="stateCharts ? (instances ? 'col-md-4' : 'col-md-2') : 'hide'" class="sidebar hide ">
+    <div ng-class="stateChartIds ? (instances ? 'col-md-4' : 'col-md-2') : 'hide'" class="sidebar hide ">
         <div ng-class="instances ? 'col-md-6' : 'col-md-12'">
             <div class="row">
                 <div class="col-md-10">
@@ -15,9 +15,9 @@
                 </div>
             </div>
             <ul>
-                <li ng-repeat="chart in stateCharts">
-                    <a ng-click="selectStateChart(chart.id)">
-                        {{chart.name}}
+                <li ng-repeat="chart in stateChartIds">
+                    <a ng-click="selectStateChart(chart)">
+                        {{chart}}
                     </a>
                 </li>
             </ul>
@@ -34,9 +34,9 @@
                 </div>
             </div>
             <ul>
-                <li ng-repeat="instance in instances">
-                    <a ng-click="selectInstance(instance.id)">
-                        {{instance.id}}
+                <li ng-repeat="instanceId in instances">
+                    <a ng-click="selectInstance(instanceId)">
+                        {{instanceId}}
                     </a>
                 </li>
             </ul>
@@ -44,22 +44,22 @@
     </div>
 
 
-    <div ng-class="stateCharts ? 'col-md-8' : 'col-md-10'">
-        <div class="row text-center" ng-hide="stateChart || isCreating">
+    <div ng-class="stateChartIds ? 'col-md-8' : 'col-md-10'">
+        <div class="row text-center" ng-hide="selectedChartName || isCreating">
                 <a href="#/statechart/new" class="btn btn-primary">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
         </div>
 
-        <div class="row" ng-show="stateChart || isCreating">
+        <div class="row" ng-show="selectedChartName || isCreating">
             <div class="row">
-                <h3 class="col-md-6 text-left">{{stateChart.name}}</h3>
-                <h3 class="col-md-6 text-right text-muted">#{{stateChart.activeinstances}} instances</h3>
+                <h3 class="col-md-6 text-left">{{selectedChartName}}</h3>
+                <h3 ng-show="selectedInstanceId" class="col-md-6 text-right text-muted">Instance: {{selectedInstanceId}}</h3>
             </div>
-            <div class="col-md-6 code" ng-class="instance ? 'hidden' : ''">
-                <textarea>{{prettify(stateChart.content)}}</textarea>
+            <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
+                <textarea>{{prettify(stateChartContent)}}</textarea>
             </div>
-            <div class="visual" ng-class="instance ? 'col-md-12' : 'col-md-6'">
+            <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
                 Visual
                 <img class="img-responsive" src="images/visual.png" alt="Visual result">
             </div>
