@@ -1,0 +1,6 @@
+{
+    "id": 12,
+    "name": "test and test",
+    "activeinstances": 31,
+    "content": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;scxml     datamodel=&quot;ecmascript&quot;    xmlns=&quot;http://www.w3.org/2005/07/scxml&quot;    version=&quot;1.0&quot;&gt;    &lt;state id=&quot;a&quot;&gt;        &lt;state id=&quot;a1&quot;&gt;            &lt;transition target=&quot;a2&quot; event=&quot;t&quot;/&gt;        &lt;/state&gt;        &lt;state id=&quot;a2&quot;&gt;        &lt;/state&gt;    &lt;/state&gt;&lt;/scxml&gt;"
+}

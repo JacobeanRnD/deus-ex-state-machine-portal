@@ -2,15 +2,42 @@
     <div ng-hide="scDefinitions" class="text-center col-md-12">
         <p>Loading StateChart definitions</p>
     </div>
-    <div ng-class="scDefinitions ? '' : 'hide'" class="sidebar hide col-md-3">
-        <h4>{{Session.username}}'s StateChart definitions</h4>
+    <div ng-class="scDefinitions ? '' : 'hide'" class="sidebar hide col-md-2">
+        <div class="row">
+            <div class="col-md-10">
+                <h4>{{Session.username}}'s Statecharts</h4>
+            </div>
+            <div class="col-md-2">
+                <a href="#/statechart/new">
+                    <span class="glyphicon glyphicon-plus"></span>         
+                </a>
+            </div>
+        </div>
         <ul>
             <li ng-repeat="definition in scDefinitions">
-                <a href="#/def:{{definition.id}}">{{definition.name}}</a>
+                <a href="#/statechart/{{definition.id}}">{{definition.name}}</a>
             </li>
         </ul>
+        
     </div>
-    <div class="col-md-9">
-        All content
+    <div class="col-md-10 text-center">
+        <div class="row text-center" ng-hide="definition">
+                <a href="#/statechart/new" class="btn btn-primary">
+                    Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
+                </a>
+        </div>
+        <div class="row" ng-show="definition">
+            <div class="col-md-12">
+                <h3 class="text-left"><span class="text-muted">#{{definition.id}}</span> Statechart {{definition.name}}</h3>
+            </div>
+            <div class="col-md-6">
+                {{prettify(definition.content)}}
+            </div>
+            <div class="col-md-6">
+                Visual
+            </div>
+        </div>
+
+
     </div>
 </div>

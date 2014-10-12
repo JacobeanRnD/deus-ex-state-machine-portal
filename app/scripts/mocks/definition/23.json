@@ -1,0 +1,6 @@
+{
+    "id": 23,
+    "name": "Some scxml",
+    "activeinstances": 3,
+    "content": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;scxml     datamodel=&quot;ecmascript&quot;    xmlns=&quot;http://www.w3.org/2005/07/scxml&quot;    version=&quot;1.0&quot;    initial=&quot;a&quot;&gt;    &lt;state id=&quot;a&quot;/&gt;&lt;/scxml&gt;"
+}
