@@ -1,8 +1,8 @@
 <div class="row">
-    <div ng-hide="stateChartIds" class="text-center col-md-12">
+    <div ng-show="loading" class="text-center col-md-12">
         <p>Loading StateCharts</p>
     </div>
-    <div ng-class="stateChartIds ? (instances ? 'col-md-4' : 'col-md-2') : 'hide'" class="sidebar hide ">
+    <div ng-class="loading ? 'hide' : (instances ? 'col-md-4' : 'col-md-2')" class="sidebar hide ">
         <div ng-class="instances ? 'col-md-6' : 'col-md-12'">
             <div class="row">
                 <div class="col-md-10">
@@ -14,13 +14,19 @@
                     </a>
                 </div>
             </div>
-            <ul>
+            <ul ng-show="stateChartIds">
                 <li ng-repeat="chart in stateChartIds">
                     <a ng-click="selectStateChart(chart)">
                         {{chart}}
                     </a>
                 </li>
             </ul>
+            <div ng-hide="stateChartIds">
+                Please add a new Statechart
+                <a ng-click="createChart()" title="Create new statechart">
+                        <span class="glyphicon glyphicon-plus"></span>         
+                </a>
+            </div>
         </div>
         <div ng-show="instances" class="col-md-6">
             <div class="row">
@@ -46,22 +52,32 @@
 
     <div ng-class="stateChartIds ? 'col-md-8' : 'col-md-10'">
         <div class="row text-center" ng-hide="selectedChartName || isCreating">
-                <a href="#/statechart/new" class="btn btn-primary">
+                <a ng-click="createChart()" class="btn btn-primary">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
         </div>
 
-        <div class="row" ng-show="selectedChartName || isCreating">
-            <div class="row">
-                <h3 class="col-md-6 text-left">{{selectedChartName}}</h3>
-                <h3 ng-show="selectedInstanceId" class="col-md-6 text-right text-muted">Instance: {{selectedInstanceId}}</h3>
+        <div class="row chart" ng-show="selectedChartName || isCreating">
+            <div class="col-md-12 header">
+                <div class="text-left">
+                    <h3 ng-hide="isCreating">{{selectedChartName}}</h3>
+                    <label for="statechartname" ng-show="isCreating">Name:</label>
+                    <input type="text" ng-show="isCreating" ng-model="selectedChartName" placeholder="Statechart name" id="statechartname">
+                </div>
+                <div class="col-md-6 text-right">
+                    <h3 ng-show="selectedInstanceId" class="text-muted">Instance: {{selectedInstanceId}}</h3>
+                </div>
             </div>
             <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
-                <textarea>{{prettify(stateChartContent)}}</textarea>
+                Code
+                <textarea ngmodel="stateChartContent"></textarea>
             </div>
             <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
                 Visual
                 <img class="img-responsive" src="images/visual.png" alt="Visual result">
+            </div>
+            <div class="footer">
+                <a class="btn btn-primary" ng-click="saveStatechart(selectedChartName, stateChartContent,  isCreating)">Save</a>
             </div>
         </div>
 

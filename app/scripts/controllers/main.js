@@ -9,21 +9,19 @@
  */
 angular.module('deusExStateMachinePortalApp')
     .controller('MainCtrl', function($rootScope, $scope, dataService) {
+        $scope.loading = true;
 
         dataService.getAllStateCharts().then(function(response) {
             $scope.stateChartIds = response.data;
+            $scope.loading = false;
         });
-
-        $scope.prettify = function(scxml) {
-            return htmlDecode(scxml);
-        };
 
         $scope.selectStateChart = function(chartName) {
             $scope.selectedChartName = chartName;
             $scope.instance = null;
 
             dataService.getStateChart(chartName).then(function(response) {
-                $scope.stateChartContent = response.data;
+                $scope.stateChartContent = htmlDecode(response.data);
 
                 dataService.getInstances(chartName).then(function(response) {
                     $scope.instances = response.data;

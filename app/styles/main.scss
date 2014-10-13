@@ -38,6 +38,14 @@ html, body {
     }
 }
 
+.chart {
+    .header {
+        height: 30px;
+        margin: 20px 0;
+        border-bottom: 1px solid #FAFAFA;
+    }
+}
+
 .code {
     transition: all 200ms linear;
     
