@@ -91,13 +91,12 @@ angular.module('deusExStateMachinePortalApp')
                 } else {
                     alertify.error('An error occured');
                 }
-                
             });
         };
 
         $scope.createInstance = function (stateChartName) {
             dataService.createInstance(stateChartName).then(function () {
-                loadInstances(chartName);
+                loadInstances(stateChartName);
 
                 alertify.success('Instance created');
             }, function(response) {
