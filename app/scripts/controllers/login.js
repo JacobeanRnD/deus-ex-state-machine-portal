@@ -8,10 +8,12 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('LoginCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('LoginCtrl', function($location, $scope, Session) {
+        $scope.doLogin = function(inputUsername, inputPassword) {
+            // $event.preventDefault();
+            
+            Session.login(inputUsername, inputPassword).then(function() {
+                $location.url('/');
+            });
+        };
+    });

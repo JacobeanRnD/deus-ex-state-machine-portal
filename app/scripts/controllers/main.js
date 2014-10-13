@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('MainCtrl', function($scope, $routeParams, dataService) {
+    .controller('MainCtrl', function($rootScope, $scope, dataService) {
 
         dataService.getAllStateCharts().then(function(response) {
             $scope.stateChartIds = response.data;

@@ -1,1 +1,15 @@
-<p>This is the login view.</p>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form role="form" name="login" ng-submit="doLogin(inputUsername,inputPassword)">
+            <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input class="form-control" id="inputUsername" ng-model="inputUsername" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" ng-model="inputPassword" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-default">Login</button>
+        </form>
+    </div>
+</div>

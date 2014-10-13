@@ -8,32 +8,41 @@
  * Service in the deusExStateMachinePortalApp.
  */
 angular.module('deusExStateMachinePortalApp')
-  .service('Session', function Session($rootScope, $http) {
-    var session = {
-      login : function(username,password){
-        return $http({
-            method: 'POST',
-            url: '/api/_session',
-            data: $.param({name:username,password:password}),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            }).then(function(response){
-              // alertify.success('success');
-              return session.refresh(response);
-            },function(){
-              // alertify.success('fail');
-            });
-      },
-      refresh : function() {
-        return $http.get('/api/_session', { params: { 'cache': new Date().getTime() }  }).then(
-          function(response){
-            var userCtx = response.data.userCtx;
-            session.userCtx = userCtx;
-            $rootScope.session = session;
+    .service('Session', function Session($rootScope, $http, $q, $cookies) {
+        var session = {
+            login: function(username) {
+                var deferred = $q.defer();
 
-            return userCtx;
-          });
-      }
-    };
-  });
+                setTimeout(function() {
+                    $cookies.deusExStateMachinePortalAppUsername = username;
+                    session.username = username;
+                    deferred.resolve();
+                }, 200);
+
+                return deferred.promise;
+            },
+            refresh: function() {
+                var deferred = $q.defer();
+
+                setTimeout(function() {
+                    session.username = $cookies.deusExStateMachinePortalAppUsername;
+                    deferred.resolve();
+                }, 200);
+
+                return deferred.promise;
+            },
+            logout: function() {
+                var deferred = $q.defer();
+
+                setTimeout(function() {
+                    delete $cookies.deusExStateMachinePortalAppUsername;
+                    delete session.username;
+                    deferred.resolve();
+                }, 200);
+
+                return deferred.promise;
+            }
+        };
+
+        return session;
+    });

@@ -18,23 +18,20 @@ var app = angular.module('deusExStateMachinePortalApp', [
     ])
     .config(function($routeProvider) {
 
-        function checkLoggedin(Session, $location) { // jshint ignore:line
-                Session.username = 'testuser';
+        function checkLoggedin(Session, $location) {
 
-                return true;
-
-                // // Initialize a new promise var deferred = $q.defer(); 
-                // if(Session.userCtx && Session.userCtx.name){
-                //   return true;
-                // }else{
-                //   return Session.refresh().then(function(){
-                //     if(Session.userCtx && Session.userCtx.name){
-                //       return true;
-                //     }else{
-                //       $location.url('/login');
-                //     }
-                //   });
-                // }
+                // Initialize a new promise var deferred = $q.defer(); 
+                if (Session.username) {
+                    return true;
+                } else {
+                    return Session.refresh().then(function() {
+                        if (Session.username) {
+                            return true;
+                        } else {
+                            $location.url('/login');
+                        }
+                    });
+                }
             }
             /* jshint ignore:end */
 
@@ -69,7 +66,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
             });
     });
 
-app.run(function($rootScope, Session) {
+app.run(function($rootScope, Session, $location) {
     $rootScope.Session = Session;
 
+    $rootScope.logout = function() {
+        Session.logout().then(function() {
+            $location.url('/login');
+        });
+    };
 });
