@@ -11,6 +11,19 @@ angular.module('deusExStateMachinePortalApp')
     .controller('MainCtrl', function($rootScope, $scope, dataService) {
         $scope.loading = true;
 
+        function loadStatesharts () {
+            dataService.getAllStateCharts().then(function(response) {
+                $scope.stateChartIds = response.data;
+                $scope.loading = false;
+            });
+        }
+
+        function loadInstances (chartName) {
+            dataService.getInstances(chartName).then(function(response) {
+                $scope.instances = response.data;
+            });
+        }
+
         loadStatesharts();
 
         $scope.selectStateChart = function(chartName) {
@@ -21,9 +34,7 @@ angular.module('deusExStateMachinePortalApp')
             dataService.getStateChart(chartName).then(function(response) {
                 $scope.stateChartContent = response.data;
 
-                dataService.getInstances(chartName).then(function(response) {
-                    $scope.instances = response.data;
-                });
+                loadInstances(chartName);
             });
         };
 
@@ -31,7 +42,7 @@ angular.module('deusExStateMachinePortalApp')
             $scope.selectedInstanceId = instanceId;
         };
 
-        $scope.createChart = function() {
+        $scope.createStatechart = function() {
             $scope.stateChartContent = null;
             $scope.stateChartName = null;
             $scope.instances = null;
@@ -49,7 +60,7 @@ angular.module('deusExStateMachinePortalApp')
 
             scxmlTrace.empty();
 
-            ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height());
+            ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height()); // jshint ignore:line
         };
 
         $scope.saveStatechart = function(stateChartContent) {
@@ -64,7 +75,7 @@ angular.module('deusExStateMachinePortalApp')
                 return;
             }
 
-            dataService.createStateChart(stateChartContent).then(function (response) {
+            dataService.createStateChart(stateChartContent).then(function () {
                 loadStatesharts();
 
                 alertify.success('Statechart saved');
@@ -84,10 +95,17 @@ angular.module('deusExStateMachinePortalApp')
             });
         };
 
-        function loadStatesharts () {
-            dataService.getAllStateCharts().then(function(response) {
-                $scope.stateChartIds = response.data;
-                $scope.loading = false;
+        $scope.createInstance = function (stateChartName) {
+            dataService.createInstance(stateChartName).then(function () {
+                loadInstances(chartName);
+
+                alertify.success('Instance created');
+            }, function(response) {
+                if(response.data.message) {
+                    alertify.error(response.data.message);
+                } else {
+                    alertify.error('An error occured');
+                }
             });
         }
     });

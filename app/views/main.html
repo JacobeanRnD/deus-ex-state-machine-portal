@@ -9,7 +9,7 @@
                     <h4>{{Session.username}}'s Statecharts</h4>
                 </div>
                 <div class="col-md-2">
-                    <a ng-click="createChart()" title="Create new statechart">
+                    <a ng-click="createStatechart()" title="Create new statechart">
                         <span class="glyphicon glyphicon-plus"></span>         
                     </a>
                 </div>
@@ -23,18 +23,18 @@
             </ul>
             <div ng-hide="stateChartIds">
                 Please add a new Statechart
-                <a ng-click="createChart()" title="Create new statechart">
+                <a ng-click="createStatechart()" title="Create new statechart">
                         <span class="glyphicon glyphicon-plus"></span>         
                 </a>
             </div>
         </div>
-        <div ng-show="instances" class="col-md-6">
+        <div ng-show="selectedChartName" class="col-md-6">
             <div class="row">
                 <div class="col-md-10">
                     <h4>Active Instances</h4>
                 </div>
                 <div class="col-md-2">
-                    <a ng-click="createInstance()"  title="Create new instance">
+                    <a ng-click="createInstance(selectedChartName)"  title="Create new instance">
                         <span class="glyphicon glyphicon-plus"></span>         
                     </a>
                 </div>
@@ -52,7 +52,7 @@
 
     <div ng-class="stateChartIds.length ? 'col-md-8' : 'col-md-10'">
         <div class="row text-center" ng-hide="selectedChartName || isCreating">
-                <a ng-click="createChart()" class="btn btn-primary">
+                <a ng-click="createStatechart()" class="btn btn-primary">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
         </div>
