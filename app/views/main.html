@@ -50,7 +50,7 @@
     </div>
 
 
-    <div ng-class="stateChartIds ? 'col-md-8' : 'col-md-10'">
+    <div ng-class="stateChartIds.length ? 'col-md-8' : 'col-md-10'">
         <div class="row text-center" ng-hide="selectedChartName || isCreating">
                 <a ng-click="createChart()" class="btn btn-primary">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
@@ -70,15 +70,16 @@
             </div>
             <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
                 Code
-                <div ngmodel="stateChartContent"
+                <div ng-model="stateChartContent"
                     ui-ace="{ mode: 'xml',
                               firstLineNumber: 5,
-                              onChange: aceChanged
+                              onChange: aceChanged,
+                              changeSession: aceChangeSession
                             }" class="editor"></div>
             </div>
             <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
                 Visual
-                <img class="img-responsive" src="images/visual.png" alt="Visual result">
+                <div id="scxmlTrace"></div>
             </div>
             <div class="footer">
                 <a class="btn btn-primary" ng-click="saveStatechart(selectedChartName, stateChartContent,  isCreating)">Save</a>

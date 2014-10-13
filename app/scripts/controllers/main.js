@@ -32,20 +32,34 @@ angular.module('deusExStateMachinePortalApp')
         $scope.selectInstance = function(instanceId) {
             $scope.selectedInstanceId = instanceId;
         };
-        
+
         $scope.createChart = function() {
             $scope.stateChartContent = null;
-            $scope.stateChartName  = null;
+            $scope.stateChartName = null;
             $scope.instances = null;
             $scope.selectedInstanceId = null;
             $scope.isCreating = true;
         };
 
-        $scope.aceChanged = function  (changes) {
+        $scope.aceChanged = function(changes) {
+            if (!$scope.stateChartContent) {
+                return;
+            }
+
+            var doc = (new DOMParser()).parseFromString($scope.stateChartContent, 'application/xml');
+            var scxmlTrace = $('#scxmlTrace');
+
+            scxmlTrace.empty();
+
+            ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height());
+        };
+
+        $scope.aceChangeSession = function(changes) {
+            console.log($scope.stateChartContent);
             console.log(changes);
         };
 
-        function htmlDecode(input){
+        function htmlDecode(input) {
             var e = document.createElement('div');
             e.innerHTML = input;
             return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
