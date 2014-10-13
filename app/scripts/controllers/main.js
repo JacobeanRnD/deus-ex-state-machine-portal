@@ -11,17 +11,15 @@ angular.module('deusExStateMachinePortalApp')
     .controller('MainCtrl', function($rootScope, $scope, dataService) {
         $scope.loading = true;
 
-        dataService.getAllStateCharts().then(function(response) {
-            $scope.stateChartIds = response.data;
-            $scope.loading = false;
-        });
+        loadStatesharts();
 
         $scope.selectStateChart = function(chartName) {
+            $scope.isCreating = false;
             $scope.selectedChartName = chartName;
             $scope.instance = null;
 
             dataService.getStateChart(chartName).then(function(response) {
-                $scope.stateChartContent = htmlDecode(response.data);
+                $scope.stateChartContent = response.data;
 
                 dataService.getInstances(chartName).then(function(response) {
                     $scope.instances = response.data;
@@ -41,7 +39,7 @@ angular.module('deusExStateMachinePortalApp')
             $scope.isCreating = true;
         };
 
-        $scope.aceChanged = function(changes) {
+        $scope.aceChanged = function() {
             if (!$scope.stateChartContent) {
                 return;
             }
@@ -54,14 +52,42 @@ angular.module('deusExStateMachinePortalApp')
             ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height());
         };
 
-        $scope.aceChangeSession = function(changes) {
-            console.log($scope.stateChartContent);
-            console.log(changes);
+        $scope.saveStatechart = function(stateChartContent) {
+            var isError = false;
+
+            if(!stateChartContent || stateChartContent.length === 0) {
+                isError = true;
+                alertify.error('Please enter code for your Statechart');
+            }
+
+            if(isError) {
+                return;
+            }
+
+            dataService.createStateChart(stateChartContent).then(function (response) {
+                loadStatesharts();
+
+                alertify.success('Statechart saved');
+
+                $scope.stateChartContent = null;
+                $scope.stateChartName = null;
+                $scope.instances = null;
+                $scope.selectedInstanceId = null;
+                $scope.isCreating = false;
+            }, function(response) {
+                if(response.data.message) {
+                    alertify.error(response.data.message);
+                } else {
+                    alertify.error('An error occured');
+                }
+                
+            });
         };
 
-        function htmlDecode(input) {
-            var e = document.createElement('div');
-            e.innerHTML = input;
-            return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+        function loadStatesharts () {
+            dataService.getAllStateCharts().then(function(response) {
+                $scope.stateChartIds = response.data;
+                $scope.loading = false;
+            });
         }
     });

@@ -25,6 +25,17 @@ angular.module('deusExStateMachinePortalApp')
       },
       getInstances: function (stateChartId) {
         return $http.get(hostname + '/api/' + username + '/' + stateChartId + '/_all_instances');
+      },
+      createStateChart: function (content) {
+        return $http({
+            method: 'POST',
+            url: hostname + '/api/' + username,
+            headers: { 'Content-Type' : 'application/xml' },
+            data: content
+        });
+
+
+        // return $http.post(, content);
       }
     };
   });

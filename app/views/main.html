@@ -59,17 +59,19 @@
 
         <div class="row chart" ng-show="selectedChartName || isCreating">
             <div class="col-md-12 header">
-                <div class="text-left">
+                <div class="text-left col-md-4">
                     <h3 ng-hide="isCreating">{{selectedChartName}}</h3>
-                    <label for="statechartname" ng-show="isCreating">Name:</label>
-                    <input type="text" ng-show="isCreating" ng-model="selectedChartName" placeholder="Statechart name" id="statechartname">
+                    <h3 ng-show="isCreating">New Statechart</h3>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" ng-click="saveStatechart(stateChartContent)">Save</a>
                 </div>
                 <div class="col-md-6 text-right">
                     <h3 ng-show="selectedInstanceId" class="text-muted">Instance: {{selectedInstanceId}}</h3>
                 </div>
             </div>
             <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
-                Code
+                <h3>Code</h3>
                 <div ng-model="stateChartContent"
                     ui-ace="{ mode: 'xml',
                               firstLineNumber: 5,
@@ -78,12 +80,10 @@
                             }" class="editor"></div>
             </div>
             <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
-                Visual
+                <h3>Result</h3>
                 <div id="scxmlTrace"></div>
             </div>
-            <div class="footer">
-                <a class="btn btn-primary" ng-click="saveStatechart(selectedChartName, stateChartContent,  isCreating)">Save</a>
-            </div>
+            
         </div>
 
 
