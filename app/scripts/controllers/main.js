@@ -41,6 +41,10 @@ angular.module('deusExStateMachinePortalApp')
             $scope.isCreating = true;
         };
 
+        $scope.aceChanged = function  (changes) {
+            console.log(changes);
+        };
+
         function htmlDecode(input){
             var e = document.createElement('div');
             e.innerHTML = input;

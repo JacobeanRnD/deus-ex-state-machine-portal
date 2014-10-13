@@ -70,7 +70,11 @@
             </div>
             <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
                 Code
-                <textarea ngmodel="stateChartContent"></textarea>
+                <div ngmodel="stateChartContent"
+                    ui-ace="{ mode: 'xml',
+                              firstLineNumber: 5,
+                              onChange: aceChanged
+                            }" class="editor"></div>
             </div>
             <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
                 Visual

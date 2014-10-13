@@ -14,7 +14,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch'
+        'ngTouch',
+        'ui.ace'
     ])
     .config(function($routeProvider) {
 
