@@ -8,7 +8,8 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('MainCtrl', function($scope, dataService) {
+    .controller('MainCtrl', function($scope, dataService, $routeParams) {
+        
         $scope.loading = true;
 
         function loadStatesharts() {
@@ -21,6 +22,14 @@ angular.module('deusExStateMachinePortalApp')
 
                 $scope.stateCharts = response.data;
                 $scope.loading = false;
+
+                if($routeParams.stateChartId) {
+                    var chart = $scope.stateCharts.filter(function (item) {
+                        return item.name === $routeParams.stateChartId;
+                    })[0];
+
+                    selectStateChart(chart);
+                }
             });
         }
 
@@ -33,6 +42,14 @@ angular.module('deusExStateMachinePortalApp')
                 });
 
                 $scope.stateChart.instances = response.data;
+
+                if($routeParams.instanceId) {
+                    var instance = $scope.stateChart.instances.filter(function (item) {
+                        return item.id === $routeParams.instanceId;
+                    })[0];
+
+                    selectInstance(instance);
+                }
             });
         }
 
@@ -54,7 +71,7 @@ angular.module('deusExStateMachinePortalApp')
 
         loadStatesharts();
 
-        $scope.selectStateChart = function(chart) {
+        function selectStateChart(chart) {
             closeInstanceSubscription();
             $scope.isCreating = false;
             $scope.stateChart = {
@@ -69,7 +86,7 @@ angular.module('deusExStateMachinePortalApp')
 
                 loadInstances(chart.name);
             });
-        };
+        }
 
         $scope.deleteStateChart = function(chart) {
             closeInstanceSubscription();
@@ -80,7 +97,7 @@ angular.module('deusExStateMachinePortalApp')
             });
         };
 
-        $scope.selectInstance = function(instance) {
+        function selectInstance(instance) {
             closeInstanceSubscription();
             $scope.stateChart.instance = instance;
             $scope.stateChart.instance.events = [];
@@ -102,10 +119,10 @@ angular.module('deusExStateMachinePortalApp')
 
             dataService.getInstanceDetails($scope.stateChart.name, instance.id).then(function(response) {
                 d3.select($('#scxmlTrace #' + response.data[0])[0]).classed('highlighted', true);
-                
+
                 $scope.stateChart.instance.details = JSON.stringify(response.data, null, 4);
             });
-        };
+        }
 
         $scope.deleteInstance = function(instance) {
             closeInstanceSubscription();

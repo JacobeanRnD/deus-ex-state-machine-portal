@@ -17,7 +17,7 @@
                 <a ng-click="deleteInstance(instance)" title="Delete instance {{instance.id}}">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
-                <a ng-click="selectInstance(instance)">
+                <a href="#/statechart/{{stateChart.name}}/instance/{{instance.id}}">
                     {{instance.id}}
                 </a>
             </li>
