@@ -1,0 +1,26 @@
+<div class="instances list" ng-class="stateChart.instances ? 'showInstances' : ''">
+    <h4>Instances</h4>
+    <div ng-show="stateChart.instances.length === 0">
+        Create a new Instance
+    </div>
+    <div>
+        <ul>
+            <li class="new">
+                <a ng-click="createInstance(stateChart)" title="Create new Instance">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a ng-click="createInstance(stateChart)" title="Create new Instance">
+                    New Instance
+                </a>
+            </li>
+            <li ng-repeat="instance in stateChart.instances" ng-class="instance.id === stateChart.instance.id ? 'selected' : ''">
+                <a ng-click="deleteInstance(instance)" title="Delete instance {{instance.id}}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a ng-click="selectInstance(instance)">
+                    {{instance.id}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

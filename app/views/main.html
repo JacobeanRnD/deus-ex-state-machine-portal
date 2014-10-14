@@ -1,114 +1,63 @@
-<div class="row">
-    <div ng-show="loading" class="text-center col-md-12">
-        <p>Loading StateCharts</p>
+<div class="main-row row">
+    <div class="col-md-2 sidebar">
+        <chartlist></chartlist>
+        <instancelist></instancelist>
     </div>
-    <div ng-class="loading ? 'hide' : (instances ? 'col-md-4' : 'col-md-2')" class="sidebar hide ">
-        <div ng-class="instances ? 'col-md-6' : 'col-md-12'">
-            <div class="row">
-                <div class="col-md-10">
-                    <h4>{{Session.username}}'s Statecharts</h4>
-                </div>
-                <div class="col-md-2">
-                    <a ng-click="createStatechart()" title="Create new statechart">
-                        <span class="glyphicon glyphicon-plus"></span>         
-                    </a>
-                </div>
-            </div>
-            <ul ng-show="stateChartIds">
-                <li ng-repeat="chart in stateChartIds">
-                    <a ng-click="selectStateChart(chart)">
-                        {{chart}}
-                    </a>
-                    <a ng-click="deleteStateChart(chart)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </li>
-            </ul>
-            <div ng-hide="stateChartIds">
-                Please add a new Statechart
-                <a ng-click="createStatechart()" title="Create new statechart">
-                        <span class="glyphicon glyphicon-plus"></span>         
-                </a>
-            </div>
+    <div class="col-md-10 right-content">
+        <div class="content-header text-center">
+            <a ng-hide="stateChart || isCreating" ng-click="createStatechart()" class="btn btn-primary">
+                Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
+            </a>
+            <h3 ng-hide="isCreating">
+                {{stateChart.name}}
+                <small ng-show="stateChart.instance" class="text-muted">{{stateChart.instance.id}}</small>
+            </h3>
+            <h3 ng-show="isCreating">New Statechart</h3>
         </div>
-        <div ng-show="selectedChartName" class="col-md-6">
-            <div class="row">
-                <div class="col-md-10">
-                    <h4>Active Instances</h4>
+        <div class="row" ng-show="stateChart || isCreating">
+            <div class="col-md-6" ng-hide="stateChart.instance">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Statechart Code</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" ng-click="saveStatechart(stateChart.content)">Save</a>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <a ng-click="createInstance(selectedChartName)"  title="Create new instance">
-                        <span class="glyphicon glyphicon-plus"></span>         
-                    </a>
-                </div>
-            </div>
-            <ul>
-                <li ng-repeat="instanceId in instances">
-                    <a ng-click="selectInstance(instanceId)">
-                        {{instanceId}}
-                    </a>
-                    <a ng-click="deleteInstance(selectedChartName, instanceId)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
 
-
-    <div ng-class="stateChartIds.length ? 'col-md-8' : 'col-md-10'">
-        <div class="row text-center" ng-hide="selectedChartName || isCreating">
-                <a ng-click="createStatechart()" class="btn btn-primary">
-                    Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
-                </a>
-        </div>
-
-        <div class="row chart" ng-show="selectedChartName || isCreating">
-            <div class="col-md-12 header">
-                <div class="text-left col-md-4">
-                    <h3 ng-hide="isCreating">{{selectedChartName}}</h3>
-                    <h3 ng-show="isCreating">New Statechart</h3>
-                </div>
-                <div class="col-md-2">
-                    <a class="btn btn-primary" ng-click="saveStatechart(stateChartContent)">Save</a>
-                </div>
-                <div class="col-md-6 text-right">
-                    <h3 ng-show="selectedInstanceId" class="text-muted">Instance: {{selectedInstanceId}}</h3>
-                </div>
-            </div>
-            <div class="col-md-6 code" ng-class="selectedInstanceId ? 'hidden' : ''">
-                <h3>Code</h3>
-                <div ng-model="stateChartContent"
-                    ui-ace="{ mode: 'xml',
+                <div ng-model="stateChart.content" ui-ace="{ mode: 'xml',
                               firstLineNumber: 5,
                               onChange: aceChanged,
                               changeSession: aceChangeSession
-                            }" class="editor"></div>
+                            }" class="editor">
+                </div>
             </div>
-            <div class="col-md-6 code" ng-class="selectedInstanceId ? '' : 'hidden'">
-                <h3>Events</h3>
-                <ul>
-                    <li ng-repeat="event in events track by $index">
-                        {{event}}
-                    </li>
-                </ul>
-            </div>
-            <div class="visual">
-                <div ng-show="selectedInstanceId" class="col-md-12">
+            <div class="col-md-6" ng-show="stateChart.instance">
+                <div>
                     <label for="inputeventname">Event</label>
                     <input type="text" id="inputeventname" ng-model="eventname">
                     <label for="inputeventdata">Data</label>
                     <input type="text" id="inputeventdata" ng-model="eventdata">
-                    <a class="btn btn-primary" ng-click="sendEvent(selectedChartName, selectedInstanceId, eventname, eventdata)">Send Event</a>
+                    <a class="btn btn-primary" ng-click="sendEvent(eventname, eventdata)">Send Event</a>
                 </div>
-                <div class="col-md-12">
-                    <h3>Result</h3>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4>Events</h4>
+                    </div>
                 </div>
-                <div class="col-md-12" id="scxmlTrace"></div>
+                <div ng-hide="stateChart.instance.events.length > 0">
+                    There are no events.
+                </div>
+                <ul>
+                    <li ng-repeat="event in stateChart.instance.events track by $index">
+                        {{event}}
+                    </li>
+                </ul>
             </div>
-            
+            <div class="col-md-6">
+                <h4>Result</h4>
+                <div id="scxmlTrace"></div>
+            </div>
         </div>
-
-
     </div>
 </div>

@@ -21,11 +21,12 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div id="wrap">
+    <div class="header clearfix">
         <div class="container-fluid">
-            <div class="header">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">SCION</a>
+            </div>
+            <nav class="clearfix">
                 <ul class="nav nav-pills pull-right">
                     <li class="active">
                         <a ng-href="#">Home</a>
@@ -34,13 +35,11 @@
                         <a ng-click="logout()">Logout</a>
                     </li>
                 </ul>
-                <h3 class="text-muted">deusExStateMachinePortal</h3>
-            </div>
-
-            <div ng-view="" class="clearfix"></div>
+            </nav>
+            
         </div>
-        <div id="push"></div>
     </div>
+    <div ng-view="" class="container main-container"></div>
     <div class="footer text-center" id="footer">
         <p>Jacobean Research & Development</p>
     </div>
@@ -93,6 +92,7 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+    <script src="bower_components/ace-builds/src/mode-xml.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/alertifyjs/dist/js/alertify.js"></script>
     <!-- endbower -->
@@ -100,9 +100,9 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
-    <script src="bower_components/lib/scion.js"></script>
-    <script src="bower_components/lib/d3.v2.js"></script>
-    <script src="bower_components/lib/ScxmlViz.js"></script>
+    <script src="scripts/lib/scion.js"></script>
+    <script src="scripts/lib/d3.v2.js"></script>
+    <script src="scripts/lib/ScxmlViz.js"></script>
 
 
     <script src="scripts/app.js"></script>
@@ -110,6 +110,8 @@
     <script src="scripts/services/session.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/dataservice.js"></script>
+    <script src="scripts/directives/chartlist.js"></script>
+    <script src="scripts/directives/instancelist.js"></script>
     <!-- endbuild -->
 </body>
 
