@@ -120,7 +120,7 @@ angular.module('deusExStateMachinePortalApp')
             dataService.getInstanceDetails($scope.stateChart.name, instance.id).then(function(response) {
                 d3.select($('#scxmlTrace #' + response.data[0])[0]).classed('highlighted', true);
 
-                $scope.stateChart.instance.details = JSON.stringify(response.data, null, 4);
+                $scope.stateChart.instance.details = JSON.stringify(response.data[3], null, 4);
             });
         }
 
