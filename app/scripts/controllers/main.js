@@ -64,7 +64,6 @@ angular.module('deusExStateMachinePortalApp')
 
         function closeInstanceSubscription () {
             if($scope.source) {
-                alertify.success('Event subscription closed');
                 $scope.source.close();
             }
         }
@@ -105,7 +104,6 @@ angular.module('deusExStateMachinePortalApp')
             var source = dataService.subscribeInstance($scope.stateChart.name, instance.id);
             if(source) {
                 $scope.source = source;
-                alertify.success('Event subscription opened');
 
                 source.addEventListener('onEntry', function(e) {
                     d3.select($('#scxmlTrace #' + e.data)[0]).classed('highlighted', true);
