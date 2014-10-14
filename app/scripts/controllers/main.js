@@ -115,6 +115,10 @@ angular.module('deusExStateMachinePortalApp')
                     d3.select($('#scxmlTrace #' + e.data)[0]).classed('highlighted', false);
                     $scope.stateChart.instance.events.push('onExit -> ' + e.data);
                 }, false);
+
+                window.onbeforeunload = function(){
+                    closeInstanceSubscription();
+                };
             }
 
             dataService.getInstanceDetails($scope.stateChart.name, instance.id).then(function(response) {
