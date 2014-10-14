@@ -22,6 +22,7 @@
     "angular": false,
     "$": false,
     "ScxmlViz": false,
-    "alertify": false
+    "alertify": false,
+    "EventSource": false
   }
 }

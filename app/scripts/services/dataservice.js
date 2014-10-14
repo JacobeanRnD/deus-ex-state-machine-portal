@@ -54,6 +54,20 @@ angular.module('deusExStateMachinePortalApp')
                         data: eventdata
                     }
                 });
+            },
+            subscribeInstance: function(stateChartId, instanceId, onEntry, onExit) {
+                if (!!window.EventSource) {
+                    var source = new EventSource(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId + '/_changes');
+
+                    source.addEventListener('onEntry', function(e) {
+                        onEntry(e.data);
+                    }, false);
+                    source.addEventListener('onExit', function(e) {
+                        onExit(e.data);
+                    }, false);
+                } else {
+                    return false;
+                }
             }
         };
     });

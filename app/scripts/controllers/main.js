@@ -11,20 +11,20 @@ angular.module('deusExStateMachinePortalApp')
     .controller('MainCtrl', function($rootScope, $scope, dataService) {
         $scope.loading = true;
 
-        function loadStatesharts () {
+        function loadStatesharts() {
             dataService.getAllStateCharts().then(function(response) {
                 $scope.stateChartIds = response.data;
                 $scope.loading = false;
             });
         }
 
-        function loadInstances (chartName) {
+        function loadInstances(chartName) {
             dataService.getInstances(chartName).then(function(response) {
                 $scope.instances = response.data;
             });
         }
 
-        function draw () {
+        function draw() {
             var doc = (new DOMParser()).parseFromString($scope.stateChartContent, 'application/xml');
             var scxmlTrace = $('#scxmlTrace');
 
@@ -44,7 +44,7 @@ angular.module('deusExStateMachinePortalApp')
                 $scope.stateChartContent = response.data;
 
                 draw();
-                
+
                 loadInstances(chartName);
             });
         };
@@ -57,6 +57,15 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.selectInstance = function(instanceId) {
             $scope.selectedInstanceId = instanceId;
+            $scope.events = [];
+
+            dataService.subscribeInstance($scope.selectedChartName, instanceId, function onEntry(data) {
+                d3.select($('.visual #' + data)[0]).classed('highlighted',true);
+                $scope.events.push('onEntry -> ' + data);
+            }, function onExit(data) {
+                d3.select($('.visual #' + data)[0]).classed('highlighted',false);
+                $scope.events.push('onExit -> ' + data);
+            });
         };
 
         $scope.deleteInstance = function(chartName, instanceId) {
@@ -66,8 +75,8 @@ angular.module('deusExStateMachinePortalApp')
         };
 
         $scope.sendEvent = function(chartName, instanceId, eventname, eventdata) {
-            dataService.sendEvent(chartName, instanceId, eventname, eventdata).then(function(response, body) {
-                console.log(response, body);
+            dataService.sendEvent(chartName, instanceId, eventname, eventdata).then(function() {
+
             });
         };
 
@@ -90,16 +99,16 @@ angular.module('deusExStateMachinePortalApp')
         $scope.saveStatechart = function(stateChartContent) {
             var isError = false;
 
-            if(!stateChartContent || stateChartContent.length === 0) {
+            if (!stateChartContent || stateChartContent.length === 0) {
                 isError = true;
                 alertify.error('Please enter code for your Statechart');
             }
 
-            if(isError) {
+            if (isError) {
                 return;
             }
 
-            dataService.createStateChart(stateChartContent).then(function () {
+            dataService.createStateChart(stateChartContent).then(function() {
                 loadStatesharts();
 
                 alertify.success('Statechart saved');
@@ -110,7 +119,7 @@ angular.module('deusExStateMachinePortalApp')
                 $scope.selectedInstanceId = null;
                 $scope.isCreating = false;
             }, function(response) {
-                if(response.data.message) {
+                if (response.data.message) {
                     alertify.error(response.data.message);
                 } else {
                     alertify.error('An error occured');
@@ -118,13 +127,13 @@ angular.module('deusExStateMachinePortalApp')
             });
         };
 
-        $scope.createInstance = function (stateChartName) {
-            dataService.createInstance(stateChartName).then(function () {
+        $scope.createInstance = function(stateChartName) {
+            dataService.createInstance(stateChartName).then(function() {
                 loadInstances(stateChartName);
 
                 alertify.success('Instance created');
             }, function(response) {
-                if(response.data.message) {
+                if (response.data.message) {
                     alertify.error(response.data.message);
                 } else {
                     alertify.error('An error occured');

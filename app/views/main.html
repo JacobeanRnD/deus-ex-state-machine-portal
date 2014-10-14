@@ -85,7 +85,15 @@
                               changeSession: aceChangeSession
                             }" class="editor"></div>
             </div>
-            <div class="visual" ng-class="selectedInstanceId ? 'col-md-12' : 'col-md-6'">
+            <div class="col-md-6 code" ng-class="selectedInstanceId ? '' : 'hidden'">
+                <h3>Events</h3>
+                <ul>
+                    <li ng-repeat="event in events track by $index">
+                        {{event}}
+                    </li>
+                </ul>
+            </div>
+            <div class="visual">
                 <div ng-show="selectedInstanceId" class="col-md-12">
                     <label for="inputeventname">Event</label>
                     <input type="text" id="inputeventname" ng-model="eventname">
