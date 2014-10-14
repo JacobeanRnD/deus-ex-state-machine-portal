@@ -40,25 +40,6 @@
         </div>
     </div>
     <div ng-view="" class="container main-container"></div>
-    <!-- Add your site or application content here -->
-   <!--  <div id="wrap"> -->
-        <!-- <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class="active">
-                        <a ng-href="#">Home</a>
-                    </li>
-                    <li>
-                        <a ng-click="logout()">Logout</a>
-                    </li>
-                </ul>
-                <h3 class="text-muted">deusExStateMachinePortal</h3>
-            </div>
-
-            <div ng-view="" class="clearfix"></div>
-        </div> -->
-        <!-- <div id="push"></div> -->
-    <!-- </div> -->
     <div class="footer text-center" id="footer">
         <p>Jacobean Research & Development</p>
     </div>
@@ -111,6 +92,7 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+    <script src="bower_components/ace-builds/src/mode-xml.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/alertifyjs/dist/js/alertify.js"></script>
     <!-- endbower -->
@@ -118,9 +100,9 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
-    <script src="bower_components/lib/scion.js"></script>
-    <script src="bower_components/lib/d3.v2.js"></script>
-    <script src="bower_components/lib/ScxmlViz.js"></script>
+    <script src="scripts/lib/scion.js"></script>
+    <script src="scripts/lib/d3.v2.js"></script>
+    <script src="scripts/lib/ScxmlViz.js"></script>
 
 
     <script src="scripts/app.js"></script>
