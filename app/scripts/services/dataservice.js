@@ -12,7 +12,8 @@ angular.module('deusExStateMachinePortalApp')
         // Service logic
         // ...
 
-        var hostname = 'http://localhost:3000';
+        // var hostname = 'http://localhost:3000';
+        var hostname = 'http://scxml-io.herokuapp.com';
         var username = Session.username;
 
         // Public API here
