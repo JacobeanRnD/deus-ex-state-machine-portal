@@ -138,7 +138,7 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.sendEvent = function(eventname, eventdata) {
             dataService.sendEvent($scope.stateChart.name, $scope.stateChart.instance.id, eventname, eventdata).then(function() {
-
+                $scope.stateChart.instance.events.push('event sent -> ' + eventname + (eventdata ?  (' - ' + eventdata) : ''));
             });
         };
 
@@ -153,6 +153,8 @@ angular.module('deusExStateMachinePortalApp')
                             '   <state id="b"/>\n' +
                             '</scxml>'
             };
+            
+            draw();
         };
 
         $scope.aceChanged = function() {
