@@ -15,6 +15,17 @@
     "angular-ui-ace": "bower",
     "alertifyjs": "~0.3.12"
   },
+  "overrides": {
+    "ace-builds": {
+      "main": "src-min-noconflict/ace.js"
+    },
+    "alertifyjs": {
+        "main": [
+            "dist/css/alertify-bootstrap-3.css",
+            "dist/js/alertify.js"
+        ]
+    }
+  },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
     "angular-scenario": "~1.2.0"
