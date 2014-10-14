@@ -19,7 +19,7 @@
     "ace-builds": {
       "main": [
             "src-min-noconflict/ace.js",
-            "src/mode-xml.js"
+            "src-min-noconflict/mode-xml.js"
         ]
     },
     "alertifyjs": {

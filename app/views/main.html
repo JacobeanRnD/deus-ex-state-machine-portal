@@ -40,11 +40,11 @@
                     <input type="text" id="inputeventdata" ng-model="eventdata">
                     <a class="btn btn-primary" ng-click="sendEvent(eventname, eventdata)">Send Event</a>
                 </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <h4>Events</h4>
-                    </div>
+                <h4 ng-show="stateChart.instance.details">Instance Details</h4>
+                <div ng-show="stateChart.instance.details">
+                    {{stateChart.instance.details}}
                 </div>
+                <h4>Events</h4>
                 <div ng-hide="stateChart.instance.events.length > 0">
                     There are no events.
                 </div>
