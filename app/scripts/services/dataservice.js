@@ -36,9 +36,24 @@ angular.module('deusExStateMachinePortalApp')
                     data: content
                 });
             },
+            deleteStateChart: function(stateChartId) {
+                return $http.delete(hostname + '/api/' + username + '/' + stateChartId);
+            },
             createInstance: function(stateChartId) {
                 return $http.post(hostname + '/api/' + username + '/' + stateChartId);
             },
-
+            deleteInstance: function(stateChartId, instanceId) {
+                return $http.delete(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId);
+            },
+            sendEvent: function(stateChartId, instanceId, eventname, eventdata) {
+                return $http({
+                    method: 'POST',
+                    url: hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId,
+                    data: {
+                        name: eventname,
+                        data: eventdata
+                    }
+                });
+            }
         };
     });

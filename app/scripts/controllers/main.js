@@ -24,6 +24,15 @@ angular.module('deusExStateMachinePortalApp')
             });
         }
 
+        function draw () {
+            var doc = (new DOMParser()).parseFromString($scope.stateChartContent, 'application/xml');
+            var scxmlTrace = $('#scxmlTrace');
+
+            scxmlTrace.empty();
+
+            ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height()); // jshint ignore:line
+        }
+
         loadStatesharts();
 
         $scope.selectStateChart = function(chartName) {
@@ -34,12 +43,32 @@ angular.module('deusExStateMachinePortalApp')
             dataService.getStateChart(chartName).then(function(response) {
                 $scope.stateChartContent = response.data;
 
+                draw();
+                
                 loadInstances(chartName);
+            });
+        };
+
+        $scope.deleteStateChart = function(chartName) {
+            dataService.deleteStateChart(chartName).then(function() {
+                loadStatesharts();
             });
         };
 
         $scope.selectInstance = function(instanceId) {
             $scope.selectedInstanceId = instanceId;
+        };
+
+        $scope.deleteInstance = function(chartName, instanceId) {
+            dataService.deleteInstance(chartName, instanceId).then(function() {
+                loadInstances(chartName);
+            });
+        };
+
+        $scope.sendEvent = function(chartName, instanceId, eventname, eventdata) {
+            dataService.sendEvent(chartName, instanceId, eventname, eventdata).then(function(response, body) {
+                console.log(response, body);
+            });
         };
 
         $scope.createStatechart = function() {
@@ -55,12 +84,7 @@ angular.module('deusExStateMachinePortalApp')
                 return;
             }
 
-            var doc = (new DOMParser()).parseFromString($scope.stateChartContent, 'application/xml');
-            var scxmlTrace = $('#scxmlTrace');
-
-            scxmlTrace.empty();
-
-            ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height()); // jshint ignore:line
+            draw();
         };
 
         $scope.saveStatechart = function(stateChartContent) {
@@ -106,5 +130,5 @@ angular.module('deusExStateMachinePortalApp')
                     alertify.error('An error occured');
                 }
             });
-        }
+        };
     });
