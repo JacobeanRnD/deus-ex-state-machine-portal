@@ -2,8 +2,9 @@
     <div ng-show="loading" class="text-center col-md-12">
         <p>Loading StateCharts</p>
     </div>
-    <div ng-class="loading ? 'hide' : (stateChart.instances ? 'col-md-4' : 'col-md-2')" class="sidebar hide ">
-        <div ng-class="stateChart.instances ? 'col-md-6' : 'col-md-12'">
+    <!-- <div ng-class="loading ? 'hide' : (stateChart.instances ? 'col-md-4' : 'col-md-2')" class="sidebar hide "> -->
+    <div ng-hide="loading" class="sidebar col-md-2 no-float">
+        <div class="list">
             <div class="row">
                 <div class="col-md-10">
                     <h4>{{Session.username}}'s Statecharts</h4>
@@ -31,7 +32,7 @@
                 </a>
             </div>
         </div>
-        <div ng-show="stateChart.name" class="col-md-6">
+        <div ng-show="stateChart.name" class="list">
             <div class="row">
                 <div class="col-md-10">
                     <h4>Active Instances</h4>
@@ -56,14 +57,14 @@
     </div>
 
 
-    <div ng-class="stateCharts.length ? 'col-md-8' : 'col-md-10'">
-        <div class="row text-center" ng-hide="stateChart.name || isCreating">
-                <a ng-click="createStatechart()" class="btn btn-primary">
-                    Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
-                </a>
-        </div>
-
+    <div class="col-md-8 no-float">
         <div class="row chart" ng-show="stateChart.name || isCreating">
+            <div class="row text-center" ng-hide="stateChart.name || isCreating">
+                    <a ng-click="createStatechart()" class="btn btn-primary">
+                        Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
+                    </a>
+            </div>
+
             <div class="col-md-12 header">
                 <div class="text-left col-md-4">
                     <h3 ng-hide="isCreating">{{stateChart.name}}</h3>
@@ -93,7 +94,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="visual">
+            <div class="visual col-md-6">
                 <div ng-show="stateChart.instance" class="col-md-12">
                     <label for="inputeventname">Event</label>
                     <input type="text" id="inputeventname" ng-model="eventname">

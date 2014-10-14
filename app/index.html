@@ -21,10 +21,36 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div id="wrap">
+    <div class="header clearfix">
         <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">SCION</a>
+            </div>
+            <nav class="clearfix">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active">
+                        <a ng-href="#">Home</a>
+                    </li>
+                    <li>
+                        <a ng-click="logout()">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+            
+        </div>
+    </div>
+    <div class="container main-container">
+        <div class="main-row row">
+            <div class="col-md-2 sidebar">
+                <chartlist></chartlist>
+                <instancelist></instancelist>
+            </div>
+            <div class="col-md-10 right-content">Content</div>
+        </div>
+    </div>
+    <!-- Add your site or application content here -->
+   <!--  <div id="wrap"> -->
+        <!-- <div class="container">
             <div class="header">
                 <ul class="nav nav-pills pull-right">
                     <li class="active">
@@ -38,9 +64,9 @@
             </div>
 
             <div ng-view="" class="clearfix"></div>
-        </div>
-        <div id="push"></div>
-    </div>
+        </div> -->
+        <!-- <div id="push"></div> -->
+    <!-- </div> -->
     <div class="footer text-center" id="footer">
         <p>Jacobean Research & Development</p>
     </div>
@@ -110,6 +136,8 @@
     <script src="scripts/services/session.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/dataservice.js"></script>
+    <script src="scripts/directives/chartlist.js"></script>
+    <script src="scripts/directives/instancelist.js"></script>
     <!-- endbuild -->
 </body>
 
