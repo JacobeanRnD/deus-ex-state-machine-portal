@@ -65,7 +65,9 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.deleteStateChart = function(chart) {
             dataService.deleteStateChart(chart.name).then(function() {
+                $scope.stateChart = null;
                 loadStatesharts();
+                alertify.success('Statechart deleted');
             });
         };
 
@@ -76,11 +78,11 @@ angular.module('deusExStateMachinePortalApp')
             var source = dataService.subscribeInstance($scope.stateChart.name, instance.id);
             if(source) {
                 source.addEventListener('onEntry', function(e) {
-                    d3.select($('.visual #' + e.data)[0]).classed('highlighted', true);
+                    d3.select($('#scxmlTrace #' + e.data)[0]).classed('highlighted', true);
                     $scope.stateChart.instance.events.push('onEntry -> ' + e.data);
                 }, false);
                 source.addEventListener('onExit', function(e) {
-                    d3.select($('.visual #' + e.data)[0]).classed('highlighted', false);
+                    d3.select($('#scxmlTrace #' + e.data)[0]).classed('highlighted', false);
                     $scope.stateChart.instance.events.push('onExit -> ' + e.data);
                 }, false);
             }
@@ -88,7 +90,9 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.deleteInstance = function(instance) {
             dataService.deleteInstance($scope.stateChart.name, instance.id).then(function() {
+                $scope.stateChart.instance = null;
                 loadInstances($scope.stateChart.name);
+                alertify.success('Instance deleted');
             });
         };
 
@@ -135,9 +139,9 @@ angular.module('deusExStateMachinePortalApp')
             });
         };
 
-        $scope.createInstance = function(stateChartName) {
-            dataService.createInstance(stateChartName).then(function() {
-                loadInstances(stateChartName);
+        $scope.createInstance = function(stateChart) {
+            dataService.createInstance(stateChart.name).then(function() {
+                loadInstances(stateChart.name);
 
                 alertify.success('Instance created');
             }, function(response) {

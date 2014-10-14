@@ -9,11 +9,11 @@
 angular.module('deusExStateMachinePortalApp')
     .directive('instancelist', function() {
         return {
-            restrict: 'AE',
+            restrict: 'E',
             replace: true,
             templateUrl: 'views/directive-instancelist.html',
-            link: function postLink(scope, element, attrs) {
-                element.text('this is the instancelist directive');
+            link: function postLink() {
+                
             }
         };
     });

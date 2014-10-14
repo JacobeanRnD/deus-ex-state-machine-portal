@@ -9,11 +9,12 @@
 angular.module('deusExStateMachinePortalApp')
     .directive('chartlist', function() {
         return {
-            restrict: 'AE',
+            restrict: 'E',
             replace: true,
+            scope: true,
             templateUrl: 'views/directive-chartlist.html',
-            link: function postLink(scope, element, attrs) {
-                element.text('this is the chartlist directive');
+            link: function postLink() {
+                
             }
         };
     });
