@@ -12,7 +12,7 @@ angular.module('deusExStateMachinePortalApp')
         // Service logic
         // ...
 
-        var hostname = 'http://localhost:3000';
+        var hostname = '';    //TODO: aparameterize this
         var username = Session.username;
 
         // Public API here
