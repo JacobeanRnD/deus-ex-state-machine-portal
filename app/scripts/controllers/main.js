@@ -99,6 +99,12 @@ angular.module('deusExStateMachinePortalApp')
                     $scope.stateChart.instance.events.push('onExit -> ' + e.data);
                 }, false);
             }
+
+            dataService.getInstanceDetails($scope.stateChart.name, instance.id).then(function(response) {
+                d3.select($('#scxmlTrace #' + response.data[0])[0]).classed('highlighted', true);
+                
+                $scope.stateChart.instance.details = JSON.stringify(response.data, null, 4);
+            });
         };
 
         $scope.deleteInstance = function(instance) {

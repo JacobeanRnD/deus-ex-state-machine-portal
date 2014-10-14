@@ -39,6 +39,9 @@ angular.module('deusExStateMachinePortalApp')
             deleteStateChart: function(stateChartId) {
                 return $http.delete(hostname + '/api/' + username + '/' + stateChartId);
             },
+            getInstanceDetails: function(stateChartId, instanceId) {
+                return $http.get(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId);
+            },
             createInstance: function(stateChartId) {
                 return $http.post(hostname + '/api/' + username + '/' + stateChartId);
             },
