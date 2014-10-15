@@ -34,11 +34,13 @@
             </div>
             <div class="col-md-6" ng-show="stateChart.instance">
                 <div>
-                    <label for="inputeventname">Event</label>
-                    <input type="text" id="inputeventname" ng-model="eventname">
-                    <label for="inputeventdata">Data</label>
-                    <input type="text" id="inputeventdata" ng-model="eventdata">
-                    <a class="btn btn-primary" ng-click="sendEvent(eventname, eventdata)">Send Event</a>
+                    <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform" >
+                        <label for="inputeventname">Event</label>
+                        <input type="text" id="inputeventname" ng-model="eventname">
+                        <label for="inputeventdata">Data</label>
+                        <input type="text" id="inputeventdata" ng-model="eventdata">
+                        <button type="submit" class="btn btn-primary">Send Event</button>
+                    </form>
                 </div>
                 <h4 ng-show="stateChart.instance.details">Instance Details</h4>
                 <div ng-show="stateChart.instance.details">

@@ -64,7 +64,6 @@ angular.module('deusExStateMachinePortalApp')
 
         function closeInstanceSubscription () {
             if($scope.source) {
-                alertify.success('Event subscription closed');
                 $scope.source.close();
             }
         }
@@ -105,7 +104,6 @@ angular.module('deusExStateMachinePortalApp')
             var source = dataService.subscribeInstance($scope.stateChart.name, instance.id);
             if(source) {
                 $scope.source = source;
-                alertify.success('Event subscription opened');
 
                 source.addEventListener('onEntry', function(e) {
                     d3.select($('#scxmlTrace #' + e.data)[0]).classed('highlighted', true);
@@ -140,7 +138,7 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.sendEvent = function(eventname, eventdata) {
             dataService.sendEvent($scope.stateChart.name, $scope.stateChart.instance.id, eventname, eventdata).then(function() {
-
+                $scope.stateChart.instance.events.push('event sent -> ' + eventname + (eventdata ?  (' - ' + eventdata) : ''));
             });
         };
 
@@ -155,6 +153,8 @@ angular.module('deusExStateMachinePortalApp')
                             '   <state id="b"/>\n' +
                             '</scxml>'
             };
+            
+            draw();
         };
 
         $scope.aceChanged = function() {
