@@ -3,6 +3,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 html, body {
     padding: 0;
     margin: 0;
@@ -25,8 +31,6 @@ html, body, .container {
     height: calc(100% - 81px);
     margin: 0;
     padding: 0;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .header
