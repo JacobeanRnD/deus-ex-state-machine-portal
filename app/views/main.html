@@ -1,7 +1,7 @@
 <div class="main-row row">
     <div class="col-md-2 sidebar">
         <chartlist></chartlist>
-        <instancelist></instancelist>
+        <div ui-view="instancelist" class="instances list"></div>
     </div>
     <div class="col-md-10 right-content">
         <div class="content-header text-center">
@@ -44,24 +44,24 @@
                     </div>
                 </div>
                 <h4>Events</h4>
-                <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform" >
+                <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform">
                     <div class="row send-event">
 
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
-                        </div><!-- /input-group -->
-                      </div><!-- /.col-md-4 -->
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
-                        </div><!-- /input-group -->
-                      </div><!-- /.col-md-4 -->
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <button type="submit" class="btn btn-primary pull-right">Send Event</button>
-                        </div><!-- /input-group -->
-                      </div><!-- /.col-md-4 -->
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-primary pull-right">Send Event</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div ng-hide="stateChart.instance.events.length > 0">

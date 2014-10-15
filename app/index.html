@@ -21,32 +21,28 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <!-- <div id="wrap"> -->
-        <div class="header clearfix">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="/" class="main-logo">SCION</a>
-                </div>
-                <nav class="clearfix">
-                    <ul class="nav nav-pills pull-right">
-                        <li class="active">
-                            <a ng-href="#">Home</a>
-                        </li>
-                        <li>
-                            <a ng-click="logout()">Logout</a>
-                        </li>
-                    </ul>
-                </nav>
-                
+    <div class="header clearfix">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="main-logo">SCION</a>
             </div>
+            <nav class="clearfix">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active">
+                        <a ui-sref="main">Home</a>
+                    </li>
+                    <li>
+                        <a ng-click="logout()">Logout</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div ng-view="" class="container main-container"></div>
-        <!-- <div id="push"></div> -->
-    <!-- </div> -->
+    </div>
+    <div ui-view class="container main-container"></div>
     <div class="text-center" id="footer">
         SCION - Jacobean Research & Development
     </div>
-
+    
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
     (function(i, s, o, g, r, a, m) {
@@ -116,6 +112,7 @@
     <script src="scripts/services/dataservice.js"></script>
     <script src="scripts/directives/chartlist.js"></script>
     <script src="scripts/directives/instancelist.js"></script>
+    <script src="scripts/instances.js"></script>
     <!-- endbuild -->
 </body>
 

@@ -71,10 +71,6 @@ html, body, .container {
         height: 50%;
         overflow-y: auto;
 
-        &.instances {
-            display: none;
-        }
-
         &.showInstances {
             display: block;
         }

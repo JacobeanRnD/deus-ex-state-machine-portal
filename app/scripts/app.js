@@ -15,64 +15,102 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'ui.ace'
+        'ui.ace',
+        'ui.router'
     ])
-    .config(function($routeProvider) {
+    .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
 
-        function checkLoggedin(Session, $location) {
-
-                // Initialize a new promise var deferred = $q.defer(); 
-                if (Session.username) {
-                    return true;
-                } else {
-                    return Session.refresh().then(function() {
-                        if (Session.username) {
-                            return true;
-                        } else {
-                            $location.url('/login');
-                        }
-                    });
-                }
-            }
-            /* jshint ignore:end */
-
-        $routeProvider
-            .when('/login', {
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise('');
+        
+        // Now set up the states
+        $stateProvider
+            .state('main', {
+                url: '/',
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
+            })
+            .state('login', {
+                url: '/',
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    loggedin: checkLoggedin
+            .state('main.chartdetail', {
+                url: 'statechart/:chartName',
+                views: {
+                    'instancelist' : {
+                        templateUrl: 'views/partials/instances.html',
+                        controller: 'InstancesCtrl',
+                        resolve: {
+                            instances: function (dataService, $stateParams) {
+                                return dataService.getInstances($stateParams.chartName).then(function(response) {
+                                    return response;
+                                });
+                            },
+                            chartName: function ($stateParams) {
+                                return $stateParams.chartName;
+                            }
+                        }
+                    }
                 }
-            })
-            .when('/statechart/:stateChartId', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-            .when('/statechart/:stateChartId/instance/:instanceId', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-            .otherwise({
-                redirectTo: '/'
             });
+
+        // $routeProvider
+        //     .when('/login', {
+        //         templateUrl: 'views/login.html',
+        //         controller: 'LoginCtrl'
+        //     })
+        //     .when('/', {
+        //         templateUrl: 'views/main.html',
+        //         controller: 'MainCtrl',
+        //         resolve: {
+        //             loggedin: checkLoggedin
+        //         }
+        //     })
+        //     .when('/statechart/:stateChartId', {
+        //         templateUrl: 'views/main.html',
+        //         controller: 'MainCtrl',
+        //         resolve: {
+        //             loggedin: checkLoggedin
+        //         }
+        //     })
+        //     .when('/statechart/:stateChartId/instance/:instanceId', {
+        //         templateUrl: 'views/main.html',
+        //         controller: 'MainCtrl',
+        //         resolve: {
+        //             loggedin: checkLoggedin
+        //         }
+        //     })
+        //     .otherwise({
+        //         redirectTo: '/'
+        //     });
     });
 
-app.run(function($rootScope, Session, $location) {
+app.run(function($rootScope, Session, $location, $state) {
+
+    function checkLoggedin(Session, $state) {
+        if (Session.username) {
+            return true;
+        } else {
+            return Session.refresh().then(function() {
+                if (Session.username) {
+                    return true;
+                } else {
+                    $state.go('login');
+                }
+            });
+        }
+    }
+
     $rootScope.Session = Session;
+
+    $rootScope.$on('$stateChangeStart', function(){ 
+        checkLoggedin(Session, $state);
+    });
 
     $rootScope.logout = function() {
         Session.logout().then(function() {
-            $location.url('/login');
+            $state.go('login');
         });
     };
 });
