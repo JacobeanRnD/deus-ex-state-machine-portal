@@ -12,19 +12,9 @@ html, body, .container {
     height: 100%;
 }
 
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -30px;
-}
-
-#push, #footer {
-    height: 30px;
-}
-
 #footer {
-    background-color: #f5f5f5;
+    border-top: 1px solid #DADADA;
+    height: 30px;
     line-height: 30px;
 }
 
@@ -32,8 +22,9 @@ html, body, .container {
 {
     display:table;
     width: 100%;
-    margin-top: -50px;
-    padding: 50px 0 0 0;
+    height: calc(100% - 81px);
+    margin: 0;
+    padding: 0;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
@@ -49,6 +40,13 @@ html, body, .container {
             padding: 10px 15px;
             cursor: pointer;
         }
+    }
+
+    .main-logo {
+        float: left;
+        font-size: 18px;
+        line-height: 20px;
+        padding: 15px;
     }
 }
 
