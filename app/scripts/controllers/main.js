@@ -8,31 +8,38 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('MainCtrl', function($scope, dataService, $routeParams) {
+    .controller('MainCtrl', function($scope, dataService, $routeParams, charts) {
         
-        $scope.loading = true;
+        $scope.loading = false;
+        charts.data.forEach(function(name, i, arr) {
+            arr[i] = {
+                name: name
+            };
+        });
+
+        $scope.stateCharts = charts.data;
 
         function loadStatesharts() {
-            dataService.getAllStateCharts().then(function(response) {
-                response.data.forEach(function(name, i, arr) {
-                    arr[i] = {
-                        name: name
-                    };
-                });
+            // dataService.getAllStateCharts().then(function(response) {
+            //     response.data.forEach(function(name, i, arr) {
+            //         arr[i] = {
+            //             name: name
+            //         };
+            //     });
 
-                $scope.stateCharts = response.data;
-                $scope.loading = false;
+            //     $scope.stateCharts = response.data;
+            //     $scope.loading = false;
 
-                if($routeParams.stateChartId) {
-                    var charts = $scope.stateCharts.filter(function (item) {
-                        return item.name === $routeParams.stateChartId.toString();
-                    });
+            //     if($routeParams.stateChartId) {
+            //         var charts = $scope.stateCharts.filter(function (item) {
+            //             return item.name === $routeParams.stateChartId.toString();
+            //         });
 
-                    if(charts.length !== 0) {
-                        selectStateChart(charts[0]);    
-                    }
-                }
-            });
+            //         if(charts.length !== 0) {
+            //             selectStateChart(charts[0]);    
+            //         }
+            //     }
+            // });
         }
 
         function loadInstances(chartName) {
@@ -72,22 +79,22 @@ angular.module('deusExStateMachinePortalApp')
 
         loadStatesharts();
 
-        function selectStateChart(chart) {
-            closeInstanceSubscription();
-            $scope.isCreating = false;
-            $scope.stateChart = {
-                name: chart.name,
-                content: ''
-            };
+        // function selectStateChart(chart) {
+        //     closeInstanceSubscription();
+        //     $scope.isCreating = false;
+        //     $scope.stateChart = {
+        //         name: chart.name,
+        //         content: ''
+        //     };
 
-            dataService.getStateChart(chart.name).then(function(response) {
-                $scope.stateChart.content = response.data;
+        //     dataService.getStateChart(chart.name).then(function(response) {
+        //         $scope.stateChart.content = response.data;
 
-                draw();
+        //         draw();
 
-                loadInstances(chart.name);
-            });
-        }
+        //         loadInstances(chart.name);
+        //     });
+        // }
 
         $scope.deleteStateChart = function(chart) {
             closeInstanceSubscription();

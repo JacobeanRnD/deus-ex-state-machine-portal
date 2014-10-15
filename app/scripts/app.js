@@ -28,7 +28,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
             .state('main', {
                 url: '/',
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    charts: function (dataService) {
+                        return dataService.getAllStateCharts().then(function(response) {
+                            return response;
+                        });
+                    }
+                }
             })
             .state('login', {
                 url: '/',

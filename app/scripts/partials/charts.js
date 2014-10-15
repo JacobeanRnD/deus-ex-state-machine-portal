@@ -2,16 +2,17 @@
 
 /**
  * @ngdoc directive
- * @name deusExStateMachinePortalApp.directive:instancelist
+ * @name deusExStateMachinePortalApp.directive:chartlist
  * @description
- * # instancelist
+ * # chartlist
  */
 angular.module('deusExStateMachinePortalApp')
-    .directive('instancelist', function() {
+    .directive('charts', function() {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'views/directive-instancelist.html',
+            scope: true,
+            templateUrl: 'views/partials/charts.html',
             link: function postLink() {
                 
             }
