@@ -21,7 +21,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
 
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise('');
+        $urlRouterProvider.otherwise('/');
         
         // Now set up the states
         $stateProvider
@@ -38,7 +38,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 }
             })
             .state('login', {
-                url: '/',
+                url: '/login',
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
