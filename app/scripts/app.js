@@ -21,31 +21,41 @@ var app = angular.module('deusExStateMachinePortalApp', [
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
 
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/charts');
         
         // Now set up the states
         $stateProvider
-            .state('main', {
-                url: '/',
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    charts: function (dataService) {
-                        return dataService.getAllStateCharts().then(function(response) {
-                            return response;
-                        });
-                    }
-                }
-            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
-            .state('main.chartdetail', {
-                url: 'statechart/:chartName',
+            .state('main', {
+                url: '/charts',
+                abstract: true,
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl'
+            })
+            .state('main.charts', {
+                url: '',
                 views: {
-                    'instancelist' : {
+                    'chartlist': {
+                        templateUrl: 'views/partials/charts.html',
+                        controller: 'ChartsCtrl',
+                        resolve: {
+                            charts: function (dataService) {
+                                return dataService.getAllStateCharts().then(function(response) {
+                                    return response;
+                                });
+                            }
+                        }
+                    }
+                }
+            })
+            .state('main.charts.detail', {
+                url: '/:chartName/instances',
+                views: {
+                    'instancelist@main' : {
                         templateUrl: 'views/partials/instances.html',
                         controller: 'InstancesCtrl',
                         resolve: {

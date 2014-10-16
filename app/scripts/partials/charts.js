@@ -2,19 +2,17 @@
 
 /**
  * @ngdoc directive
- * @name deusExStateMachinePortalApp.directive:chartlist
+ * @name deusExStateMachinePortalApp.controller:charts
  * @description
- * # chartlist
+ * # charts
  */
 angular.module('deusExStateMachinePortalApp')
-    .directive('charts', function() {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: true,
-            templateUrl: 'views/partials/charts.html',
-            link: function postLink() {
-                
-            }
-        };
+    .controller('ChartsCtrl', function($scope, charts) {
+        charts.data.forEach(function(name, i, arr) {
+            arr[i] = {
+                name: name
+            };
+        });
+
+        $scope.charts = charts.data;
     });

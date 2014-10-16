@@ -8,16 +8,16 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('MainCtrl', function($scope, dataService, $routeParams, charts) {
-        
-        $scope.loading = false;
-        charts.data.forEach(function(name, i, arr) {
-            arr[i] = {
-                name: name
-            };
-        });
+    .controller('MainCtrl', function($scope, dataService, $routeParams) {
 
-        $scope.stateCharts = charts.data;
+        $scope.loading = false;
+        // charts.data.forEach(function(name, i, arr) {
+        //     arr[i] = {
+        //         name: name
+        //     };
+        // });
+
+        // $scope.stateCharts = charts.data;
 
         function loadStatesharts() {
             // dataService.getAllStateCharts().then(function(response) {
