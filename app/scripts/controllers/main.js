@@ -24,11 +24,13 @@ angular.module('deusExStateMachinePortalApp')
                 $scope.loading = false;
 
                 if($routeParams.stateChartId) {
-                    var chart = $scope.stateCharts.filter(function (item) {
-                        return item.name === $routeParams.stateChartId;
-                    })[0];
+                    var charts = $scope.stateCharts.filter(function (item) {
+                        return item.name === $routeParams.stateChartId.toString();
+                    });
 
-                    selectStateChart(chart);
+                    if(charts.length !== 0) {
+                        selectStateChart(charts[0]);    
+                    }
                 }
             });
         }

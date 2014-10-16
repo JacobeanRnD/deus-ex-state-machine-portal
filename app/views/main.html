@@ -10,7 +10,6 @@
             </a>
             <h3 ng-hide="isCreating">
                 {{stateChart.name}}
-                <small ng-show="stateChart.instance" class="text-muted">{{stateChart.instance.id}}</small>
             </h3>
             <h3 ng-show="isCreating">New Statechart</h3>
         </div>
@@ -33,28 +32,48 @@
                 </div>
             </div>
             <div class="col-md-6" ng-show="stateChart.instance">
-                <div>
-                    <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform" >
-                        <label for="inputeventname">Event</label>
-                        <input type="text" id="inputeventname" ng-model="eventname">
-                        <label for="inputeventdata">Data</label>
-                        <input type="text" id="inputeventdata" ng-model="eventdata">
-                        <button type="submit" class="btn btn-primary">Send Event</button>
-                    </form>
-                </div>
-                <h4 ng-show="stateChart.instance.details">Instance Details</h4>
-                <div ng-show="stateChart.instance.details">
-                    {{stateChart.instance.details}}
+                <div class="row clearfix instance-details">
+                    <div class="col-md-4">
+                        <h4 ng-show="stateChart.instance.details">Instance Details</h4>
+                    </div>
+                    <div class="col-md-8">
+                        <h5 ng-show="stateChart.instance" class="text-muted">{{stateChart.instance.id}}</h5>
+                    </div>
+                    <div class="col-md-12" ng-show="stateChart.instance.details">
+                        Data Model: {{stateChart.instance.details}}
+                    </div>
                 </div>
                 <h4>Events</h4>
+                <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform" >
+                    <div class="row send-event">
+
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-md-4 -->
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-md-4 -->
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <button type="submit" class="btn btn-primary pull-right">Send Event</button>
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-md-4 -->
+                    </div>
+                </form>
                 <div ng-hide="stateChart.instance.events.length > 0">
                     There are no events.
                 </div>
-                <ul>
-                    <li ng-repeat="event in stateChart.instance.events track by $index">
-                        {{event}}
-                    </li>
-                </ul>
+                <div class="event-list">
+                    <ul>
+                        <li ng-repeat="event in stateChart.instance.events track by $index">
+                            {{event}}
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-6">
                 <h4>Result</h4>
