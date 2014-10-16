@@ -70,6 +70,10 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         }
                     }
                 }
+            })
+            .state('main.charts.detail.instance', {
+                url: '/:instanceId',
+                template: 'asda'
             });
 
         // $routeProvider
