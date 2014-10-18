@@ -170,33 +170,33 @@ angular.module('deusExStateMachinePortalApp')
             draw();
         };
 
-        $scope.saveStatechart = function(content) {
-            var isError = false;
+        // $scope.saveStatechart = function(content) {
+        //     var isError = false;
 
-            if (!content || content.length === 0) {
-                isError = true;
-                alertify.error('Please enter code for your Statechart');
-            }
+        //     if (!content || content.length === 0) {
+        //         isError = true;
+        //         alertify.error('Please enter code for your Statechart');
+        //     }
 
-            if (isError) {
-                return;
-            }
+        //     if (isError) {
+        //         return;
+        //     }
 
-            dataService.createStateChart(content).then(function() {
-                loadStatesharts();
+        //     dataService.createStateChart(content).then(function() {
+        //         loadStatesharts();
 
-                alertify.success('Statechart saved');
+        //         alertify.success('Statechart saved');
 
-                $scope.stateChart = null;
-                $scope.isCreating = false;
-            }, function(response) {
-                if (response.data.message) {
-                    alertify.error(response.data.message);
-                } else {
-                    alertify.error('An error occured');
-                }
-            });
-        };
+        //         $scope.stateChart = null;
+        //         $scope.isCreating = false;
+        //     }, function(response) {
+        //         if (response.data.message) {
+        //             alertify.error(response.data.message);
+        //         } else {
+        //             alertify.error('An error occured');
+        //         }
+        //     });
+        // };
 
         $scope.createInstance = function(stateChart) {
             closeInstanceSubscription();
