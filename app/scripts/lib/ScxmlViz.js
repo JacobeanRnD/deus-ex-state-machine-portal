@@ -59,7 +59,7 @@ function ScxmlViz(domAttachPoint,doc,width,height){
                                         .map(getElementByIdWrapper.bind(null,transitionNode.ownerDocument));
             transitionNode.target = transitionNode.targets[0];
 
-            if(!transitionNode.target) throw new Error("Unable to find target for transition node.");
+            if(!transitionNode.target) throw new Error("Unable to find target for transition node [" + transitionNode.source.id + "].");
 
             transitionNode.targets.slice(1).forEach(function(target){
                 //make a fake transition node
