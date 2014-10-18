@@ -1,0 +1,11 @@
+<div class="row clearfix instance-details">
+    <div class="col-md-4">
+        <h4 ng-show="stateChart.instance.details">Instance Details</h4>
+    </div>
+    <div class="col-md-8">
+        <h5 ng-show="stateChart.instance" class="text-muted">{{stateChart.instance.id}}</h5>
+    </div>
+    <div class="col-md-12" ng-show="stateChart.instance.details">
+        Data Model: {{stateChart.instance.details}}
+    </div>
+</div>

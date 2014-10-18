@@ -13,8 +13,10 @@
             </h3>
             <h3 ng-show="isCreating">New Statechart</h3>
         </div>
-        <div class="row" ng-show="stateChart || isCreating">
-            <div class="col-md-6" ng-hide="stateChart.instance">
+        <div class="row"> <!-- ng-show="stateChart || isCreating" -->
+            <div ui-view="editor" class="col-md-6"></div>
+            <div ui-view="simulation" class="col-md-6"></div>
+            <!-- <div class="col-md-6" ng-hide="stateChart.instance">
                 <div class="row">
                     <div class="col-md-10">
                         <h4>Statechart Code</h4>
@@ -30,9 +32,9 @@
                               changeSession: aceChangeSession
                             }" class="editor">
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6" ng-show="stateChart.instance">
-                <div class="row clearfix instance-details">
+                <!-- <div class="row clearfix instance-details">
                     <div class="col-md-4">
                         <h4 ng-show="stateChart.instance.details">Instance Details</h4>
                     </div>
@@ -42,8 +44,8 @@
                     <div class="col-md-12" ng-show="stateChart.instance.details">
                         Data Model: {{stateChart.instance.details}}
                     </div>
-                </div>
-                <h4>Events</h4>
+                </div> -->
+                <!-- <h4>Events</h4>
                 <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform">
                     <div class="row send-event">
 
@@ -73,12 +75,12 @@
                             {{event}}
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <h4>Result</h4>
                 <div id="scxmlTrace"></div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

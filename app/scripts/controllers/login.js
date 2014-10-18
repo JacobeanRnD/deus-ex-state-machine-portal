@@ -11,7 +11,7 @@ angular.module('deusExStateMachinePortalApp')
     .controller('LoginCtrl', function($location, $scope, Session, $state) {
         $scope.doLogin = function(inputUsername, inputPassword) {
             Session.login(inputUsername, inputPassword).then(function() {
-                $state.go('main');
+                $state.go('main.charts');
             });
         };
     });

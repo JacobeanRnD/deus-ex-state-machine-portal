@@ -22,7 +22,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
 
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise('/charts');
-        
+
         // Now set up the states
         $stateProvider
             .state('login', {
@@ -43,7 +43,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/charts.html',
                         controller: 'ChartsCtrl',
                         resolve: {
-                            charts: function (dataService) {
+                            charts: function(dataService) {
                                 return dataService.getAllStateCharts().then(function(response) {
                                     return response;
                                 });
@@ -55,20 +55,47 @@ var app = angular.module('deusExStateMachinePortalApp', [
             .state('main.charts.detail', {
                 url: '/:chartName/instances',
                 views: {
-                    'instancelist@main' : {
+                    'instancelist@main': {
                         templateUrl: 'views/partials/instances.html',
                         controller: 'InstancesCtrl',
                         resolve: {
-                            instances: function (dataService, $stateParams) {
+                            instances: function(dataService, $stateParams) {
                                 return dataService.getInstances($stateParams.chartName).then(function(response) {
                                     return response;
                                 });
                             },
-                            chartName: function ($stateParams) {
+                            chartName: function($stateParams) {
                                 return $stateParams.chartName;
                             }
                         }
+                    },
+                    'editor@main': {
+                        templateUrl: 'views/partials/editor.html',
+                        controller: 'EditorCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
+                            chartContent: function(dataService, $stateParams) {
+                                return dataService.getStateChart($stateParams.chartName).then(function(response) {
+                                    return response;
+                                });
+                            }
+                        }
+                    },
+                    'simulation@main': {
+                        templateUrl: 'views/partials/simulation.html',
+                        controller: 'SimulationCtrl'
                     }
+                    // ,
+                    // 'instancedetail@main': {
+                    //     templateUrl: 'views/partials/instancedetail.html',
+                    //     controller: 'InstancedetailCtrl'
+                    // },
+                    // 'events@main': {
+                    //     templateUrl: 'views/partials/events.html',
+                    //     controller: 'EventsCtrl'
+                    // }
                 }
             })
             .state('main.charts.detail.instance', {
@@ -125,7 +152,7 @@ app.run(function($rootScope, Session, $location, $state) {
 
     $rootScope.Session = Session;
 
-    $rootScope.$on('$stateChangeStart', function(){ 
+    $rootScope.$on('$stateChangeStart', function() {
         checkLoggedin(Session, $state);
     });
 
