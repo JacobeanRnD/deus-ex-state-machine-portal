@@ -186,7 +186,7 @@ app.run(function($rootScope, Session, $location, $state) {
             });
         }
     }
-
+    
     $rootScope.Session = Session;
 
     $rootScope.$on('$stateChangeStart', function() {

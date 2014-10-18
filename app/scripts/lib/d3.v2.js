@@ -1,3 +1,5 @@
+// jshint ignore: start
+
 (function() {
   function d3_class(ctor, properties) {
     try {

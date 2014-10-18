@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 */
-
+// jshint ignore: start
 function ScxmlViz(domAttachPoint,doc,width,height){
     var STATE_NAMES = ['scxml','state','parallel','final','history'];
     var scxmlNs = "http://www.w3.org/2005/07/scxml";

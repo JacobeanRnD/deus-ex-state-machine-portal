@@ -12,7 +12,7 @@
                 New Statechart
             </a>
         </li>
-        <li ng-repeat="chart in charts" ng-class="chart.name === stateChart.name ? 'selected' : ''">
+        <li ng-repeat="chart in charts" ng-class="chart.name === state.params.chartName ? 'selected' : ''">
             <a ng-click="deleteStateChart(chart)" title="Delete Statechart {{chart.name}}">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>

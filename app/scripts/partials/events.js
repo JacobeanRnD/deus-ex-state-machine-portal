@@ -8,6 +8,6 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('EventsCtrl', function($scope) {
+    .controller('EventsCtrl', function() {
         
     });

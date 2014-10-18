@@ -96,14 +96,14 @@ angular.module('deusExStateMachinePortalApp')
         //     });
         // }
 
-        $scope.deleteStateChart = function(chart) {
-            closeInstanceSubscription();
-            dataService.deleteStateChart(chart.name).then(function() {
-                $scope.stateChart = null;
-                loadStatesharts();
-                alertify.success('Statechart deleted');
-            });
-        };
+        // $scope.deleteStateChart = function(chart) {
+        //     closeInstanceSubscription();
+        //     dataService.deleteStateChart(chart.name).then(function() {
+        //         $scope.stateChart = null;
+        //         loadStatesharts();
+        //         alertify.success('Statechart deleted');
+        //     });
+        // };
 
         function selectInstance(instance) {
             closeInstanceSubscription();

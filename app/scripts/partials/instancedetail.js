@@ -10,5 +10,5 @@
 angular.module('deusExStateMachinePortalApp')
     .controller('InstancedetailCtrl', function($scope, instanceDetails, instanceId) {
         $scope.instanceId = instanceId;
-        $scope.dataModel = JSON.stringify(instanceDetails[3], null, 4);;
+        $scope.dataModel = JSON.stringify(instanceDetails[3], null, 4);
     });

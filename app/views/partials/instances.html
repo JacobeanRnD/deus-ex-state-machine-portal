@@ -12,7 +12,7 @@
                 New Instance
             </a>
         </li>
-        <li ng-repeat="instance in instances" ng-class="instance.id === selectedInstanceId ? 'selected' : ''">
+        <li ng-repeat="instance in instances" ng-class="instance.id === state.params.instanceId ? 'selected' : ''">
             <a ng-click="deleteInstance(instance)" title="Delete instance {{instance.id}}">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
