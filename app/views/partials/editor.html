@@ -1,11 +1,2 @@
-<div class="row">
-    <div class="col-md-10">
-        <h4>Statechart Code</h4>
-    </div>
-    <div class="col-md-2">
-        <a class="btn btn-primary" ng-click="saveStatechart(chartContent)">Save</a>
-    </div>
-</div>
-
-<div ng-model="chartContent" ui-ace="{ mode: 'xml', firstLineNumber: 5, onChange: aceChanged }" class="editor">
-</div>
+<h4>{{chartName}}<a class="btn btn-primary" ng-click="saveStatechart(chartContent)">Save</a></h4>
+<div ng-model="chartContent" ui-ace="{ mode: 'xml', firstLineNumber: 5, onChange: aceChanged }" class="editor"></div>

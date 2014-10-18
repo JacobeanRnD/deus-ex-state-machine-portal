@@ -52,6 +52,32 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     }
                 }
             })
+            .state('main.charts.new', {
+                url: '^/new-chart',
+                views: {
+                    'editor@main': {
+                        templateUrl: 'views/partials/editor.html',
+                        controller: 'EditorCtrl',
+                        resolve: {
+                            chartName: function() {
+                                return 'New Statechart';
+                            },
+                            chartContent: function() {
+                                return '<scxml name="helloworld">\n' +
+                                    '   <state id="a">\n' +
+                                    '       <transition target="b" event="e1"/>\n' +
+                                    '   </state>\n' +
+                                    '   <state id="b"/>\n' +
+                                    '</scxml>';
+                            }
+                        }
+                    },
+                    'simulation@main': {
+                        templateUrl: 'views/partials/simulation.html',
+                        controller: 'SimulationCtrl'
+                    }
+                }
+            })
             .state('main.charts.detail', {
                 url: '/:chartName/instances',
                 views: {
@@ -78,7 +104,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                             },
                             chartContent: function(dataService, $stateParams) {
                                 return dataService.getStateChart($stateParams.chartName).then(function(response) {
-                                    return response;
+                                    return response.data;
                                 });
                             }
                         }
@@ -102,7 +128,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             //     url: '/:instanceId',
             //     template: 'asda'
             // })
-            ;
+        ;
 
         // $routeProvider
         //     .when('/login', {
@@ -136,6 +162,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     });
 
 app.run(function($rootScope, Session, $location, $state) {
+    $rootScope.state = $state;
 
     function checkLoggedin(Session, $state) {
         if (Session.username) {

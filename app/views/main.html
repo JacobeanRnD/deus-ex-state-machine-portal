@@ -1,86 +1,20 @@
 <div class="main-row row">
-    <div class="col-md-2 sidebar">
+    <div class="col-md-2 sidebar cell">
         <div ui-view="chartlist" class="charts list"></div>
         <div ui-view="instancelist" class="instances list"></div>
     </div>
-    <div class="col-md-10 right-content">
-        <div class="content-header text-center">
-            <a ng-hide="stateChart || isCreating" ng-click="createStatechart()" class="btn btn-primary">
-                Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
-            </a>
-            <h3 ng-hide="isCreating">
-                {{stateChart.name}}
-            </h3>
-            <h3 ng-show="isCreating">New Statechart</h3>
-        </div>
-        <div class="row"> <!-- ng-show="stateChart || isCreating" -->
+    <div class="col-md-10 cell">
+        <div class="row">
+            <div class="content-header text-center" ng-show="state.current.name === 'main.charts'">
+                Select a Statechart from left menu</br>OR</br>
+                <a ui-sref="main.charts.new" class="btn btn-primary" title="Create new Statechart">
+                    Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
+                </a>
+            </div>
             <div ui-view="editor" class="col-md-6"></div>
             <div ui-view="simulation" class="col-md-6"></div>
-            <!-- <div class="col-md-6" ng-hide="stateChart.instance">
-                <div class="row">
-                    <div class="col-md-10">
-                        <h4>Statechart Code</h4>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-primary" ng-click="saveStatechart(stateChart.content)">Save</a>
-                    </div>
-                </div>
-
-                <div ng-model="stateChart.content" ui-ace="{ mode: 'xml',
-                              firstLineNumber: 5,
-                              onChange: aceChanged,
-                              changeSession: aceChangeSession
-                            }" class="editor">
-                </div>
-            </div> -->
-            <div class="col-md-6" ng-show="stateChart.instance">
-                <!-- <div class="row clearfix instance-details">
-                    <div class="col-md-4">
-                        <h4 ng-show="stateChart.instance.details">Instance Details</h4>
-                    </div>
-                    <div class="col-md-8">
-                        <h5 ng-show="stateChart.instance" class="text-muted">{{stateChart.instance.id}}</h5>
-                    </div>
-                    <div class="col-md-12" ng-show="stateChart.instance.details">
-                        Data Model: {{stateChart.instance.details}}
-                    </div>
-                </div> -->
-                <!-- <h4>Events</h4>
-                <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform">
-                    <div class="row send-event">
-
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <button type="submit" class="btn btn-primary pull-right">Send Event</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div ng-hide="stateChart.instance.events.length > 0">
-                    There are no events.
-                </div>
-                <div class="event-list">
-                    <ul>
-                        <li ng-repeat="event in stateChart.instance.events track by $index">
-                            {{event}}
-                        </li>
-                    </ul>
-                </div> -->
-            </div>
-            <!-- <div class="col-md-6">
-                <h4>Result</h4>
-                <div id="scxmlTrace"></div>
-            </div> -->
+            <div ui-view="instancedetail" class="col-md-6"></div>
+            <div ui-view="events" class="col-md-6"></div>
         </div>
     </div>
 </div>
