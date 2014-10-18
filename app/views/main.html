@@ -11,10 +11,14 @@
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
             </div>
-            <div ui-view="editor" class="col-md-6"></div>
+            <div ui-view="editor" class="col-md-6" ng-hide="state.current.name === 'main.charts.detail.instance'"></div>
+            <div class="col-md-6" ng-show="state.current.name === 'main.charts.detail.instance'">
+                <div class="row">
+                    <div ui-view="instancedetail" class="col-md-12"></div>
+                    <div ui-view="events" class="col-md-12"></div>
+                </div>
+            </div>
             <div ui-view="simulation" class="col-md-6"></div>
-            <div ui-view="instancedetail" class="col-md-6"></div>
-            <div ui-view="events" class="col-md-6"></div>
         </div>
     </div>
 </div>

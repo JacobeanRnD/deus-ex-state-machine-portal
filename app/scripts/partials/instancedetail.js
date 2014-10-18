@@ -8,6 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('InstancedetailCtrl', function($scope) {
-        
+    .controller('InstancedetailCtrl', function($scope, instanceDetails, instanceId) {
+        $scope.instanceId = instanceId;
+        $scope.dataModel = JSON.stringify(instanceDetails[3], null, 4);;
     });

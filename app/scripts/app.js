@@ -113,22 +113,31 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/simulation.html',
                         controller: 'SimulationCtrl'
                     }
-                    // ,
-                    // 'instancedetail@main': {
-                    //     templateUrl: 'views/partials/instancedetail.html',
-                    //     controller: 'InstancedetailCtrl'
-                    // },
-                    // 'events@main': {
-                    //     templateUrl: 'views/partials/events.html',
-                    //     controller: 'EventsCtrl'
-                    // }
                 }
             })
-            // .state('main.charts.detail.instance', {
-            //     url: '/:instanceId',
-            //     template: 'asda'
-            // })
-        ;
+            .state('main.charts.detail.instance', {
+                url: '/:instanceId',
+                views: {
+                    'instancedetail@main': {
+                        templateUrl: 'views/partials/instancedetail.html',
+                        controller: 'InstancedetailCtrl',
+                        resolve: {
+                            instanceDetails: function (dataService, $stateParams) {
+                                return dataService.getInstanceDetails($stateParams.chartName, $stateParams.instanceId).then(function(response) {
+                                    return response.data;
+                                });
+                            },
+                            instanceId: function($stateParams) {
+                                return $stateParams.instanceId;
+                            }
+                        }
+                    },
+                    'events@main': {
+                        templateUrl: 'views/partials/events.html',
+                        controller: 'EventsCtrl'
+                    }
+                }
+            });
 
         // $routeProvider
         //     .when('/login', {
