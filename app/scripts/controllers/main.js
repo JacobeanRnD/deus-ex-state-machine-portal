@@ -198,18 +198,18 @@ angular.module('deusExStateMachinePortalApp')
         //     });
         // };
 
-        $scope.createInstance = function(stateChart) {
-            closeInstanceSubscription();
-            dataService.createInstance(stateChart.name).then(function() {
-                loadInstances(stateChart.name);
+        // $scope.createInstance = function(stateChart) {
+        //     closeInstanceSubscription();
+        //     dataService.createInstance(stateChart.name).then(function() {
+        //         loadInstances(stateChart.name);
 
-                alertify.success('Instance created');
-            }, function(response) {
-                if (response.data.message) {
-                    alertify.error(response.data.message);
-                } else {
-                    alertify.error('An error occured');
-                }
-            });
-        };
+        //         alertify.success('Instance created');
+        //     }, function(response) {
+        //         if (response.data.message) {
+        //             alertify.error(response.data.message);
+        //         } else {
+        //             alertify.error('An error occured');
+        //         }
+        //     });
+        // };
     });

@@ -9,7 +9,7 @@
 angular.module('deusExStateMachinePortalApp')
     .controller('ChartsCtrl', function($scope, $state, dataService, charts, username) {
         $scope.username = username;
-        
+
         charts.data.forEach(function(name, i, arr) {
             arr[i] = {
                 name: name
@@ -21,8 +21,8 @@ angular.module('deusExStateMachinePortalApp')
         $scope.deleteStateChart = function(chart) {
             // closeInstanceSubscription();
 
-            dataService.deleteStateChart(chart.name).then(function() {
-                $state.go('/');
+            dataService.deleteStateChart(username, chart.name).then(function() {
+                $state.go('.', null, { reload: true });
                 alertify.success('Statechart deleted');
             });
         };

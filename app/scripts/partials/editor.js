@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('EditorCtrl', function($scope, $state, simulateService, dataService, chartName, chartContent) {
+    .controller('EditorCtrl', function($scope, $state, simulateService, dataService, chartName, chartContent, username) {
         $scope.chartName = chartName;
         $scope.chartContent = chartContent.data;
 
@@ -30,8 +30,8 @@ angular.module('deusExStateMachinePortalApp')
                 return;
             }
 
-            dataService.createStateChart(content).then(function() {
-                $state.reload();
+            dataService.createStateChart(username, content).then(function() {
+                $state.go('.', null, { reload: true });
                 //TODO: select newly created chart
 
                 alertify.success('Statechart saved');

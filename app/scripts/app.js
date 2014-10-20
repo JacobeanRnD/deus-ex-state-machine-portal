@@ -72,12 +72,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
                                 return 'New Statechart';
                             },
                             chartContent: function() {
-                                return '<scxml name="helloworld">\n' +
+                                return { data: '<scxml name="helloworld">\n' +
                                     '   <state id="a">\n' +
                                     '       <transition target="b" event="e1"/>\n' +
                                     '   </state>\n' +
                                     '   <state id="b"/>\n' +
-                                    '</scxml>';
+                                    '</scxml>' };
                             }
                         }
                     },
