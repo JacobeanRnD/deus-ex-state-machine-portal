@@ -127,6 +127,9 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/instancedetail.html',
                         controller: 'InstancedetailCtrl',
                         resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
                             instanceDetails: function (dataService, username, $stateParams) {
                                 return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
                             },
@@ -137,7 +140,15 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     },
                     'events@main': {
                         templateUrl: 'views/partials/events.html',
-                        controller: 'EventsCtrl'
+                        controller: 'EventsCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
+                            instanceId: function($stateParams) {
+                                return $stateParams.instanceId;
+                            }
+                        }
                     }
                 }
             });

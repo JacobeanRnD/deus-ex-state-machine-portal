@@ -19,12 +19,12 @@
         </div>
     </div>
 </form>
-<div ng-hide="stateChart.instance.events.length > 0">
+<div ng-hide="events.length > 0">
     There are no events.
 </div>
 <div class="event-list">
     <ul>
-        <li ng-repeat="event in stateChart.instance.events track by $index">
+        <li ng-repeat="event in events track by $index">
             {{event}}
         </li>
     </ul>
