@@ -19,8 +19,6 @@ angular.module('deusExStateMachinePortalApp')
         $scope.charts = charts.data;
 
         $scope.deleteStateChart = function(chart) {
-            // closeInstanceSubscription();
-
             dataService.deleteStateChart(username, chart.name).then(function() {
                 $state.go('.', null, { reload: true });
                 alertify.success('Statechart deleted');
