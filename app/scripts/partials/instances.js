@@ -19,10 +19,9 @@ angular.module('deusExStateMachinePortalApp')
         $scope.chartName = chartName;
 
         $scope.createInstance = function(chartName) {
-            // closeInstanceSubscription();
+            // TODO do this onExit closeInstanceSubscription();
 
             dataService.createInstance(username, chartName).then(function() {
-                // loadInstances(stateChart.name);
                 $state.go('.', null, { reload: true });
                 alertify.success('Instance created');
             }, function(response) {
@@ -31,6 +30,15 @@ angular.module('deusExStateMachinePortalApp')
                 } else {
                     alertify.error('An error occured');
                 }
+            });
+        };
+
+        $scope.deleteInstance = function(instance) {
+            // TODO do this onExit closeInstanceSubscription();
+
+            dataService.deleteInstance(username, chartName, instance.id).then(function() {
+                $state.go('.', null, { reload: true });
+                alertify.success('Instance deleted');
             });
         };
     });
