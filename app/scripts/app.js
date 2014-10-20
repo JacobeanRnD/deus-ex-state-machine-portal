@@ -150,6 +150,18 @@ var app = angular.module('deusExStateMachinePortalApp', [
                             }
                         }
                     }
+                },
+                onEnter: function(simulateService){
+                    window.onbeforeunload = function(){
+                        if(simulateService.events.eventSource) {
+                            simulateService.events.eventSource.close();
+                        }
+                    };
+                },
+                onExit: function(simulateService){
+                    if(simulateService.events.eventSource) {
+                        simulateService.events.eventSource.close();
+                    }
                 }
             });
 

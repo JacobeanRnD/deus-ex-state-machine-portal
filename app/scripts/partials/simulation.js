@@ -31,7 +31,12 @@ angular.module('deusExStateMachinePortalApp')
         }
 
         drawSimulation(simulateService.chartContent);
+
         $scope.$on('simulationContentUploaded', function() {
             drawSimulation(simulateService.chartContent);
+        });
+
+        $scope.$on('simulationHighlighted', function(e, eventName, event) {
+            d3.select($('#scxmlTrace #' + event)[0]).classed('highlighted', eventName === 'onEntry');
         });
     });
