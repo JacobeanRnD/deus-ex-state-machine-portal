@@ -19,10 +19,10 @@ angular.module('deusExStateMachinePortalApp')
         $scope.chartName = chartName;
 
         $scope.createInstance = function(chartName) {
-            // TODO do this onExit closeInstanceSubscription();
-
             dataService.createInstance(username, chartName).then(function() {
-                $state.go('.', null, { reload: true });
+                $state.go('.', null, {
+                    reload: true
+                });
                 alertify.success('Instance created');
             }, function(response) {
                 if (response.data.message) {
@@ -34,10 +34,10 @@ angular.module('deusExStateMachinePortalApp')
         };
 
         $scope.deleteInstance = function(instance) {
-            // TODO do this onExit closeInstanceSubscription();
-
             dataService.deleteInstance(username, chartName, instance.id).then(function() {
-                $state.go('.', null, { reload: true });
+                $state.go('.', null, {
+                    reload: true
+                });
                 alertify.success('Instance deleted');
             });
         };

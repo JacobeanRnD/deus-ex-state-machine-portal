@@ -72,12 +72,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
                                 return 'New Statechart';
                             },
                             chartContent: function() {
-                                return { data: '<scxml name="helloworld">\n' +
-                                    '   <state id="a">\n' +
-                                    '       <transition target="b" event="e1"/>\n' +
-                                    '   </state>\n' +
-                                    '   <state id="b"/>\n' +
-                                    '</scxml>' };
+                                return {
+                                    data: '<scxml name="helloworld">\n' +
+                                        '   <state id="a">\n' +
+                                        '       <transition target="b" event="e1"/>\n' +
+                                        '   </state>\n' +
+                                        '   <state id="b"/>\n' +
+                                        '</scxml>'
+                                };
                             }
                         }
                     },
@@ -130,7 +132,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                             chartName: function($stateParams) {
                                 return $stateParams.chartName;
                             },
-                            instanceDetails: function (dataService, username, $stateParams) {
+                            instanceDetails: function(dataService, username, $stateParams) {
                                 return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
                             },
                             instanceId: function($stateParams) {
@@ -151,49 +153,19 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         }
                     }
                 },
-                onEnter: function(simulateService){
-                    window.onbeforeunload = function(){
-                        if(simulateService.events.eventSource) {
+                onEnter: function(simulateService) {
+                    window.onbeforeunload = function() {
+                        if (simulateService.events.eventSource) {
                             simulateService.events.eventSource.close();
                         }
                     };
                 },
-                onExit: function(simulateService){
-                    if(simulateService.events.eventSource) {
+                onExit: function(simulateService) {
+                    if (simulateService.events.eventSource) {
                         simulateService.events.eventSource.close();
                     }
                 }
             });
-
-        // $routeProvider
-        //     .when('/login', {
-        //         templateUrl: 'views/login.html',
-        //         controller: 'LoginCtrl'
-        //     })
-        //     .when('/', {
-        //         templateUrl: 'views/main.html',
-        //         controller: 'MainCtrl',
-        //         resolve: {
-        //             loggedin: checkLoggedin
-        //         }
-        //     })
-        //     .when('/statechart/:stateChartId', {
-        //         templateUrl: 'views/main.html',
-        //         controller: 'MainCtrl',
-        //         resolve: {
-        //             loggedin: checkLoggedin
-        //         }
-        //     })
-        //     .when('/statechart/:stateChartId/instance/:instanceId', {
-        //         templateUrl: 'views/main.html',
-        //         controller: 'MainCtrl',
-        //         resolve: {
-        //             loggedin: checkLoggedin
-        //         }
-        //     })
-        //     .otherwise({
-        //         redirectTo: '/'
-        //     });
     });
 
 app.run(function($rootScope, Session, $location, $state) {

@@ -17,7 +17,7 @@ angular.module('deusExStateMachinePortalApp')
         simulateService.draw();
 
         //Wait till everything is loaded so the event listener on simulation controller can bind
-        $timeout(function(){
+        $timeout(function() {
             simulateService.events.highlight('onEntry', instanceDetails.data[0]);
-        }); 
+        });
     });
