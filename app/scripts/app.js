@@ -19,11 +19,19 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ui.router'
     ])
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
+        function checkLoggedin(Session, $state) {
+            return Session.refresh().then(function() {
+                if (Session.username) {
+                    return Session.username;
+                } else {
+                    $state.go('login');
+                    return false;
+                }
+            });
+        }
 
-        // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise('/charts');
 
-        // Now set up the states
         $stateProvider
             .state('login', {
                 url: '/login',
@@ -34,7 +42,10 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 url: '/charts',
                 abstract: true,
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    username: checkLoggedin
+                }
             })
             .state('main.charts', {
                 url: '',
@@ -43,10 +54,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/charts.html',
                         controller: 'ChartsCtrl',
                         resolve: {
-                            charts: function(dataService) {
-                                return dataService.getAllStateCharts().then(function(response) {
-                                    return response;
-                                });
+                            charts: function(dataService, username) {
+                                return dataService.getAllStateCharts(username);
                             }
                         }
                     }
@@ -85,10 +94,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/instances.html',
                         controller: 'InstancesCtrl',
                         resolve: {
-                            instances: function(dataService, $stateParams) {
-                                return dataService.getInstances($stateParams.chartName).then(function(response) {
-                                    return response;
-                                });
+                            instances: function(dataService, username, $stateParams) {
+                                return dataService.getInstances(username, $stateParams.chartName);
                             },
                             chartName: function($stateParams) {
                                 return $stateParams.chartName;
@@ -102,10 +109,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
                             chartName: function($stateParams) {
                                 return $stateParams.chartName;
                             },
-                            chartContent: function(dataService, $stateParams) {
-                                return dataService.getStateChart($stateParams.chartName).then(function(response) {
-                                    return response.data;
-                                });
+                            chartContent: function(dataService, username, $stateParams) {
+                                return dataService.getStateChart(username, $stateParams.chartName);
                             }
                         }
                     },
@@ -122,10 +127,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/instancedetail.html',
                         controller: 'InstancedetailCtrl',
                         resolve: {
-                            instanceDetails: function (dataService, $stateParams) {
-                                return dataService.getInstanceDetails($stateParams.chartName, $stateParams.instanceId).then(function(response) {
-                                    return response.data;
-                                });
+                            instanceDetails: function (dataService, username, $stateParams) {
+                                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
                             },
                             instanceId: function($stateParams) {
                                 return $stateParams.instanceId;
@@ -172,26 +175,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
 
 app.run(function($rootScope, Session, $location, $state) {
     $rootScope.state = $state;
-
-    function checkLoggedin(Session, $state) {
-        if (Session.username) {
-            return true;
-        } else {
-            return Session.refresh().then(function() {
-                if (Session.username) {
-                    return true;
-                } else {
-                    $state.go('login');
-                }
-            });
-        }
-    }
-    
     $rootScope.Session = Session;
-
-    $rootScope.$on('$stateChangeStart', function() {
-        checkLoggedin(Session, $state);
-    });
 
     $rootScope.logout = function() {
         Session.logout().then(function() {

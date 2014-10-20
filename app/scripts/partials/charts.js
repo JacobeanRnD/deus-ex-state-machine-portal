@@ -7,7 +7,9 @@
  * # charts
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('ChartsCtrl', function($scope, $state, dataService, charts) {
+    .controller('ChartsCtrl', function($scope, $state, dataService, charts, username) {
+        $scope.username = username;
+        
         charts.data.forEach(function(name, i, arr) {
             arr[i] = {
                 name: name
