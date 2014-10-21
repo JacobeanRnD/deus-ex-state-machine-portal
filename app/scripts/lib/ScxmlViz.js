@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 */
-
+// jshint ignore: start
 function ScxmlViz(domAttachPoint,doc,width,height){
     var STATE_NAMES = ['scxml','state','parallel','final','history'];
     var scxmlNs = "http://www.w3.org/2005/07/scxml";
@@ -59,7 +59,7 @@ function ScxmlViz(domAttachPoint,doc,width,height){
                                         .map(getElementByIdWrapper.bind(null,transitionNode.ownerDocument));
             transitionNode.target = transitionNode.targets[0];
 
-            if(!transitionNode.target) throw new Error("Unable to find target for transition node.");
+            if(!transitionNode.target) throw new Error("Unable to find target for transition node [" + transitionNode.source.id + "].");
 
             transitionNode.targets.slice(1).forEach(function(target){
                 //make a fake transition node

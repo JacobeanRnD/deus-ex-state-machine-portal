@@ -1,0 +1,22 @@
+<h4>{{username}}'s Statecharts</h4>
+<div ng-hide="charts">
+    Create a new Statechart
+</div>
+<div ng-show="charts">
+    <ul>
+        <li class="new">
+            <a ng-click="createStatechart()" title="Create new Statechart">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a ui-sref="main.charts.new" title="Create new Statechart">
+                New Statechart
+            </a>
+        </li>
+        <li ng-repeat="chart in charts" ng-class="chart.name === state.params.chartName ? 'selected' : ''">
+            <a ng-click="deleteStateChart(chart)" title="Delete Statechart {{chart.name}}">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <a ui-sref="main.charts.detail({chartName:chart.name})">{{chart.name}}</a>
+        </li>
+    </ul>
+</div>

@@ -58,22 +58,22 @@ html, body, .container {
 {
     height: 100%;
     display: table-row;
+
+    .cell {
+        display: table-cell;
+        vertical-align: top;
+        float: none;
+    }
 }
 
 .sidebar
 {
-    display: table-cell;
-    float: none;
     border-right: 1px solid #DADADA;
 
     .list {
         display: block;
         height: 50%;
         overflow-y: auto;
-
-        &.instances {
-            display: none;
-        }
 
         &.showInstances {
             display: block;
@@ -104,11 +104,6 @@ html, body, .container {
             text-decoration: none;
         }
     }
-}
-
-.right-content {
-    display: table-cell;
-    float: none;
 }
 
 .editor {

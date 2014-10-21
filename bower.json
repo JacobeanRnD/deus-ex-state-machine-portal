@@ -13,20 +13,21 @@
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-ui-ace": "bower",
-    "alertifyjs": "~0.3.12"
+    "alertifyjs": "~0.3.12",
+    "angular-ui-router": "~0.2.11"
   },
   "overrides": {
     "ace-builds": {
       "main": [
-            "src-min-noconflict/ace.js",
-            "src-min-noconflict/mode-xml.js"
-        ]
+        "src-min-noconflict/ace.js",
+        "src-min-noconflict/mode-xml.js"
+      ]
     },
     "alertifyjs": {
-        "main": [
-            "dist/css/alertify-bootstrap-3.css",
-            "dist/js/alertify.js"
-        ]
+      "main": [
+        "dist/css/alertify-bootstrap-3.css",
+        "dist/js/alertify.js"
+      ]
     }
   },
   "devDependencies": {

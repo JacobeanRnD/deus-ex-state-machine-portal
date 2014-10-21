@@ -8,25 +8,20 @@
  * Factory in the deusExStateMachinePortalApp.
  */
 angular.module('deusExStateMachinePortalApp')
-    .factory('dataService', function($resource, $http, Session) {
-        // Service logic
-        // ...
-
-        var hostname = 'http://scxml-io.herokuapp.com';
-        var username = Session.username;
-
-        // Public API here
+    .factory('dataService', function($resource, $http) {
+        var hostname = '';
+        
         return {
-            getAllStateCharts: function() {
+            getAllStateCharts: function(username) {
                 return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
             },
-            getStateChart: function(stateChartId) {
+            getStateChart: function(username, stateChartId) {
                 return $http.get(hostname + '/api/' + username + '/' + stateChartId);
             },
-            getInstances: function(stateChartId) {
+            getInstances: function(username, stateChartId) {
                 return $http.get(hostname + '/api/' + username + '/' + stateChartId + '/_all_instances');
             },
-            createStateChart: function(content) {
+            createStateChart: function(username, content) {
                 return $http({
                     method: 'POST',
                     url: hostname + '/api/' + username,
@@ -36,19 +31,19 @@ angular.module('deusExStateMachinePortalApp')
                     data: content
                 });
             },
-            deleteStateChart: function(stateChartId) {
+            deleteStateChart: function(username, stateChartId) {
                 return $http.delete(hostname + '/api/' + username + '/' + stateChartId);
             },
-            getInstanceDetails: function(stateChartId, instanceId) {
+            getInstanceDetails: function(username, stateChartId, instanceId) {
                 return $http.get(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId);
             },
-            createInstance: function(stateChartId) {
+            createInstance: function(username, stateChartId) {
                 return $http.post(hostname + '/api/' + username + '/' + stateChartId);
             },
-            deleteInstance: function(stateChartId, instanceId) {
+            deleteInstance: function(username, stateChartId, instanceId) {
                 return $http.delete(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId);
             },
-            sendEvent: function(stateChartId, instanceId, eventname, eventdata) {
+            sendEvent: function(username, stateChartId, instanceId, eventname, eventdata) {
                 return $http({
                     method: 'POST',
                     url: hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId,
@@ -58,7 +53,7 @@ angular.module('deusExStateMachinePortalApp')
                     }
                 });
             },
-            subscribeInstance: function(stateChartId, instanceId) {
+            subscribeInstance: function(username, stateChartId, instanceId) {
                 if (!!window.EventSource) {
                     var source = new EventSource(hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId + '/_changes');
 

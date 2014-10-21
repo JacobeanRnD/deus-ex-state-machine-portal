@@ -1,4 +1,4 @@
-
+// jshint ignore: start
 (function(/*! Stitch !*/) {
 
   var modules = {}, cache = {}, req = function(name, root) {
@@ -63,7 +63,8 @@
       }
     }
   };
-}).call(this)({"base-platform/dom": function(exports, require, module) {/*
+}).call(this)({"base-platform/dom": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -161,7 +162,8 @@ module.exports = {
     //so we wrap it here in a trivial self-executing function which gets eval'd
     return eval('(function(){\nreturn ' + content + ';})()');
 };
-}, "base-platform/path": function(exports, require, module) {/*
+}, "base-platform/path": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -211,7 +213,8 @@ module.exports = {
     }
 };
 }, "browser/browser-listener-client": function(exports, require, module) {//TODO: this will be like node-listener-client.js, except will use jquery/AJAX for its remoting
-}, "browser/dom": function(exports, require, module) {/*
+}, "browser/dom": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -262,7 +265,8 @@ dom.serializeToString = function(node){
 };
 
 module.exports = dom;
-}, "browser/platform": function(exports, require, module) {/*
+}, "browser/platform": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -346,7 +350,8 @@ exports.platform = {
     dom : require('./dom')
 
 };
-}, "browser/url": function(exports, require, module) {/*
+}, "browser/url": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -385,7 +390,8 @@ module.exports = {
 };
 
 
-}, "core/constants": function(exports, require, module) {/*
+}, "core/constants": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -1057,7 +1063,8 @@ module.exports = {
     SCXMLInterpreter: SCXMLInterpreter,
     SimpleInterpreter: SimpleInterpreter
 };
-}, "core/scxml/default-transition-selector": function(exports, require, module) {//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/default-transition-selector": function(exports, require, module) {
+//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -1078,7 +1085,8 @@ module.exports = function(state,eventNames,evaluator){
         return !t.event || ( eventNames.indexOf(t.event) > -1 && (!t.cond || evaluator(t)) );
     });
 };
-}, "core/scxml/json2model": function(exports, require, module) {//     Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/json2model": function(exports, require, module) {
+//     Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
@@ -1207,7 +1215,8 @@ if(require.main === module){
     }
 
 }
-}, "core/scxml/model": function(exports, require, module) {//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/model": function(exports, require, module) {
+//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -1263,7 +1272,8 @@ var model = {
 };
 
 module.exports = model;
-}, "core/scxml/scxml-dynamic-name-match-transition-selector": function(exports, require, module) {//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/scxml-dynamic-name-match-transition-selector": function(exports, require, module) {
+//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -1307,7 +1317,8 @@ module.exports = function(state, eventNames, evaluator) {
         return (!t.events || nameMatch(t,eventNames)) && (!t.cond || evaluator(t));
     });
 };
-}, "core/scxml/set/ArraySet": function(exports, require, module) {//     Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/set/ArraySet": function(exports, require, module) {
+//     Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //     Licensed under the Apache License, Version 2.0 (the "License");
 //     you may not use this file except in compliance with the License.
@@ -1395,7 +1406,8 @@ ArraySet.prototype = {
 };
 
 module.exports = ArraySet;
-}, "core/scxml/setup-default-opts": function(exports, require, module) {//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/setup-default-opts": function(exports, require, module) {
+//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -1425,7 +1437,8 @@ module.exports = function(opts) {
     return opts;
 };
 
-}, "core/scxml/state-kinds-enum": function(exports, require, module) {//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
+}, "core/scxml/state-kinds-enum": function(exports, require, module) {
+//   Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -1449,7 +1462,8 @@ module.exports = {
     INITIAL: 4,
     FINAL: 5
 };
-}, "core/util/annotate-scxml-json": function(exports, require, module) {/*
+}, "core/util/annotate-scxml-json": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -1844,7 +1858,8 @@ function getScope(transition){
 //this script can be called as a main script to convert an xml file to annotated scxml.
 //TODO: get google closure to compile this out as dead code in the browser build
 if(require.main === module) console.log(JSON.stringify(transform((new (require('xmldom').DOMParser)).parseFromString(require('fs').readFileSync(process.argv[2],'utf8'))),4,4));
-}, "core/util/code-gen": function(exports, require, module) {/*
+}, "core/util/code-gen": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -2182,7 +2197,8 @@ module.exports = {
         }
     }
 };
-}, "core/util/docToModel": function(exports, require, module) {/*
+}, "core/util/docToModel": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -2300,7 +2316,8 @@ function traverse(node,nodeList){
 
 
 module.exports = documentToModel;
-}, "core/util/util": function(exports, require, module) {/*
+}, "core/util/util": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -2331,7 +2348,8 @@ module.exports = {
         return target;
     }
 };
-}, "platform": function(exports, require, module) {/*
+}, "platform": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -2370,7 +2388,8 @@ if(isBrowser()){
 }else if(isRhino()){
     module.exports = require('./rhino/platform');
 }
-}, "scion": function(exports, require, module) {/*
+}, "scion": function(exports, require, module) {
+/*
      Copyright 2011-2012 Jacob Beard, INFICON, and other SCION contributors
 
      Licensed under the Apache License, Version 2.0 (the "License");

@@ -8,10 +8,10 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('LoginCtrl', function($location, $scope, Session) {
+    .controller('LoginCtrl', function($location, $scope, Session, $state) {
         $scope.doLogin = function(inputUsername, inputPassword) {
             Session.login(inputUsername, inputPassword).then(function() {
-                $location.url('/');
+                $state.go('main.charts');
             });
         };
     });

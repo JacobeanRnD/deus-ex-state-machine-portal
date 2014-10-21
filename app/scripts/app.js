@@ -15,64 +15,166 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'ui.ace'
+        'ui.ace',
+        'ui.router'
     ])
-    .config(function($routeProvider) {
-
-        function checkLoggedin(Session, $location) {
-
-                // Initialize a new promise var deferred = $q.defer(); 
+    .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
+        function checkLoggedin(Session, $state) {
+            return Session.refresh().then(function() {
                 if (Session.username) {
-                    return true;
+                    return Session.username;
                 } else {
-                    return Session.refresh().then(function() {
-                        if (Session.username) {
-                            return true;
-                        } else {
-                            $location.url('/login');
-                        }
-                    });
+                    $state.go('login');
+                    return false;
                 }
-            }
-            /* jshint ignore:end */
+            });
+        }
 
-        $routeProvider
-            .when('/login', {
+        $urlRouterProvider.otherwise('/charts');
+
+        $stateProvider
+            .state('login', {
+                url: '/login',
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
-            .when('/', {
+            .state('main', {
+                url: '/charts',
+                abstract: true,
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    loggedin: checkLoggedin
+                    username: checkLoggedin
                 }
             })
-            .when('/statechart/:stateChartId', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    loggedin: checkLoggedin
+            .state('main.charts', {
+                url: '',
+                views: {
+                    'chartlist': {
+                        templateUrl: 'views/partials/charts.html',
+                        controller: 'ChartsCtrl',
+                        resolve: {
+                            charts: function(dataService, username) {
+                                return dataService.getAllStateCharts(username);
+                            }
+                        }
+                    }
                 }
             })
-            .when('/statechart/:stateChartId/instance/:instanceId', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    loggedin: checkLoggedin
+            .state('main.charts.new', {
+                url: '^/new-chart',
+                views: {
+                    'editor@main': {
+                        templateUrl: 'views/partials/editor.html',
+                        controller: 'EditorCtrl',
+                        resolve: {
+                            chartName: function() {
+                                return 'New Statechart';
+                            },
+                            chartContent: function() {
+                                return {
+                                    data: '<scxml name="helloworld">\n' +
+                                        '   <state id="a">\n' +
+                                        '       <transition target="b" event="e1"/>\n' +
+                                        '   </state>\n' +
+                                        '   <state id="b"/>\n' +
+                                        '</scxml>'
+                                };
+                            }
+                        }
+                    },
+                    'simulation@main': {
+                        templateUrl: 'views/partials/simulation.html',
+                        controller: 'SimulationCtrl'
+                    }
                 }
             })
-            .otherwise({
-                redirectTo: '/'
+            .state('main.charts.detail', {
+                url: '/:chartName/instances',
+                views: {
+                    'instancelist@main': {
+                        templateUrl: 'views/partials/instances.html',
+                        controller: 'InstancesCtrl',
+                        resolve: {
+                            instances: function(dataService, username, $stateParams) {
+                                return dataService.getInstances(username, $stateParams.chartName);
+                            },
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            }
+                        }
+                    },
+                    'editor@main': {
+                        templateUrl: 'views/partials/editor.html',
+                        controller: 'EditorCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
+                            chartContent: function(dataService, username, $stateParams) {
+                                return dataService.getStateChart(username, $stateParams.chartName);
+                            }
+                        }
+                    },
+                    'simulation@main': {
+                        templateUrl: 'views/partials/simulation.html',
+                        controller: 'SimulationCtrl'
+                    }
+                }
+            })
+            .state('main.charts.detail.instance', {
+                url: '/:instanceId',
+                views: {
+                    'instancedetail@main': {
+                        templateUrl: 'views/partials/instancedetail.html',
+                        controller: 'InstancedetailCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
+                            instanceDetails: function(dataService, username, $stateParams) {
+                                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
+                            },
+                            instanceId: function($stateParams) {
+                                return $stateParams.instanceId;
+                            }
+                        }
+                    },
+                    'events@main': {
+                        templateUrl: 'views/partials/events.html',
+                        controller: 'EventsCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            },
+                            instanceId: function($stateParams) {
+                                return $stateParams.instanceId;
+                            }
+                        }
+                    }
+                },
+                onEnter: function(simulateService) {
+                    window.onbeforeunload = function() {
+                        if (simulateService.events.eventSource) {
+                            simulateService.events.eventSource.close();
+                        }
+                    };
+                },
+                onExit: function(simulateService) {
+                    if (simulateService.events.eventSource) {
+                        simulateService.events.eventSource.close();
+                    }
+                }
             });
     });
 
-app.run(function($rootScope, Session, $location) {
+app.run(function($rootScope, Session, $location, $state) {
+    $rootScope.state = $state;
     $rootScope.Session = Session;
 
     $rootScope.logout = function() {
         Session.logout().then(function() {
-            $location.url('/login');
+            $state.go('login');
         });
     };
 });

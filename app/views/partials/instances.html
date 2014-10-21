@@ -1,0 +1,22 @@
+<h4>Instances</h4>
+<div ng-show="instances.length === 0">
+    Create a new Instance
+</div>
+<div>
+    <ul>
+        <li class="new">
+            <a ng-click="createInstance(chartName)" title="Create new Instance">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a ng-click="createInstance(chartName)" title="Create new Instance">
+                New Instance
+            </a>
+        </li>
+        <li ng-repeat="instance in instances" ng-class="instance.id === state.params.instanceId ? 'selected' : ''">
+            <a ng-click="deleteInstance(instance)" title="Delete instance {{instance.id}}">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <a ui-sref="main.charts.detail.instance({chartName:chartName, instanceId: instance.id})">{{instance.id}}</a>
+        </li>
+    </ul>
+</div>
