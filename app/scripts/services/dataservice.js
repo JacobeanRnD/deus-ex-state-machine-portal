@@ -9,8 +9,8 @@
  */
 angular.module('deusExStateMachinePortalApp')
     .factory('dataService', function($resource, $http) {
-        var hostname = 'http://scxml-io.herokuapp.com';
-
+        var hostname = '';
+        
         return {
             getAllStateCharts: function(username) {
                 return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
