@@ -11,6 +11,7 @@ angular.module('deusExStateMachinePortalApp')
     .controller('EditorCtrl', function($scope, $state, simulateService, dataService, chartName, chartContent, username) {
         $scope.chartName = chartName;
         $scope.chartContent = chartContent.data;
+        $scope.username = username;
 
         simulateService.update($scope.chartContent);
 
