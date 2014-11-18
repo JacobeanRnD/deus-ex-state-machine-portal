@@ -17,18 +17,18 @@ angular.module('deusExStateMachinePortalApp')
 
             scxmlTrace.empty();
 
-            //try {
+            try {
                 //ScxmlViz(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height()); // jshint ignore:line
                 force.render(scxmlTrace[0], doc, scxmlTrace.width(), scxmlTrace.height())
-            //} catch (e) {
-            //    errorMessage = e.message;
-            //} finally {
-            //    if (errorMessage) {
-            //        $scope.error = errorMessage;
-            //    } else {
-            //        $scope.error = null;
-            //    }
-            //}
+            } catch (e) {
+                errorMessage = e.message;
+            } finally {
+                if (errorMessage) {
+                    $scope.error = errorMessage;
+                } else {
+                    $scope.error = null;
+                }
+            }
         }
 
         drawSimulation(simulateService.chartContent);
