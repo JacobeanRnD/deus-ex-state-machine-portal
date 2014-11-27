@@ -15,13 +15,14 @@ angular.module('deusExStateMachinePortalApp')
 
         simulateService.update($scope.chartContent);
 
-        socket.on('init', function (data) {
-            $scope.name = data.name;
-            $scope.users = data.users;
-          });
+        
 
         $scope.aceChanged = function() {
             simulateService.update($scope.chartContent);
+
+            socket.emit('change:content', {
+              chart: $scope.chartContent
+            });
         };
 
         $scope.saveStatechart = function(content) {
