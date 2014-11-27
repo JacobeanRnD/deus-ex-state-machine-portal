@@ -8,12 +8,17 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('EditorCtrl', function($scope, $state, simulateService, dataService, chartName, chartContent, username) {
+    .controller('EditorCtrl', function($scope, $state, simulateService, dataService, chartName, chartContent, username, socket) {
         $scope.chartName = chartName;
         $scope.chartContent = chartContent.data;
         $scope.username = username;
 
         simulateService.update($scope.chartContent);
+
+        socket.on('init', function (data) {
+            $scope.name = data.name;
+            $scope.users = data.users;
+          });
 
         $scope.aceChanged = function() {
             simulateService.update($scope.chartContent);
