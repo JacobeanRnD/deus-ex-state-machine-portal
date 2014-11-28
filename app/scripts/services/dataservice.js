@@ -9,7 +9,7 @@
  */
 angular.module('deusExStateMachinePortalApp')
     .factory('dataService', function($resource, $http) {
-        var hostname = '';
+        var hostname = 'http://localhost:3000';
         
         return {
             getAllStateCharts: function(username) {
