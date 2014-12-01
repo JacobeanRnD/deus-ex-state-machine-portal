@@ -18,7 +18,7 @@ angular.module('deusExStateMachinePortalApp')
             scxmlTrace.empty();
 
             try {
-                forceLayout.render({parent: scxmlTrace[0], doc: doc});
+                forceLayout.render({parent: scxmlTrace[0], doc: doc}); // jshint ignore:line
             } catch (e) {
                 errorMessage = e.message;
             } finally {
