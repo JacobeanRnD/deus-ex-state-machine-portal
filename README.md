@@ -2,9 +2,22 @@
 =====================================
 
 ### Development
-Install dependencies, then run grunt:
+Install dependencies:
 
     npm install
+
+Also install the desm-force-layout library:
+
+    # in another folder
+    git clone https://github.com/JacobeanRnD/deus-ex-state-machine-frontend.git
+    cd deus-ex-state-machine-frontend/dist
+    bower link
+
+    # back in the portal source tree
+    bwower link desm-force-layout
+
+Run grunt:
+
     grunt serve
 
 grunt serve assumes deus-ex-state-machine running at localhost:3000
