@@ -13,8 +13,8 @@ angular.module('deusExStateMachinePortalApp')
         	if(name === 'twitter') {
         		//Start listening for child windows
         		window.channelListener = {
-        			done: function (result) {
-        				console.log(result);
+        			done: function (error, token, secret) {
+        				console.log(error, token, secret);
         			}
         		};
 
