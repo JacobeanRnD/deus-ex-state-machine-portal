@@ -8,13 +8,19 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('ChannelsCtrl', function($location, $scope, Session, $state) {
-        $scope.activate = function (name) {
-        	if(name === 'twitter') {
+    .controller('ChannelsCtrl', function($location, $scope, Session, $state, dataService, username) {
+        $scope.activate = function (channelname) {
+        	if(channelname === 'twitter') {
         		//Start listening for child windows
         		window.channelListener = {
-        			done: function (error, token, secret) {
-        				console.log(error, token, secret);
+        			done: function (error, data) {
+        				if(error) {
+        					alertify.error(error);
+        				} else {
+        					dataService.saveChannelData(username, channelname, data).then(function() {
+				                alertify.success(channelname + ' channel activated.');
+				            });
+        				}
         			}
         		};
 

@@ -41,7 +41,10 @@ var app = angular.module('deusExStateMachinePortalApp', [
             .state('channels', {
                 url: '/channels',
                 templateUrl: 'views/channels.html',
-                controller: 'ChannelsCtrl'
+                controller: 'ChannelsCtrl',
+                resolve: {
+                    username: checkLoggedin
+                }
             })
             .state('main', {
                 url: '/charts',
