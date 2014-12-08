@@ -38,6 +38,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
+            .state('channels', {
+                url: '/channels',
+                templateUrl: 'views/channels.html',
+                controller: 'ChannelsCtrl'
+            })
             .state('main', {
                 url: '/charts',
                 abstract: true,
