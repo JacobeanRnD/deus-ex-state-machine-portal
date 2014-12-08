@@ -11,7 +11,14 @@ angular.module('deusExStateMachinePortalApp')
     .controller('ChannelsCtrl', function($location, $scope, Session, $state) {
         $scope.activate = function (name) {
         	if(name === 'twitter') {
-        		var twitterWindow = window.open('/channels/twitter', '_blank');
+        		//Start listening for child windows
+        		window.channelListener = {
+        			done: function (result) {
+        				console.log(result);
+        			}
+        		};
+
+        		window.open('/channels/twitter', '_blank');
         	}
         };
     });
