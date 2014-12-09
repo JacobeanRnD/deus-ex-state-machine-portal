@@ -21,7 +21,7 @@ angular.module('deusExStateMachinePortalApp')
         					alertify.error(error);
         				} else {
         					dataService.saveChannelData(username, channelname, data).then(function() {
-				                alertify.success(channelname + ' channel activated.');
+				                alertify.success('"' + channelname  + '" channel activated.');
 				            });
         				}
         			}
