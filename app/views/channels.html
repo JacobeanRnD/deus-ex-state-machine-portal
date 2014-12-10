@@ -3,13 +3,19 @@
 	<ul>
 		<li>
 			<label>Twitter</label>
-			<a ng-click="activate('twitter')">
-				<span ng-hide="isTwitterChannelActivated">Activate</span>
-				<span ng-show="isTwitterChannelActivated">Loading...</span>
+			<a ng-click="activate('twitter')" ng-show="channels.twitter === 'notactive'">
+				Activate
 			</a>
+			<span ng-show="channels.twitter === 'loading'">Loading...</span>
+			<span ng-show="channels.twitter === 'success'">Activated</span>
 		</li>
 		<li>
-			<label>Spark.io</label><a ng-click="activate('spark')">Activate</a>
+			<label>Spark.io</label>
+			<a ng-click="activate('spark')" ng-show="channels.spark === 'notactive'">
+				Activate
+			</a>
+			<span ng-show="channels.spark === 'loading'">Loading...</span>
+			<span ng-show="channels.spark === 'success'">Activated</span>
 		</li>
 	</ul>
 </div>
