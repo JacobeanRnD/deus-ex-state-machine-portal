@@ -11,18 +11,18 @@ angular.module('deusExStateMachinePortalApp')
     .controller('ChannelsCtrl', function($location, $scope, Session, $state, dataService, username) {
         $scope.activate = function (channelname) {
         	if(channelname === 'twitter') {
-        		$scope.isTwitter = true;
+        		$scope.isTwitterChannelActivated = true;
         		//Start listening for child windows
         		window.channelListener = {
         			done: function (error, data) {
-        				$scope.isTwitter = false;
+        				$scope.isTwitterChannelActivated = false;
 
         				if(error) {
         					alertify.error(error);
         				} else {
-        					dataService.saveChannelData(username, channelname, data).then(function() {
-				                alertify.success('"' + channelname  + '" channel activated.');
-				            });
+							dataService.saveChannelData(username, channelname, data).then(function() {
+								alertify.success('"' + channelname  + '" channel activated.');
+							});
         				}
         			}
         		};
