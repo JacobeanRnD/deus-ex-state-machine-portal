@@ -84,6 +84,18 @@ angular.module('deusExStateMachinePortalApp')
             },
             getSparkDevices: function(username) {
                 return $http.get(hostname + '/channels/' + username + '/spark');
+            },
+            getConnectedSparkDevice: function(username, stateChartId, instanceId) {
+                return $http.get(hostname + '/channels/' + username + '/spark/' + stateChartId + '/' + instanceId);
+            },
+            connectSparkDevice: function(username, device, stateChartId, instanceId) {
+                return $http({
+                    method: 'POST',
+                    url: hostname + '/channels/' + username + '/spark/' + stateChartId + '/' + instanceId,
+                    data: {
+                        device: device
+                    }
+                });
             }
         };
     });

@@ -12,7 +12,12 @@ angular.module('deusExStateMachinePortalApp')
         $scope.events = [];
 
         dataService.getSparkDevices(username).then(function (sparkDetails) {
-            $scope.devices = sparkDetails.data.devices;
+            dataService.getConnectedSparkDevice(username, chartName, instanceId).then(function (deviceDetails) {
+                $scope.devices = sparkDetails.data.devices;
+                $scope.selectedDevice = sparkDetails.data.devices.filter(function(device) {
+                    return device.id === deviceDetails.data.device.id;
+                })[0];
+            });
         });
 
         simulateService.events.subscribe(username, chartName, instanceId, function onEntry(eventName, e) {
@@ -22,7 +27,9 @@ angular.module('deusExStateMachinePortalApp')
         });
 
         $scope.connectDevice = function (selectedDevice) {
-            console.log(selectedDevice);
+            dataService.connectSparkDevice(username, selectedDevice, chartName, instanceId).then(function () {
+                alertify.success('"' + selectedDevice.name  + '" connected with instance.');
+            });
         };
 
         $scope.sendEvent = function(eventname, eventdata) {
