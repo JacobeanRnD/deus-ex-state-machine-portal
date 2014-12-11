@@ -41,7 +41,7 @@ angular.module('deusExStateMachinePortalApp')
         	} else if(channelname === 'spark') {
         		if(accessToken) {
         			dataService.getSparkDevicesOnSpark(accessToken).then(function(result) {
-						dataService.saveSparkDevices(username, channelname, accessToken, result.data).then(function(devices) {
+						dataService.saveSparkDevices(username, channelname, accessToken, result.data).then(function() {
 							$scope.channels.spark.status = 'success';
 							alertify.success('"' + channelname  + '" channel activated.');
 						});
