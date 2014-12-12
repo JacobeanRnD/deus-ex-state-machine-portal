@@ -9,8 +9,8 @@ Install dependencies:
 Also install the desm-force-layout library:
 
     # in another folder
-    git clone https://github.com/JacobeanRnD/deus-ex-state-machine-frontend.git
-    cd deus-ex-state-machine-frontend/dist
+    git clone https://github.com/JacobeanRnD/deus-ex-state-machine-visualization.git
+    cd deus-ex-state-machine-visualization
     bower link
 
     # back in the portal source tree
