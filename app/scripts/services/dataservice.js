@@ -61,6 +61,9 @@ angular.module('deusExStateMachinePortalApp')
                 } else {
                     return false;
                 }
+            },
+            getAlgorithms: function () {
+                return $http.get('/kieler/layout/serviceData');
             }
         };
     });

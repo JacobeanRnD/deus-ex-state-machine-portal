@@ -8,11 +8,17 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('SimulationCtrl', function($scope, simulateService) {
+    .controller('SimulationCtrl', function($scope, simulateService, dataService) {
 
-        $scope.selectedAlgorithm = 'de.cau.cs.kieler.klay.layered';
 
-        function drawSimulation(content, force, algorithm) {
+        dataService.getAlgorithms().then(function (result) {
+            $scope.algorithms = result.data.layoutAlgorithms;
+            $scope.selectedAlgorithm = $scope.algorithms[0];
+
+            drawSimulation(simulateService.chartContent, $scope.algorithms[0]);
+        });
+
+        function drawSimulation(content, algorithm) {
             var errorMessage;
             var doc = (new DOMParser()).parseFromString(content, 'application/xml');
             var scxmlTrace = $('#scxmlTrace');
@@ -20,7 +26,9 @@ angular.module('deusExStateMachinePortalApp')
             scxmlTrace.empty();
 
             try {
-                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: '/kieler/layout', kielerAlgorithm: algorithm }); // jshint ignore:line
+                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: '/kieler/layout', kielerAlgorithm: algorithm.id }); // jshint ignore:line
+
+                $scope.toggleLayout();
             } catch (e) {
                 errorMessage = e.message;
             } finally {
@@ -32,18 +40,20 @@ angular.module('deusExStateMachinePortalApp')
             }
         }
 
-        drawSimulation(simulateService.chartContent);
-
         $scope.toggleLayout = function () {
-            if($scope.forceLayout) {
-                $scope.layout.stop();
-            } else {
+            if($scope.forceLayoutEnabled) {
                 $scope.layout.start();
+            } else {
+                $scope.layout.stop();
             }
         };
 
+        $scope.changeAlgorithm = function (selectedAlgorithm) {
+            drawSimulation(simulateService.chartContent, selectedAlgorithm);
+        };
+
         $scope.$on('simulationContentUploaded', function() {
-            drawSimulation(simulateService.chartContent);
+            drawSimulation(simulateService.chartContent, $scope.selectedAlgorithm);
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
