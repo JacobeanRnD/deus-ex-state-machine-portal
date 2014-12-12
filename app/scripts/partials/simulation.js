@@ -10,7 +10,9 @@
 angular.module('deusExStateMachinePortalApp')
     .controller('SimulationCtrl', function($scope, simulateService) {
 
-        function drawSimulation(content) {
+        $scope.selectedAlgorithm = 'de.cau.cs.kieler.klay.layered';
+
+        function drawSimulation(content, force, algorithm) {
             var errorMessage;
             var doc = (new DOMParser()).parseFromString(content, 'application/xml');
             var scxmlTrace = $('#scxmlTrace');
@@ -18,7 +20,7 @@ angular.module('deusExStateMachinePortalApp')
             scxmlTrace.empty();
 
             try {
-                forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: '/kieler/layout', kielerAlgorithm: 'de.cau.cs.kieler.klay.layered'}); // jshint ignore:line
+                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: '/kieler/layout', kielerAlgorithm: algorithm }); // jshint ignore:line
             } catch (e) {
                 errorMessage = e.message;
             } finally {
@@ -31,6 +33,14 @@ angular.module('deusExStateMachinePortalApp')
         }
 
         drawSimulation(simulateService.chartContent);
+
+        $scope.toggleLayout = function () {
+            if($scope.forceLayout) {
+                $scope.layout.stop();
+            } else {
+                $scope.layout.start();
+            }
+        };
 
         $scope.$on('simulationContentUploaded', function() {
             drawSimulation(simulateService.chartContent);
