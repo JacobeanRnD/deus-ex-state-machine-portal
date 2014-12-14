@@ -180,6 +180,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
     });
 
 app.run(function($rootScope, Session, $location, $state) {
+    $rootScope.simulationServerUrl = $location.search().simulationServer;
+
     $rootScope.state = $state;
     $rootScope.Session = Session;
 
