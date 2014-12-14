@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('SimulationCtrl', function($scope, simulateService, dataService) {
+    .controller('SimulationCtrl', function($scope, $rootScope, simulateService, dataService) {
 
 
         dataService.getAlgorithms().then(function (result) {
@@ -26,7 +26,7 @@ angular.module('deusExStateMachinePortalApp')
             scxmlTrace.empty();
 
             try {
-                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: '/kieler/layout', kielerAlgorithm: algorithm.id }); // jshint ignore:line
+                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: $rootScope.simulationServerUrl + '/kieler/layout', kielerAlgorithm: algorithm.id }); // jshint ignore:line
 
                 $scope.toggleLayout();
             } catch (e) {

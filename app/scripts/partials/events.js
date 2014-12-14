@@ -14,9 +14,11 @@ angular.module('deusExStateMachinePortalApp')
         dataService.getSparkDevices(username).then(function (sparkDetails) {
             dataService.getConnectedSparkDevice(username, chartName, instanceId).then(function (deviceDetails) {
                 $scope.devices = sparkDetails.data.devices;
-                $scope.selectedDevice = sparkDetails.data.devices.filter(function(device) {
-                    return device.id === deviceDetails.data.device.id;
-                })[0];
+                if (sparkDetails.data.devices && sparkDetails.data.devices.length > 0) {
+                    $scope.selectedDevice = sparkDetails.data.devices.filter(function(device) {
+                        return device.id === deviceDetails.data.device.id;
+                    })[0];  
+                }
             });
         });
 

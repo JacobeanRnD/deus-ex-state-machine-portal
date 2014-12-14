@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('ChannelsCtrl', function($location, $scope, Session, $state, dataService, username) {
+    .controller('ChannelsCtrl', function($rootScope, $location, $scope, Session, $state, dataService, username) {
     	$scope.channels = {
     		twitter: {
     			status: 'notactive'
@@ -37,7 +37,7 @@ angular.module('deusExStateMachinePortalApp')
         			}
         		};
 
-        		window.open('/channels/twitter', '_blank');
+        		window.open($rootScope.simulationServerUrl + '/channels/twitter', '_blank');
         	} else if(channelname === 'spark') {
         		if(accessToken) {
         			dataService.getSparkDevicesOnSpark(accessToken).then(function(result) {

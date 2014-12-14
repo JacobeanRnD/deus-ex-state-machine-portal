@@ -180,7 +180,17 @@ var app = angular.module('deusExStateMachinePortalApp', [
     });
 
 app.run(function($rootScope, Session, $location, $state) {
-    $rootScope.simulationServerUrl = $location.search().simulationServer;
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+            results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    var url = getParameterByName('simulationServer');
+    if(url[url.length - 1] === '/') {
+        $rootScope.simulationServerUrl = url.substring(0, url.length - 1);    
+    }
 
     $rootScope.state = $state;
     $rootScope.Session = Session;
