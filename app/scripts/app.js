@@ -38,6 +38,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
+            .state('channels', {
+                url: '/channels',
+                templateUrl: 'views/channels.html',
+                controller: 'ChannelsCtrl',
+                resolve: {
+                    username: checkLoggedin
+                }
+            })
             .state('main', {
                 url: '/charts',
                 abstract: true,

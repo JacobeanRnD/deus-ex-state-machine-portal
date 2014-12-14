@@ -61,6 +61,13 @@ angular.module('deusExStateMachinePortalApp')
                 } else {
                     return false;
                 }
+            },
+            saveChannelData: function(username, channelname, tokenData) {
+                return $http({
+                    method: 'POST',
+                    url: hostname + '/channels/' + username + '/' + channelname,
+                    data: tokenData
+                });
             }
         };
     });
