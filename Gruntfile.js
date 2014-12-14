@@ -80,7 +80,9 @@ module.exports = function(grunt) {
                         return [
                             function(reqParent, resParent, next) {
                                 //Pass only calls made to /api
-                                if (reqParent.url.indexOf('/api') === -1 && reqParent.url.indexOf('/live') === -1 && reqParent.url.indexOf('/kieler') === -1) { return next(); }
+                                if (reqParent.url.indexOf('/api') === -1 && reqParent.url.indexOf('/live') === -1 && reqParent.url.indexOf('/channels/') === -1 && reqParent.url.indexOf('/kieler/') === -1) {
+                                    return next();
+                                }
 
                                 console.log('serve: ' + reqParent.method + ' - ' + reqParent.url);
 

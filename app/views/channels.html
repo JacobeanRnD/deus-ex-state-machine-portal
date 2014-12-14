@@ -1,0 +1,28 @@
+<div class="container">
+	<h1>Channels</h1>
+	<ul>
+		<li>
+			<label>Twitter</label>
+			<a ng-click="activate('twitter')" ng-show="channels.twitter.status === 'notactive'">
+				Activate
+			</a>
+			<span ng-show="channels.twitter.status === 'loading'">Loading...</span>
+			<span ng-show="channels.twitter.status === 'success'">Activated</span>
+		</li>
+		<li>
+			<label>Spark.io</label>
+			<a ng-click="activate('spark')" ng-show="channels.spark.status === 'notactive'">
+				Activate
+			</a>
+			<div ng-show="channels.spark.status === 'loading'">
+				<p>Please login to <a href="https://www.spark.io/build/new">spark.io</a> website</p>
+				<p>Click settings button on bottom left corner</p>
+				<p>Copy your access token</p>
+				<p>Paste below and submit</p>
+				<input type="text" ng-model="channels.spark.token" placeholder="Spark.io access token"/>
+				<a ng-click="activate('spark', channels.spark.token)">Submit</a>
+			</div>
+			<span ng-show="channels.spark.status === 'success'">Activated</span>
+		</li>
+	</ul>
+</div>
