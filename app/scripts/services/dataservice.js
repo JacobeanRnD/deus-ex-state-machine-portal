@@ -88,12 +88,13 @@ angular.module('deusExStateMachinePortalApp')
             getConnectedSparkDevice: function(username, stateChartId, instanceId) {
                 return $http.get(hostname + '/channels/' + username + '/spark/' + stateChartId + '/' + instanceId);
             },
-            connectSparkDevice: function(username, device, stateChartId, instanceId) {
+            connectSparkDevice: function(username, device, listeningEvents, stateChartId, instanceId) {
                 return $http({
                     method: 'POST',
                     url: hostname + '/channels/' + username + '/spark/' + stateChartId + '/' + instanceId,
                     data: {
-                        device: device
+                        device: device,
+                        listeningEvents: listeningEvents
                     }
                 });
             }

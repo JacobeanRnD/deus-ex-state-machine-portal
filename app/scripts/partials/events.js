@@ -26,8 +26,10 @@ angular.module('deusExStateMachinePortalApp')
             simulateService.events.highlight(eventName, e.data);
         });
 
-        $scope.connectDevice = function (selectedDevice) {
-            dataService.connectSparkDevice(username, selectedDevice, chartName, instanceId).then(function () {
+        $scope.connectDevice = function (selectedDevice, listeningEvents) {
+            listeningEvents = listeningEvents.split(',');
+
+            dataService.connectSparkDevice(username, selectedDevice, listeningEvents, chartName, instanceId).then(function () {
                 alertify.success('"' + selectedDevice.name  + '" connected with instance.');
             });
         };

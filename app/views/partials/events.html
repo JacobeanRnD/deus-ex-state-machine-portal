@@ -1,14 +1,19 @@
 <h4>Connected devices</h4>
-<form ng-submit="connectDevice(selectedDevice)" role="form" name="deviceform">
+<form ng-submit="connectDevice(selectedDevice, listeningEvents)" role="form" name="deviceform">
     <div class="row send-event">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="input-group">
                 <select ng-model="selectedDevice" ng-options="device.name for device in devices">
                     <option value="">Choose device</option>
                 </select>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="input-group col-md-12">
+                <input type="text" ng-model="listeningEvents" placeholder="Comma-separated listening events"/>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="input-group">
                 <button type="submit" class="btn btn-primary pull-right">Connect</button>
             </div>
