@@ -62,6 +62,9 @@ angular.module('deusExStateMachinePortalApp')
                     return false;
                 }
             },
+            getAlgorithms: function () {
+                return $http.get('/kieler/layout/serviceData');
+            },
             saveChannelData: function(username, channelname, tokenData) {
                 return $http({
                     method: 'POST',

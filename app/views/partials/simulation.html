@@ -1,3 +1,9 @@
 <h4>Result</h4>
+<label>Force Layout: </label>
+<input type="checkbox" ng-change="toggleLayout()" ng-model="forceLayoutEnabled"/>
+
+ <label>Layout Algorithm: </label>
+ <select ng-model="selectedAlgorithm" ng-change="changeAlgorithm(selectedAlgorithm)" ng-options="algorithm.name for algorithm in algorithms"></select>
+
 <div id="scxmlTrace" ng-hide="error"></div>
 <div class="error" ng-show="error">{{error}}</div>
