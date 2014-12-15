@@ -25,6 +25,11 @@ angular.module('deusExStateMachinePortalApp')
             var doc = (new DOMParser()).parseFromString(content, 'application/xml');
             var scxmlTrace = $('#scxmlTrace');
 
+            if( doc.getElementsByTagName('parsererror').length ){
+              //there was a parser error, but for some reason it didn't throw an exception
+              return;
+            }
+
             scxmlTrace.empty();
 
             try {
