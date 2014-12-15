@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('SimulationCtrl', function($scope, $rootScope, simulateService, dataService) {
+    .controller('SimulationCtrl', function($scope, $rootScope, $timeout, simulateService, dataService) {
         $scope.forceLayoutEnabled = true;
 
         dataService.getAlgorithms().then(function (result) {
@@ -28,7 +28,13 @@ angular.module('deusExStateMachinePortalApp')
             scxmlTrace.empty();
 
             try {
-                $scope.layout = forceLayout.render({parent: scxmlTrace[0], doc: doc, kielerURL: $rootScope.simulationServerUrl + '/kieler/layout', kielerAlgorithm: algorithm.id }); // jshint ignore:line
+                $scope.layout = new forceLayout.Layout({// jshint ignore:line
+                    parent: scxmlTrace[0],
+                    doc: doc,
+                    kielerURL: $rootScope.simulationServerUrl + '/kieler/layout',
+                    kielerAlgorithm: algorithm.id,
+                    debug: false
+                });
 
                 $scope.toggleLayout();
             } catch (e) {
@@ -59,6 +65,13 @@ angular.module('deusExStateMachinePortalApp')
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
-            d3.select($('#scxmlTrace #' + event)[0]).classed('highlighted', eventName === 'onEntry');
+            if($scope.layout && $scope.layout.highlightState) {
+                $scope.layout.highlightState(event, eventName === 'onEntry');    
+            } else {
+                //Small queue system that tries to highlight every second.
+                $timeout(function() {
+                    simulateService.events.highlight(eventName, event);
+                }, 1000);
+            }
         });
     });
