@@ -9,11 +9,13 @@
  */
 angular.module('deusExStateMachinePortalApp')
     .controller('SimulationCtrl', function($scope, $rootScope, simulateService, dataService) {
-
+        $scope.forceLayoutEnabled = true;
 
         dataService.getAlgorithms().then(function (result) {
             $scope.algorithms = result.data.layoutAlgorithms;
-            $scope.selectedAlgorithm = $scope.algorithms[0];
+            $scope.selectedAlgorithm = $scope.algorithms.filter(function (algorithm) {
+                return algorithm.id === 'de.cau.cs.kieler.klay.force';
+            })[0];
 
             drawSimulation(simulateService.chartContent, $scope.algorithms[0]);
         });
