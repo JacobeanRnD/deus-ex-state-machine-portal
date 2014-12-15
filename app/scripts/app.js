@@ -188,9 +188,10 @@ app.run(function($rootScope, Session, $location, $state) {
     }
 
     var url = getParameterByName('simulationServer');
-    if(url[url.length - 1] === '/') {
-        $rootScope.simulationServerUrl = url.substring(0, url.length - 1);    
-    }
+    $rootScope.simulationServerUrl = 
+      url[url.length - 1] === '/' ? 
+        url.substring(0, url.length - 1) : 
+        'http://simulation.scxml.io';
 
     $rootScope.state = $state;
     $rootScope.Session = Session;
