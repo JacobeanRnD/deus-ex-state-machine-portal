@@ -20,4 +20,12 @@ angular.module('deusExStateMachinePortalApp')
         $timeout(function() {
             simulateService.events.highlight('onEntry', instanceDetails.data[0]);
         });
+
+        $scope.$on('simulationHighlighted', function(e, eventName, event) {
+            if(event[0] !== '[') {
+                event = '["' + event + '"]';
+            }
+
+            $scope.currentChartState = event;
+        });
     });
