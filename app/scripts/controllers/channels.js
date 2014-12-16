@@ -35,7 +35,6 @@ angular.module('deusExStateMachinePortalApp')
 
         		//Start listening for child windows
                 window.addEventListener('message', function(e) {
-                    console.log(e);
                     var result = e.data;
                     if(result.error) {
                         popupWindow.close();
