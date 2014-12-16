@@ -46,31 +46,22 @@ angular.module('deusExStateMachinePortalApp')
             }
         }
         
-        // addDataToDashboard(instanceDetails.data[3]);
+        var dataModelLegend = [];
+
+        for(var item in instanceDetails.data[3]) {
+            dataModelLegend.push({
+                y: item,
+                axis: 'y',
+                type: 'line'
+            });
+        }
 
         $scope.dashOptions = {
             axes: {
                 x: { key: 'x' },
                 y: { type: 'linear' }
             },
-            series: [{
-                y: 'some1',
-                axis: 'y',
-                type: 'line'
-            }, {
-                y: 'some2',
-                type: 'line',
-                axis: 'y'
-            }, {
-                y: 'some3',
-                type: 'line',
-                axis: 'y'
-            }, {
-                y: 'some4',
-                type: 'line',
-                axis: 'y',
-                id: 'some4'
-            }],
+            series: dataModelLegend,
             stacks: [],
             lineMode: 'linear',
             tension: 0,
