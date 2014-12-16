@@ -15,7 +15,8 @@
     "angular-ui-ace": "bower",
     "alertifyjs": "~0.3.12",
     "angular-ui-router": "~0.2.11",
-    "desm-force-layout": "https://github.com/JacobeanRnD/deus-ex-state-machine-visualization.git"
+    "desm-force-layout": "https://github.com/JacobeanRnD/deus-ex-state-machine-visualization.git",
+    "n3-line-chart": "~1.1.4"
   },
   "overrides": {
     "ace-builds": {

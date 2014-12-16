@@ -16,7 +16,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngSanitize',
         'ngTouch',
         'ui.ace',
-        'ui.router'
+        'ui.router',
+        'n3-line-chart'
     ])
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
         function checkLoggedin(Session, $state) {
