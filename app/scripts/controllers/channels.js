@@ -22,7 +22,7 @@ angular.module('deusExStateMachinePortalApp')
             function activatePopupMessage () {
                 $timeout(function() {
                     if(popupWindow) {
-                        popupWindow.postMessage('ping', 'http://scxml.io');
+                        popupWindow.postMessage('ping', 'http://simulation.scxml.io');
                         activatePopupMessage();  
                     }
                 }, 1000);
