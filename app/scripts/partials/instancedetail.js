@@ -29,45 +29,72 @@ angular.module('deusExStateMachinePortalApp')
             $scope.currentChartState = event;
 
             dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-                $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
-                addDataToDashboard(instance.data[3]);
+                if(!_.isEqual($scope.prev, instance.data[3])) {// jshint ignore:line
+                    $scope.prev = instance.data[3];
+
+                    $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
+                    addDataToDashboard(instance.data[3]);   
+                }
             });
         });
 
-        function addDataToDashboard (data) {
-            var newData = data;
-            newData.x = $scope.dashData ? $scope.dashData.length : 0;
-            // newData.x = Date.now();
-
-            if($scope.dashData) {
-                $scope.dashData.push(newData);
-            } else {
-                $scope.dashData = [ newData ];
+        function  addDataToDashboard(data) {
+            for(var serie in $scope.dashOptions.series) {
+                if(data[$scope.dashOptions.series[serie].name]) {
+                    $scope.dashOptions.series[serie].data.push(parseInt(data[$scope.dashOptions.series[serie].name]));
+                }
             }
+
+            
+
+            // for(var item in data) {
+            //     $scope.dashOptions.series.filter(function (serie) {
+            //         return serie.name === item;
+            //     })[0].data.push(data[item]);
+            // }
         }
+
+        // var count = 0;
+        // function addDataToDashboard (data) {
+            // var newObject = Object.create(data);
+            // newObject.x = count++;
+
+            // if($scope.dashData) {
+            //     $scope.dashData.push(newObject);
+            // } else {
+            //     $scope.dashData = [ newObject ];
+            // }
+        // }
         
         var dataModelLegend = [];
 
         for(var item in instanceDetails.data[3]) {
             dataModelLegend.push({
-                y: item,
-                axis: 'y',
-                type: 'line'
+                name: item,
+                data: [],
+                connectNulls: true,
+                id: item,
+                type: 'spline',
+                dashStyle: 'Solid'
             });
         }
-
+        
         $scope.dashOptions = {
-            axes: {
-                x: { key: 'x' },
-                y: { type: 'linear' }
+            options: {
+                chart: {
+                    type: 'line'
+                }
             },
             series: dataModelLegend,
-            stacks: [],
-            lineMode: 'line',
-            tension: 0,
-            tooltip: { mode: 'scrubber' },
-            drawLegend: true,
-            drawDots: true,
-            columnsHGap: 5
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            loading: false,
+            size: {
+                height: '300'
+            }
         };
     });
