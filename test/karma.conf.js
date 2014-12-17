@@ -29,6 +29,7 @@ module.exports = function(config) {
       'bower_components/ace-builds/src-min-noconflict/ace.js',
       'bower_components/angular-ui-ace/ui-ace.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/n3-line-chart/dist/line-chart.min.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

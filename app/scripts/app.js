@@ -16,7 +16,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngSanitize',
         'ngTouch',
         'ui.ace',
-        'ui.router'
+        'ui.router',
+        'n3-line-chart'
     ])
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
         function checkLoggedin(Session, $state) {
@@ -148,7 +149,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
                             },
                             instanceId: function($stateParams) {
                                 return $stateParams.instanceId;
-                            }
+                            },
+                            username: checkLoggedin
                         }
                     },
                     'events@main': {
@@ -188,11 +190,10 @@ app.run(function($rootScope, Session, $location, $state) {
     }
 
     var url = getParameterByName('simulationServer');
-    $rootScope.simulationServerUrl = 
-      url[url.length - 1] === '/' ? 
-        url.substring(0, url.length - 1) : 
-        'http://simulation.scxml.io';
+    url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
 
+    $rootScope.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
+    
     $rootScope.state = $state;
     $rootScope.Session = Session;
 

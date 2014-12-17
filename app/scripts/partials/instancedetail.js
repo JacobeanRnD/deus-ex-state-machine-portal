@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('InstancedetailCtrl', function($scope, $timeout, simulateService, instanceDetails, instanceId, chartName) {
+    .controller('InstancedetailCtrl', function($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
         $scope.chartName = chartName;
         $scope.instanceId = instanceId;
         $scope.dataModel = JSON.stringify(instanceDetails.data[3], null, 4);
@@ -27,5 +27,47 @@ angular.module('deusExStateMachinePortalApp')
             }
 
             $scope.currentChartState = event;
+
+            dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
+                $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
+                addDataToDashboard(instance.data[3]);
+            });
         });
+
+        function addDataToDashboard (data) {
+            var newData = data;
+            newData.x = $scope.dashData ? $scope.dashData.length : 0;
+            // newData.x = Date.now();
+
+            if($scope.dashData) {
+                $scope.dashData.push(newData);
+            } else {
+                $scope.dashData = [ newData ];
+            }
+        }
+        
+        var dataModelLegend = [];
+
+        for(var item in instanceDetails.data[3]) {
+            dataModelLegend.push({
+                y: item,
+                axis: 'y',
+                type: 'line'
+            });
+        }
+
+        $scope.dashOptions = {
+            axes: {
+                x: { key: 'x' },
+                y: { type: 'linear' }
+            },
+            series: dataModelLegend,
+            stacks: [],
+            lineMode: 'linear',
+            tension: 0,
+            tooltip: { mode: 'scrubber' },
+            drawLegend: true,
+            drawDots: true,
+            columnsHGap: 5
+        };
     });
