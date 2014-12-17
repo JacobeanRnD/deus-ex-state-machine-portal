@@ -36,7 +36,6 @@ angular.module('deusExStateMachinePortalApp')
                 $scope.layout = new forceLayout.Layout({// jshint ignore:line
                     parent: scxmlTrace[0],
                     doc: doc,
-                    kielerURL: $rootScope.simulationServerUrl + '/kieler/layout',
                     kielerAlgorithm: algorithm.id,
                     debug: false
                 });

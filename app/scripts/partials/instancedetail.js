@@ -63,7 +63,7 @@ angular.module('deusExStateMachinePortalApp')
             },
             series: dataModelLegend,
             stacks: [],
-            lineMode: 'linear',
+            lineMode: 'line',
             tension: 0,
             tooltip: { mode: 'scrubber' },
             drawLegend: true,
