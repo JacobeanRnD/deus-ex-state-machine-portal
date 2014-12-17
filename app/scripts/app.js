@@ -17,7 +17,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         'ngTouch',
         'ui.ace',
         'ui.router',
-        'n3-line-chart'
+        'highcharts-ng'
     ])
     .config(function($routeProvider, $stateProvider, $urlRouterProvider) {
         function checkLoggedin(Session, $state) {

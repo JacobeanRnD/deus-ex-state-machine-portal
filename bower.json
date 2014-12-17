@@ -16,7 +16,7 @@
     "alertifyjs": "~0.3.12",
     "angular-ui-router": "~0.2.11",
     "desm-force-layout": "https://github.com/JacobeanRnD/deus-ex-state-machine-visualization.git",
-    "n3-line-chart": "~1.1.4"
+    "highcharts-ng": "~0.0.7"
   },
   "overrides": {
     "ace-builds": {
