@@ -5,5 +5,5 @@
  <label for="algorithmlist">Layout Algorithm: </label>
  <select id="algorithmlist" ng-model="selectedAlgorithm" ng-change="changeAlgorithm(selectedAlgorithm)" ng-options="algorithm.name for algorithm in algorithms"></select>
 
-<div id="scxmlTrace" ng-hide="error"></div>
 <div class="error" ng-show="error">{{error}}</div>
+<div id="scxmlTrace"></div>
