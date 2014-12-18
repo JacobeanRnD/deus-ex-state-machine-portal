@@ -22,17 +22,20 @@ angular.module('deusExStateMachinePortalApp')
 
         function drawSimulation(content, algorithm) {
             var errorMessage;
-            var doc = (new DOMParser()).parseFromString(content, 'application/xml');
             var scxmlTrace = $('#scxmlTrace');
-
-            if( doc.getElementsByTagName('parsererror').length ){
-              //there was a parser error, but for some reason it didn't throw an exception
-              return;
-            }
-
             scxmlTrace.empty();
 
             try {
+                var doc = (new DOMParser()).parseFromString(content, 'application/xml');
+
+                if(doc.getElementsByTagName('parsererror').length){
+                  throw({
+                    //Only div in parsererror contains the error message
+                    //If there is more than one error, browser shows only the first error
+                    message: $(doc).find('parsererror div').html()
+                  });
+                }
+
                 $scope.layout = new forceLayout.Layout({// jshint ignore:line
                     parent: scxmlTrace[0],
                     doc: doc,
