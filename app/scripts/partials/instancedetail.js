@@ -21,6 +21,7 @@ angular.module('deusExStateMachinePortalApp')
             simulateService.events.highlight('onEntry', instanceDetails.data[0]);
         });
 
+        $scope.oneSecondPassed = true;
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
             if(event[0] !== '[') {
                 event = '["' + event + '"]';
@@ -29,42 +30,34 @@ angular.module('deusExStateMachinePortalApp')
             $scope.currentChartState = event;
 
             dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-                if(!_.isEqual($scope.prev, instance.data[3])) {// jshint ignore:line
-                    $scope.prev = instance.data[3];
+                // if(!_.isEqual($scope.prev, instance.data[3])) {// jshint ignore:line
+                //     $scope.prev = instance.data[3];
 
                     $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
-                    addDataToDashboard(instance.data[3]);   
-                }
+
+                    if($scope.oneSecondPassed) {
+                        addDataToDashboard(instance.data[3]);  
+                        $scope.oneSecondPassed = false;
+                        $timeout(function () {
+                            $scope.oneSecondPassed = true;
+                        }, 500);  
+                    }
+
+                // }
             });
         });
 
-        function  addDataToDashboard(data) {
+        function addDataToDashboard(data) {
             for(var serie in $scope.dashOptions.series) {
                 if(data[$scope.dashOptions.series[serie].name]) {
-                    $scope.dashOptions.series[serie].data.push(parseInt(data[$scope.dashOptions.series[serie].name]));
+                    $scope.dashOptions.series[serie].data.push([new Date().getTime(), parseInt(data[$scope.dashOptions.series[serie].name])]);
+
+                    if($scope.dashOptions.series[serie].data.length > 30) {
+                        $scope.dashOptions.series[serie].data.splice(0, 1);
+                    }
                 }
             }
-
-            
-
-            // for(var item in data) {
-            //     $scope.dashOptions.series.filter(function (serie) {
-            //         return serie.name === item;
-            //     })[0].data.push(data[item]);
-            // }
         }
-
-        // var count = 0;
-        // function addDataToDashboard (data) {
-            // var newObject = Object.create(data);
-            // newObject.x = count++;
-
-            // if($scope.dashData) {
-            //     $scope.dashData.push(newObject);
-            // } else {
-            //     $scope.dashData = [ newObject ];
-            // }
-        // }
         
         var dataModelLegend = [];
 
@@ -82,8 +75,13 @@ angular.module('deusExStateMachinePortalApp')
         $scope.dashOptions = {
             options: {
                 chart: {
-                    type: 'line'
+                    type: 'line',
+                    animation: Highcharts.svg// jshint ignore:line
                 }
+            },
+            xAxis: {
+                type: 'datetime',
+                tickInterval: 1000
             },
             series: dataModelLegend,
             title: {
