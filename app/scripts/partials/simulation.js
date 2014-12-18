@@ -72,7 +72,11 @@ angular.module('deusExStateMachinePortalApp')
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
-            if($scope.layout && $scope.layout.highlightState && event.indexOf('$') !== 0) {
+            if(event.indexOf('$') === 0) {
+                return;
+            }
+
+            if($scope.layout && $scope.layout.highlightState) {
                 $scope.layout.highlightState(event, eventName === 'onEntry');    
             } else {
                 //Small queue system that tries to highlight every second.
