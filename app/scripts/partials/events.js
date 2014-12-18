@@ -23,7 +23,18 @@ angular.module('deusExStateMachinePortalApp')
         });
 
         simulateService.events.subscribe(username, chartName, instanceId, function onEntry(eventName, e) {
-            $scope.events.unshift(eventName + ' -> ' + e.data);
+            var today= new Date();
+            var h=today.getHours();
+            var m=today.getMinutes();
+            var s=today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+
+            $scope.events.unshift(h + ':' + m + ':' + s + ': ' + eventName + ' -> ' + e.data);
+
+            if($scope.events.length > 50) {
+                $scope.events.splice(0, 1);
+            }
 
             simulateService.events.highlight(eventName, e.data);
         });
@@ -42,4 +53,10 @@ angular.module('deusExStateMachinePortalApp')
 
             });
         };
+        function checkTime(i) {
+            if (i<10) {
+                i = '0' + i;
+            }// add zero in front of numbers < 10
+            return i;
+        }
     });
