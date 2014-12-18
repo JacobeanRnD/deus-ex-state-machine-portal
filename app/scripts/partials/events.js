@@ -33,7 +33,7 @@ angular.module('deusExStateMachinePortalApp')
             $scope.events.unshift(h + ':' + m + ':' + s + ': ' + eventName + ' -> ' + e.data);
 
             if($scope.events.length > 50) {
-                $scope.events.splice(0, 1);
+                $scope.events.splice(50, 1);
             }
 
             simulateService.events.highlight(eventName, e.data);
