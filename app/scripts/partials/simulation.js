@@ -76,10 +76,6 @@ angular.module('deusExStateMachinePortalApp')
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
-            if(event.indexOf('$') === 0) {
-                return;
-            }
-
             if($scope.layout && $scope.layout.highlightState) {
                 $scope.layout.highlightState(event, eventName === 'onEntry');    
             } else {
