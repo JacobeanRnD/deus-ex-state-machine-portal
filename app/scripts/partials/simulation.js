@@ -36,14 +36,18 @@ angular.module('deusExStateMachinePortalApp')
                   });
                 }
 
-                $scope.layout = new forceLayout.Layout({// jshint ignore:line
-                    parent: scxmlTrace[0],
-                    doc: doc,
-                    kielerAlgorithm: algorithm.id,
-                    debug: false
-                });
+                if($scope.layout) {
+                    $scope.layout.update(doc);
+                } else {
+                    $scope.layout = new forceLayout.Layout({// jshint ignore:line
+                        parent: scxmlTrace[0],
+                        doc: doc,
+                        kielerAlgorithm: algorithm.id,
+                        debug: false
+                    });
 
-                $scope.toggleLayout();
+                    $scope.toggleLayout();
+                }
             } catch (e) {
                 errorMessage = e.message;
             } finally {
