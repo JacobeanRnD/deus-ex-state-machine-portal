@@ -8,14 +8,18 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('SimulationCtrl', function($scope, $rootScope, $timeout, simulateService, dataService) {
+    .controller('SimulationCtrl', function($scope, $rootScope, $timeout, $cookies, simulateService, dataService) {
         $scope.forceLayoutEnabled = true;
         var scxmlTrace = $('#scxmlTrace');
 
         dataService.getAlgorithms().then(function (result) {
             $scope.algorithms = result.data.layoutAlgorithms;
             $scope.selectedAlgorithm = $scope.algorithms.filter(function (algorithm) {
-                return algorithm.id === 'de.cau.cs.kieler.klay.force';
+                if($cookies.userAlgorithm) {
+                    return algorithm.id === $cookies.userAlgorithm;
+                } else {
+                    return algorithm.id === 'de.cau.cs.kieler.klay.force';
+                }
             })[0];
 
             drawSimulation(simulateService.chartContent, $scope.algorithms[0]);
@@ -69,6 +73,8 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.changeAlgorithm = function (selectedAlgorithm) {
             drawSimulation(simulateService.chartContent, selectedAlgorithm);
+
+            $cookies.userAlgorithm = selectedAlgorithm.id;
         };
 
         $scope.$on('simulationContentUploaded', function() {
