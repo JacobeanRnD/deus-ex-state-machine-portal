@@ -49,7 +49,7 @@ angular.module('deusExStateMachinePortalApp')
                     url: hostname + '/api/' + username + '/' + stateChartId + '/' + instanceId,
                     data: {
                         name: eventname,
-                        data: eventdata
+                        data: JSON.parse(eventdata)
                     }
                 });
             },
