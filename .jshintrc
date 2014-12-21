@@ -24,6 +24,7 @@
     "ScxmlViz": false,
     "alertify": false,
     "EventSource": false,
-    "d3": false
+    "d3": false,
+    "_": false
   }
 }
