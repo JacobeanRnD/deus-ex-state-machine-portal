@@ -35,9 +35,10 @@ angular.module('deusExStateMachinePortalApp')
                   });
                 }
 
-                if($scope.layout) {
+                if($scope.layout && !algorithm) {
                     $scope.layout.update(doc);
                 } else {
+                    scxmlTrace.empty();
                     $scope.layout = new forceLayout.Layout({// jshint ignore:line
                         parent: scxmlTrace[0],
                         doc: doc,
@@ -71,7 +72,7 @@ angular.module('deusExStateMachinePortalApp')
         };
 
         $scope.$on('simulationContentUploaded', function() {
-            drawSimulation(simulateService.chartContent, $scope.selectedAlgorithm);
+            drawSimulation(simulateService.chartContent);
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
