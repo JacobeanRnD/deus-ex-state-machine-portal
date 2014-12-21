@@ -19,10 +19,8 @@ angular.module('deusExStateMachinePortalApp')
         $scope.chartName = chartName;
 
         $scope.createInstance = function(chartName) {
-            dataService.createInstance(username, chartName).then(function() {
-                $state.go('.', null, {
-                    reload: true
-                });
+            dataService.createInstance(username, chartName).then(function(result) {
+                $state.go('main.charts.detail.instance', { instanceId: result.data.instanceId }, { reload: false });
                 alertify.success('Instance created');
             }, function(response) {
                 if (response.data.message) {
