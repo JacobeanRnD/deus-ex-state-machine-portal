@@ -52,7 +52,7 @@ angular.module('deusExStateMachinePortalApp')
                 if(data[$scope.dashOptions.series[serie].name]) {
                     $scope.dashOptions.series[serie].data.push([new Date().getTime(), parseInt(data[$scope.dashOptions.series[serie].name])]);
 
-                    if($scope.dashOptions.series[serie].data.length > 30) {
+                    if($scope.dashOptions.series[serie].data.length > 10) {
                         $scope.dashOptions.series[serie].data.splice(0, 1);
                     }
                 }
