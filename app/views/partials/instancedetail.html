@@ -10,6 +10,9 @@
 <div class="col-md-6">
 	State: {{currentChartState}}		
 </div>
-<div class="col-md-12">
+<div class="col-md-12" ng-show="dashOptions.series.length > 0">
 	<highchart id="datamodelChart" config="dashOptions"></highchart>
+</div>
+<div class="col-md-12" ng-hide="dashOptions.series.length > 0">
+	Datamodel doesn't have any variables to generate a graph.
 </div>
