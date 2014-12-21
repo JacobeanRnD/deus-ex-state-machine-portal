@@ -10,6 +10,7 @@
 angular.module('deusExStateMachinePortalApp')
     .controller('SimulationCtrl', function($scope, $rootScope, $timeout, simulateService, dataService) {
         $scope.forceLayoutEnabled = true;
+        var scxmlTrace = $('#scxmlTrace');
 
         dataService.getAlgorithms().then(function (result) {
             $scope.algorithms = result.data.layoutAlgorithms;
@@ -22,8 +23,6 @@ angular.module('deusExStateMachinePortalApp')
 
         function drawSimulation(content, algorithm) {
             var errorMessage;
-            var scxmlTrace = $('#scxmlTrace');
-            scxmlTrace.empty();
 
             try {
                 var doc = (new DOMParser()).parseFromString(content, 'application/xml');
