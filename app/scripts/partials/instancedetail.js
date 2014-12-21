@@ -12,6 +12,7 @@ angular.module('deusExStateMachinePortalApp')
         $scope.chartName = chartName;
         $scope.instanceId = instanceId;
         $scope.dataModel = JSON.stringify(instanceDetails.data[3], null, 4);
+        $scope.currentChartState = [];
 
         //Redraw to remove event changes
         simulateService.draw();
@@ -23,27 +24,15 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.oneSecondPassed = true;
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
-            if(event[0] !== '[') {
-                event = '["' + event + '"]';
+            if(eventName === 'onEntry') {
+                $scope.currentChartState.push(event);
+            } else {
+                $scope.currentChartState = _.without($scope.currentChartState, _.findWhere($scope.currentChartState, event));
             }
 
-            $scope.currentChartState = event;
-
             dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-                // if(!_.isEqual($scope.prev, instance.data[3])) {// jshint ignore:line
-                //     $scope.prev = instance.data[3];
-
-                    $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
-
-                    if($scope.oneSecondPassed) {
-                        addDataToDashboard(instance.data[3]);  
-                        $scope.oneSecondPassed = false;
-                        $timeout(function () {
-                            $scope.oneSecondPassed = true;
-                        }, 500);  
-                    }
-
-                // }
+                $scope.dataModel = JSON.stringify(instance.data[3], null, 4);
+                addDataToDashboard(instance.data[3]);
             });
         });
 

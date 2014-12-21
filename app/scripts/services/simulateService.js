@@ -31,7 +31,13 @@ angular.module('deusExStateMachinePortalApp')
                     }, false);
                 },
                 highlight: function(eventName, event) {
-                    $rootScope.$broadcast('simulationHighlighted', eventName, event);
+                    if(Array.isArray(event)) {
+                        for(var eventIndex in event) {
+                            $rootScope.$broadcast('simulationHighlighted', eventName, event[eventIndex]);
+                        }
+                    } else {
+                        $rootScope.$broadcast('simulationHighlighted', eventName, event);
+                    }
                 }
             }
         };
