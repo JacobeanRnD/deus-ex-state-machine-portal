@@ -19,7 +19,7 @@ angular.module('deusExStateMachinePortalApp')
         //Wait till everything is loaded so the event listener on simulation controller can bind
         $timeout(function() {
             simulateService.events.highlight('onEntry', instanceDetails.data[0]);
-        });
+        }, 1000);
 
         $scope.oneSecondPassed = true;
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
