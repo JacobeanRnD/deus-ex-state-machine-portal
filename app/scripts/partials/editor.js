@@ -20,30 +20,53 @@ angular.module('deusExStateMachinePortalApp')
         };
 
         $scope.saveStatechart = function(content) {
-            var isError = false;
+            checkChartContent(content, function (error, name) {
+                if(error) {
+                    alertify.error(error);
+                    return;
+                }
+                
+                dataService.createStateChart(username, content).then(function() {
+                    $state.go('main.charts.detail', { chartName: name }, { reload: false });
+                    alertify.success('Statechart saved');
+                }, function(response) {
+                    if (response.data.message) {
+                        alertify.error(response.data.message);
+                    } else {
+                        alertify.error('An error occured');
+                    }
+                });
+
+            });
+
+            
+        };
+
+        function checkChartContent(content, done) {
 
             if (!content || content.length === 0) {
-                isError = true;
-                alertify.error('Please enter code for your Statechart');
-            }
-
-            if (isError) {
+                done('Please enter code for your Statechart');
                 return;
             }
 
-            dataService.createStateChart(username, content).then(function() {
-                $state.go('.', null, { reload: true });
-                //TODO: select newly created chart
+            var doc;
 
-                alertify.success('Statechart saved');
-            }, function(response) {
-                if (response.data.message) {
-                    alertify.error(response.data.message);
-                } else {
-                    alertify.error('An error occured');
+            try {
+                doc = (new DOMParser()).parseFromString(content, 'application/xml');
+
+                if(doc.getElementsByTagName('parsererror').length){
+                  throw({
+                    //Only div in parsererror contains the error message
+                    //If there is more than one error, browser shows only the first error
+                    message: $(doc).find('parsererror div').html()
+                  });
                 }
-            });
-        };
+            } catch (e) {
+                done(e.message);
+                return;
+            }
 
-        
+            done(null, doc.documentElement.getAttribute('name'));
+            return;
+        }
     });
