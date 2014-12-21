@@ -106,14 +106,20 @@ html, body, .container {
     }
 }
 
+.full_height {
+    height: 100vh;
+}
+
 .editor {
     width: 100%;
-    height: 400px;
 }
 
 #scxmlTrace {
     width: 100%;
-    height: 400px;
+}
+
+.simulation_separator {
+    border-left: 1px solid #DADADA;
 }
 
 .instance-details {
