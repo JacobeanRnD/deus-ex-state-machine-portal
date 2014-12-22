@@ -130,7 +130,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     },
                     'simulation@main': {
                         templateUrl: 'views/partials/simulation.html',
-                        controller: 'SimulationCtrl'
+                        controller: 'SimulationCtrl',
+                        resolve: {
+                            chartName: function($stateParams) {
+                                return $stateParams.chartName;
+                            }
+                        }
                     }
                 }
             })

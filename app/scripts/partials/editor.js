@@ -27,6 +27,8 @@ angular.module('deusExStateMachinePortalApp')
                 }
                 
                 dataService.createStateChart(username, content).then(function() {
+                    simulateService.chartSaved(name);
+
                     $state.go('main.charts.detail', { chartName: name }, { reload: false });
                     alertify.success('Statechart saved');
                 }, function(response) {
@@ -36,10 +38,7 @@ angular.module('deusExStateMachinePortalApp')
                         alertify.error('An error occured');
                     }
                 });
-
             });
-
-            
         };
 
         function checkChartContent(content, done) {

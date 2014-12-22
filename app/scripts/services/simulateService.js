@@ -39,6 +39,9 @@ angular.module('deusExStateMachinePortalApp')
                         $rootScope.$broadcast('simulationHighlighted', eventName, event);
                     }
                 }
+            },
+            chartSaved: function (chartName) {
+                $rootScope.$broadcast('chartSaved', chartName);
             }
         };
     });

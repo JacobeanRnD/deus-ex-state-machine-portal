@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('SimulationCtrl', function($scope, $rootScope, $timeout, $cookies, simulateService, dataService) {
+    .controller('SimulationCtrl', function($scope, $rootScope, $timeout, $cookies, $state, chartName, simulateService, dataService) {
         $scope.forceLayoutEnabled = true;
         var scxmlTrace = $('#scxmlTrace');
 
@@ -47,7 +47,8 @@ angular.module('deusExStateMachinePortalApp')
                         parent: scxmlTrace[0],
                         doc: doc,
                         kielerAlgorithm: algorithm.id,
-                        debug: false
+                        debug: false,
+                        geometry: $cookies[chartName + '/geometry']
                     });
 
                     $scope.toggleLayout();
@@ -90,5 +91,9 @@ angular.module('deusExStateMachinePortalApp')
                     simulateService.events.highlight(eventName, event);
                 }, 1000);
             }
+        });
+
+        $scope.$on('chartSaved', function(e, chartName) {
+            $cookies[chartName + '/geometry'] = $scope.layout.saveGeometry();
         });
     });
