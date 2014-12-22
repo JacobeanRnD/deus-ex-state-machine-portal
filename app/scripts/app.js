@@ -99,7 +99,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                         templateUrl: 'views/partials/simulation.html',
                         controller: 'SimulationCtrl',
                         resolve: {
-                            chartName: function($stateParams) {
+                            chartName: function() {
                                 return null;
                             }
                         }
