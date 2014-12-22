@@ -29,7 +29,7 @@ angular.module('deusExStateMachinePortalApp')
                 dataService.createStateChart(username, content).then(function() {
                     simulateService.chartSaved(name);
 
-                    $state.go('main.charts.detail', { chartName: name }, { reload: false });
+                    $state.go('main.charts.detail', { chartName: name }, { reload: true });
                     alertify.success('Statechart saved');
                 }, function(response) {
                     if (response.data.message) {
