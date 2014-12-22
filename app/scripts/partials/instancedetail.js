@@ -24,10 +24,12 @@ angular.module('deusExStateMachinePortalApp')
 
         $scope.oneSecondPassed = true;
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
-            if(eventName === 'onEntry') {
+            var stateIndex = $scope.currentChartState.indexOf(event);
+
+            if(eventName === 'onEntry' && stateIndex === -1) {
                 $scope.currentChartState.push(event);
-            } else {
-                $scope.currentChartState = _.without($scope.currentChartState, _.findWhere($scope.currentChartState, event));
+            } else if (stateIndex !== -1) {
+                $scope.currentChartState.splice(stateIndex, 1);
             }
 
             dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
