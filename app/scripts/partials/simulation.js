@@ -78,8 +78,12 @@ angular.module('deusExStateMachinePortalApp')
             $cookies.userAlgorithm = selectedAlgorithm.id;
         };
 
-        $scope.$on('simulationContentUploaded', function() {
+        var updateLayout = _.debounce(function() {
             drawSimulation(simulateService.chartContent);
+        }, 500);
+
+        $scope.$on('simulationContentUploaded', function() {
+            updateLayout();
         });
 
         $scope.$on('simulationHighlighted', function(e, eventName, event) {
