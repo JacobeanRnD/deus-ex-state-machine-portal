@@ -114,7 +114,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             controller: 'InstancesCtrl',
             resolve: {
               instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances(username, $stateParams.chartName);
+                return dataService.getInstances(username, $stateParams.id);
               },
               chartName: function ($stateParams) {
                 return $stateParams.chartName;
@@ -129,7 +129,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               chartContent: function (dataService, username, $stateParams) {
-                return dataService.getStateChart(username, $stateParams.chartName);
+                return dataService.getStateChart(username, $stateParams.id);
               }
             }
           },

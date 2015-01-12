@@ -8,40 +8,43 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('InstancesCtrl', function($scope, $state, dataService, instances, chartName, username) {
-        instances.data.forEach(function(id, i, arr) {
-            arr[i] = {
-                id: id
-            };
+  .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
+    $scope.instances = instances.data;
+    $scope.chartName = chartName;
+
+    $scope.createInstance = function (chartName) {
+      dataService.createInstance(username, chartName).then(function (result) {
+        $state.go('main.charts.detail.instance', {
+          instanceId: result.data.instanceId
+        }, {
+          reload: true
         });
+        alertify.success('Instance created');
+      }, function (response) {
+        if (response.data.message) {
+          alertify.error(response.data.message);
+        } else {
+          alertify.error('An error occured');
+        }
+      });
+    };
 
-        $scope.instances = instances.data;
-        $scope.chartName = chartName;
+    $scope.deleteInstance = function (instance) {
+      dataService.deleteInstance(username, chartName, instance.id).then(function () {
+        if (instance.id === $state.params.instanceId) {
+          $state.go('main.charts.detail', {
+            chartName: chartName
+          }, {
+            reload: true
+          });
+        } else {
+          $state.go('.', null, {
+            reload: true 
+          });
+        }
 
-        $scope.createInstance = function(chartName) {
-            dataService.createInstance(username, chartName).then(function(result) {
-                $state.go('main.charts.detail.instance', { instanceId: result.data.instanceId }, { reload: true });
-                alertify.success('Instance created');
-            }, function(response) {
-                if (response.data.message) {
-                    alertify.error(response.data.message);
-                } else {
-                    alertify.error('An error occured');
-                }
-            });
-        };
+        alertify.success('Instance deleted');
+      });
+    };
+  });
 
-        $scope.deleteInstance = function(instance) {
-            dataService.deleteInstance(username, chartName, instance.id).then(function() {
-                if(instance.id === $state.params.instanceId) {
-                    $state.go('main.charts.detail', { chartName: chartName }, {
-                        reload: true
-                    });   
-                } else {
-                    $state.go('.', null, { reload: true });
-                }
-
-                alertify.success('Instance deleted');
-            });
-        };
-    });
