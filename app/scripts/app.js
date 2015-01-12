@@ -107,20 +107,20 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main.charts.detail', {
-        url: '/:chartName-:id/instances',
+        url: '/:chartName-:chartId/instances',
         views: {
           'instancelist@main': {
             templateUrl: 'views/partials/instances.html',
             controller: 'InstancesCtrl',
             resolve: {
               instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances(username, $stateParams.id);
+                return dataService.getInstances(username, $stateParams.chartId);
               },
               chartName: function ($stateParams) {
                 return $stateParams.chartName;
               },
               chartId: function ($stateParams) {
-                return $stateParams.id;
+                return $stateParams.chartId;
               }
             }
           },
@@ -132,7 +132,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               chartContent: function (dataService, username, $stateParams) {
-                return dataService.getStateChart(username, $stateParams.id);
+                return dataService.getStateChart(username, $stateParams.chartId);
               }
             }
           },
@@ -158,7 +158,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               instanceDetails: function (dataService, username, $stateParams) {
-                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
+                return dataService.getInstanceDetails(username, $stateParams.chartId, $stateParams.instanceId);
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;

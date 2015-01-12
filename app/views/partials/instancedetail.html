@@ -1,18 +1,18 @@
 <div class="col-md-4">
-    <h4>Instance Details</h4>
+  <h4>Instance Details</h4>
 </div>
 <div class="col-md-8 text-right">
-    <h4>{{chartName}} <small class="text-muted">{{instanceId}}</small></h4>
+  <h4>{{chartName}} <small class="text-muted">{{instanceuuid}}</small></h4>
 </div>
 <div class="col-md-6">
-	Data Model: {{dataModel}}		
+  Data Model: {{dataModel}}
 </div>
 <div class="col-md-6">
-	State: {{currentChartState}}		
+  State: {{currentChartState}}
 </div>
 <div class="col-md-12" ng-show="dashOptions.series.length > 0">
-	<highchart id="datamodelChart" config="dashOptions"></highchart>
+  <highchart id="datamodelChart" config="dashOptions"></highchart>
 </div>
 <div class="col-md-12" ng-hide="dashOptions.series.length > 0">
-	Datamodel doesn't have any variables to generate a graph.
+  Datamodel doesn't have any variables to generate a graph.
 </div>
