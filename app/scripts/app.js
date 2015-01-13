@@ -175,6 +175,9 @@ var app = angular.module('deusExStateMachinePortalApp', [
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
+              },
+              chartId: function ($stateParams) {
+                return $stateParams.chartId;
               }
             }
           }
