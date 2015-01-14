@@ -36,8 +36,8 @@ angular.module('deusExStateMachinePortalApp')
           });
           alertify.success('Statechart saved');
         }, function (response) {
-          if (response.data.message) {
-            alertify.error(response.data.message);
+          if (response.status === 400) {
+            alertify.error(response.data);
           } else {
             alertify.error('An error occured');
           }
