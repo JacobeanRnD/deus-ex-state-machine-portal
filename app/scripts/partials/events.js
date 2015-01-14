@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('EventsCtrl', function ($scope, dataService, simulateService, username, chartName, chartId, instanceId) {
+  .controller('EventsCtrl', function ($scope, dataService, simulateService, username, chartName, instanceId) {
     $scope.events = [];
 
     dataService.getSparkDevices(username).then(function (sparkDetails) {
@@ -49,7 +49,7 @@ angular.module('deusExStateMachinePortalApp')
 
     $scope.sendEvent = function (eventname, eventdata) {
       $scope.events.unshift('event sent -> ' + eventname + (eventdata ? (' - ' + eventdata) : ''));
-      dataService.sendEvent(username, chartId, instanceId, eventname, eventdata).then(function () {
+      dataService.sendEvent(username, chartName, instanceId, eventname, eventdata).then(function () {
 
       });
     };

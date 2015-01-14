@@ -107,20 +107,17 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main.charts.detail', {
-        url: '/:chartName-:chartId/instances',
+        url: '/:chartName/instances',
         views: {
           'instancelist@main': {
             templateUrl: 'views/partials/instances.html',
             controller: 'InstancesCtrl',
             resolve: {
               instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances(username, $stateParams.chartId);
+                return dataService.getInstances(username, $stateParams.chartName);
               },
               chartName: function ($stateParams) {
                 return $stateParams.chartName;
-              },
-              chartId: function ($stateParams) {
-                return $stateParams.chartId;
               }
             }
           },
@@ -132,7 +129,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               chartContent: function (dataService, username, $stateParams) {
-                return dataService.getStateChart(username, $stateParams.chartId);
+                return dataService.getStateChart(username, $stateParams.chartName);
               }
             }
           },
@@ -158,7 +155,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               instanceDetails: function (dataService, username, $stateParams) {
-                return dataService.getInstanceDetails(username, $stateParams.chartId, $stateParams.instanceId);
+                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
@@ -175,9 +172,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
-              },
-              chartId: function ($stateParams) {
-                return $stateParams.chartId;
               }
             }
           }

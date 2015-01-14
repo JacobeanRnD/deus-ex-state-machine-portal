@@ -8,14 +8,14 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, chartId, username) {
+  .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
     $scope.instances = instances.data;
     $scope.chartName = chartName;
 
     $scope.createInstance = function () {
-      dataService.createInstance(username, chartId).then(function (result) {
+      dataService.createInstance(username, chartName).then(function (result) {
         $state.go('main.charts.detail.instance', {
-          instanceId: result.data.instanceId
+          instanceId: result.data.Id
         }, {
           reload: true
         });
