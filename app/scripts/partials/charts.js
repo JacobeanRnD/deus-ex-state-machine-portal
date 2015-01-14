@@ -7,21 +7,17 @@
  * # charts
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('ChartsCtrl', function($scope, $state, dataService, charts, username) {
-        $scope.username = username;
+  .controller('ChartsCtrl', function ($scope, $state, dataService, charts, username) {
+    $scope.username = username;
+    $scope.charts = charts.data;
 
-        charts.data.forEach(function(name, i, arr) {
-            arr[i] = {
-                name: name
-            };
+    $scope.deleteStateChart = function (chart) {
+      dataService.deleteStateChart(username, chart.name).then(function () {
+        $state.go('.', null, {
+          reload: true
         });
+        alertify.success('Statechart deleted');
+      });
+    };
+  });
 
-        $scope.charts = charts.data;
-
-        $scope.deleteStateChart = function(chart) {
-            dataService.deleteStateChart(username, chart.name).then(function() {
-                $state.go('.', null, { reload: true });
-                alertify.success('Statechart deleted');
-            });
-        };
-    });
