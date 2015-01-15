@@ -21,15 +21,28 @@ angular.module('deusExStateMachinePortalApp')
       getInstances: function (username, stateChartName) {
         return $http.get(hostname + '/api/' + username + '/' + stateChartName + '/_all_instances');
       },
-      createStateChart: function (username, content) {
-        return $http({
-          method: 'POST',
-          url: hostname + '/api/' + username,
-          headers: {
-            'Content-Type': 'application/xml'
-          },
-          data: content
-        });
+      saveStateChart: function (stateChartName, username, content) {
+        if (stateChartName) {
+          //Update current statechart
+          return $http({
+            method: 'PUT',
+            url: hostname + '/api/' + username + '/' + stateChartName,
+            headers: {
+              'Content-Type': 'application/xml'
+            },
+            data: content
+          });
+        } else {
+          //Insert new statechart
+          return $http({
+            method: 'POST',
+            url: hostname + '/api/' + username,
+            headers: {
+              'Content-Type': 'application/xml'
+            },
+            data: content
+          });
+        }
       },
       deleteStateChart: function (username, stateChartName) {
         return $http.delete(hostname + '/api/' + username + '/' + stateChartName);

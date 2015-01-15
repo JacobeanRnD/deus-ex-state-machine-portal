@@ -26,7 +26,9 @@ angular.module('deusExStateMachinePortalApp')
           return;
         }
 
-        dataService.createStateChart(username, content).then(function () {
+        var isCreate = $state.$current.name === 'main.charts.new';
+
+        dataService.saveStateChart(isCreate ? null : name, username, content).then(function () {
           simulateService.chartSaved(name);
 
           $state.go('main.charts.detail', {
