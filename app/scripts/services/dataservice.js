@@ -8,10 +8,29 @@
  * Factory in the deusExStateMachinePortalApp.
  */
 angular.module('deusExStateMachinePortalApp')
-  .factory('dataService', function ($rootScope, $resource, $http) {
-    var hostname = $rootScope.simulationServerUrl;
+  .factory('dataService', function ($resource, $http) {
+    var hostname = window.simulationServerUrl;
 
     return {
+      createAccount: function (username, password) {
+        return $http({
+          method: 'POST',
+          url: hostname + '/api/',
+          data: {
+            username: username,
+            password: password
+          }
+        });
+      },
+      login: function (username, password) {
+        return $http({
+          method: 'POST',
+          url: hostname + '/api/' + username + '/_session',
+          data: {
+            password: password
+          }
+        });
+      },
       getAllStateCharts: function (username) {
         return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
       },
