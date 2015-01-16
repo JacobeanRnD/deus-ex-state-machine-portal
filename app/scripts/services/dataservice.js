@@ -26,8 +26,12 @@ angular.module('deusExStateMachinePortalApp')
         return $http({
           method: 'POST',
           url: hostname + '/api/' + username + '/_session',
-          data: {
+          params: {
+            username: username,
             password: password
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
         });
       },
