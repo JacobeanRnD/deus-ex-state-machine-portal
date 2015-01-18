@@ -94,7 +94,9 @@ angular.module('deusExStateMachinePortalApp')
       },
       subscribeInstance: function (username, stateChartName, instanceId) {
         if (!!window.EventSource) {
-          var source = new EventSource(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId + '/_changes');
+          var source = new EventSource(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId + '/_changes', {
+            withCredentials: true
+          });
 
           return source;
         } else {
