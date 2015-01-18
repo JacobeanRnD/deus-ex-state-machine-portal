@@ -36,6 +36,11 @@ angular.module('deusExStateMachinePortalApp')
           }
         });
       },
+      checkAccount: function () {
+        return $http.get(hostname + '/api/_session', {
+          withCredentials: true
+        });
+      },
       getAllStateCharts: function (username) {
         return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
       },

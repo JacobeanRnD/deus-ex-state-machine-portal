@@ -21,10 +21,18 @@ angular.module('deusExStateMachinePortalApp')
       refresh: function () {
         var deferred = $q.defer();
 
-        setTimeout(function () {
-          session.username = $cookies.deusExStateMachinePortalAppUsername;
-          deferred.resolve();
-        }, 200);
+        if (session.username) {
+          setTimeout(function () {
+            deferred.resolve();
+          }, 200);
+        } else {
+          dataService.checkAccount().then(function (result) {
+            session.username = result.data;
+            deferred.resolve();
+          }, function () {
+            deferred.resolve();
+          });
+        }
 
         return deferred.promise;
       },
