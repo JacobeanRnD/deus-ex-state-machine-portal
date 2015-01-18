@@ -32,7 +32,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'ui.router',
     'highcharts-ng'
   ])
-  .config(function ($routeProvider, $stateProvider, $urlRouterProvider) {
+  .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
     function checkLoggedin(Session, $state) {
       return Session.refresh().then(function () {
         if (Session.username) {
@@ -44,6 +44,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
       });
     }
 
+    $httpProvider.defaults.withCredentials = true;
     $urlRouterProvider.otherwise('/charts');
 
     $stateProvider

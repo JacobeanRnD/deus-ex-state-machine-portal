@@ -24,7 +24,6 @@ angular.module('deusExStateMachinePortalApp')
       },
       login: function (username, password) {
         return $http({
-          withCredentials: true,
           method: 'POST',
           url: hostname + '/api/' + username + '/_session',
           params: {
@@ -37,9 +36,7 @@ angular.module('deusExStateMachinePortalApp')
         });
       },
       checkAccount: function () {
-        return $http.get(hostname + '/api/_session', {
-          withCredentials: true
-        });
+        return $http.get(hostname + '/api/_session');
       },
       getAllStateCharts: function (username) {
         return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
@@ -106,7 +103,8 @@ angular.module('deusExStateMachinePortalApp')
       },
       getAlgorithms: function () {
         return $http.get('http://kieler.herokuapp.com/layout/serviceData', {
-          cache: true
+          cache: true,
+          withCredentials: false
         });
       },
       saveChannelData: function (username, channelname, tokenData) {
