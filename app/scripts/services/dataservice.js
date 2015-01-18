@@ -24,6 +24,7 @@ angular.module('deusExStateMachinePortalApp')
       },
       login: function (username, password) {
         return $http({
+          withCredentials: true,
           method: 'POST',
           url: hostname + '/api/' + username + '/_session',
           params: {
