@@ -22,9 +22,7 @@ angular.module('deusExStateMachinePortalApp')
         var deferred = $q.defer();
 
         if (session.username) {
-          setTimeout(function () {
-            deferred.resolve();
-          }, 200);
+          deferred.resolve();
         } else {
           dataService.checkAccount().then(function (result) {
             session.username = result.data;
