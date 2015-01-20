@@ -37,11 +37,16 @@ angular.module('deusExStateMachinePortalApp')
       logout: function () {
         var deferred = $q.defer();
 
-        setTimeout(function () {
-          delete $cookies.deusExStateMachinePortalAppUsername;
-          delete session.username;
+        if (session.username) {
+          dataService.logout(session.username).then(function () {
+            delete session.username;
+            deferred.resolve();
+          }, function () {
+            deferred.resolve();
+          });
+        } else {
           deferred.resolve();
-        }, 200);
+        }
 
         return deferred.promise;
       }

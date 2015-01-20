@@ -35,6 +35,9 @@ angular.module('deusExStateMachinePortalApp')
           }
         });
       },
+      logout: function (username) {
+        return $http.delete(hostname + '/api/' + username + '/_session');
+      },
       checkAccount: function () {
         return $http.get(hostname + '/api/_session');
       },
