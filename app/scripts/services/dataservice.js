@@ -41,6 +41,12 @@ angular.module('deusExStateMachinePortalApp')
       checkAccount: function () {
         return $http.get(hostname + '/api/_session');
       },
+      getToken: function (username) {
+        return $http.get(hostname + '/api/' + username + '/_token');
+      },
+      refreshToken: function (username) {
+        return $http.post(hostname + '/api/' + username + '/_token');
+      },
       getAllStateCharts: function (username) {
         return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
       },

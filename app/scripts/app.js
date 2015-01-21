@@ -63,7 +63,10 @@ var app = angular.module('deusExStateMachinePortalApp', [
         templateUrl: 'views/channels.html',
         controller: 'ChannelsCtrl',
         resolve: {
-          username: checkLoggedin
+          username: checkLoggedin,
+          token: function (dataService, username) {
+            return dataService.getToken(username);
+          }
         }
       })
       .state('main', {
