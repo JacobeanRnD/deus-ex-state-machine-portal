@@ -39,7 +39,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           return Session.username;
         } else {
           $state.go('login');
-          return false;
+          return;
         }
       });
     }
@@ -85,7 +85,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/charts.html',
             controller: 'ChartsCtrl',
             resolve: {
-              charts: function (dataService, username) {
+              charts: function (dataService, username, $state) {
+                if (!username) {
+                  $state.go('login');
+                  return;
+                }
+
                 return dataService.getAllStateCharts(username);
               }
             }
