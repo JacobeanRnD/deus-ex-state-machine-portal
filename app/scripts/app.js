@@ -8,6 +8,19 @@
  *
  * Main module of the application.
  */
+
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+    results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+var url = getParameterByName('simulationServer');
+url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
+
+window.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
+
 var app = angular.module('deusExStateMachinePortalApp', [
     'ngAnimate',
     'ngCookies',
@@ -19,7 +32,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'ui.router',
     'highcharts-ng'
   ])
-  .config(function ($routeProvider, $stateProvider, $urlRouterProvider) {
+  .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
     function checkLoggedin(Session, $state) {
       return Session.refresh().then(function () {
         if (Session.username) {
@@ -31,6 +44,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
       });
     }
 
+    $httpProvider.defaults.withCredentials = true;
     $urlRouterProvider.otherwise('/charts');
 
     $stateProvider
@@ -39,12 +53,20 @@ var app = angular.module('deusExStateMachinePortalApp', [
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
+      .state('register', {
+        url: '/register',
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl'
+      })
       .state('channels', {
         url: '/channels',
         templateUrl: 'views/channels.html',
         controller: 'ChannelsCtrl',
         resolve: {
-          username: checkLoggedin
+          username: checkLoggedin,
+          token: function (dataService, username) {
+            return dataService.getToken(username);
+          }
         }
       })
       .state('main', {
@@ -192,18 +214,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
   });
 
 app.run(function ($rootScope, Session, $location, $state) {
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-      results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-  }
-
-  var url = getParameterByName('simulationServer');
-  url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
-
-  $rootScope.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
-
   $rootScope.state = $state;
   $rootScope.Session = Session;
 

@@ -8,10 +8,45 @@
  * Factory in the deusExStateMachinePortalApp.
  */
 angular.module('deusExStateMachinePortalApp')
-  .factory('dataService', function ($rootScope, $resource, $http) {
-    var hostname = $rootScope.simulationServerUrl;
+  .factory('dataService', function ($resource, $http) {
+    var hostname = window.simulationServerUrl;
 
     return {
+      createAccount: function (username, password) {
+        return $http({
+          method: 'POST',
+          url: hostname + '/api/',
+          data: {
+            username: username,
+            password: password
+          }
+        });
+      },
+      login: function (username, password) {
+        return $http({
+          method: 'POST',
+          url: hostname + '/api/' + username + '/_session',
+          params: {
+            username: username,
+            password: password
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+      },
+      logout: function (username) {
+        return $http.delete(hostname + '/api/' + username + '/_session');
+      },
+      checkAccount: function () {
+        return $http.get(hostname + '/api/_session');
+      },
+      getToken: function (username) {
+        return $http.get(hostname + '/api/' + username + '/_token');
+      },
+      refreshToken: function (username) {
+        return $http.post(hostname + '/api/' + username + '/_token');
+      },
       getAllStateCharts: function (username) {
         return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
       },
@@ -68,7 +103,9 @@ angular.module('deusExStateMachinePortalApp')
       },
       subscribeInstance: function (username, stateChartName, instanceId) {
         if (!!window.EventSource) {
-          var source = new EventSource(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId + '/_changes');
+          var source = new EventSource(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId + '/_changes', {
+            withCredentials: true
+          });
 
           return source;
         } else {
@@ -77,7 +114,8 @@ angular.module('deusExStateMachinePortalApp')
       },
       getAlgorithms: function () {
         return $http.get('http://kieler.herokuapp.com/layout/serviceData', {
-          cache: true
+          cache: true,
+          withCredentials: false
         });
       },
       saveChannelData: function (username, channelname, tokenData) {
