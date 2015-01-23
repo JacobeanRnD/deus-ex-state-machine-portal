@@ -17,3 +17,4 @@ describe('Directive: instancelist', function () {
     // expect(element.text()).toBe('this is the instancelist directive');
   }));
 });
+

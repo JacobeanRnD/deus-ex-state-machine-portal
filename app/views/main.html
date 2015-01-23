@@ -1,24 +1,24 @@
 <div class="main-row row">
-    <div class="col-md-2 sidebar cell">
-        <div ui-view="chartlist" class="charts list"></div>
-        <div ui-view="instancelist" class="instances list"></div>
-    </div>
-    <div class="col-md-10 cell">
-        <div class="row">
-            <div class="content-header text-center" ng-show="state.current.name === 'main.charts'">
-                <p>Select a Statechart from left menu or</p>
-                <a ui-sref="main.charts.new" class="btn btn-primary" title="Create new Statechart">
+  <div class="col-md-2 sidebar cell">
+    <div ui-view="chartlist" class="charts list"></div>
+    <div ui-view="instancelist" class="instances list"></div>
+  </div>
+  <div class="col-md-10 cell">
+    <div class="row">
+      <div class="content-header text-center" ng-show="state.current.name === 'main.charts'">
+        <p>Select a Statechart from left menu or</p>
+        <a ui-sref="main.charts.new" class="btn btn-primary" title="Create new Statechart">
                     Create new Statechart <span class="glyphicon glyphicon-plus"></span>         
                 </a>
-            </div>
-            <div ui-view="editor" class="col-md-6" ng-hide="state.current.name === 'main.charts.detail.instance'"></div>
-            <div class="col-md-6" ng-show="state.current.name === 'main.charts.detail.instance'">
-                <div class="row">
-                    <div ui-view="instancedetail" class="clearfix instance-details"></div>
-                    <div ui-view="events" class="col-md-12"></div>
-                </div>
-            </div>
-            <div ui-view="simulation" class="col-md-6 simulation_separator"></div>
+      </div>
+      <div ui-view="editor" class="col-md-6" ng-hide="state.current.name === 'main.charts.detail.instance'"></div>
+      <div class="col-md-6" ng-show="state.current.name === 'main.charts.detail.instance'">
+        <div class="row">
+          <div ui-view="instancedetail" class="clearfix instance-details"></div>
+          <div ui-view="events" class="col-md-12"></div>
         </div>
+      </div>
+      <div ui-view="simulation" class="col-md-6 simulation_separator"></div>
     </div>
+  </div>
 </div>

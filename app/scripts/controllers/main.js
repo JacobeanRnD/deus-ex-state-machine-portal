@@ -8,5 +8,5 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-    .controller('MainCtrl', function() {
-    });
+  .controller('MainCtrl', function () {});
+

@@ -1,53 +1,53 @@
 <h4>Connected devices</h4>
 <form ng-submit="connectDevice(selectedDevice, listeningEvents)" role="form" name="deviceform">
-    <div class="row send-event">
-        <div class="col-md-3">
-            <div class="input-group">
-                <select ng-model="selectedDevice" ng-options="device.name for device in devices">
-                    <option value="">Choose device</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="input-group col-md-12">
-                <input type="text" ng-model="listeningEvents" placeholder="Comma-separated listening events"/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary pull-right">Connect</button>
-            </div>
-        </div>
+  <div class="row send-event">
+    <div class="col-md-3">
+      <div class="input-group">
+        <select ng-model="selectedDevice" ng-options="device.name for device in devices">
+          <option value="">Choose device</option>
+        </select>
+      </div>
     </div>
+    <div class="col-md-6">
+      <div class="input-group col-md-12">
+        <input type="text" ng-model="listeningEvents" placeholder="Comma-separated listening events" />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <button type="submit" class="btn btn-primary pull-right">Connect</button>
+      </div>
+    </div>
+  </div>
 </form>
 <h4>Events</h4>
 <form ng-submit="sendEvent(eventname, eventdata)" role="form" name="eventform">
-    <div class="row send-event">
+  <div class="row send-event">
 
-        <div class="col-md-4">
-            <div class="input-group">
-                <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="input-group">
-                <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary pull-right">Send Event</button>
-            </div>
-        </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="text" id="inputeventname" ng-model="eventname" placeholder="Event name">
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="text" id="inputeventdata" ng-model="eventdata" placeholder="Event data">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <button type="submit" class="btn btn-primary pull-right">Send Event</button>
+      </div>
+    </div>
+  </div>
 </form>
 <div ng-hide="events.length > 0">
-    There are no events.
+  There are no events.
 </div>
 <div class="event-list">
-    <ul>
-        <li ng-repeat="event in events track by $index">
-            {{event}}
-        </li>
-    </ul>
+  <ul>
+    <li ng-repeat="event in events track by $index">
+      {{event}}
+    </li>
+  </ul>
 </div>
