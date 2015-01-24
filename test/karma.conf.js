@@ -3,7 +3,7 @@
 // Generated on 2014-10-12 using
 // generator-karma 0.8.3
 
-module.exports = function(config) {
+module.exports = function (config) {
   'use strict';
 
   config.set({
@@ -77,3 +77,4 @@ module.exports = function(config) {
     // urlRoot: '_karma_'
   });
 };
+

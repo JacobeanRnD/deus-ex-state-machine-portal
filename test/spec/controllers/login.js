@@ -20,3 +20,4 @@ describe('Controller: LoginCtrl', function () {
     // expect(scope.awesomeThings.length).toBe(3);
   });
 });
+

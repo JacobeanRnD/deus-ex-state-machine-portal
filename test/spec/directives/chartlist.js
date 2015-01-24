@@ -15,3 +15,4 @@ describe('Directive: chartList', function () {
 
   }));
 });
+
