@@ -9,10 +9,10 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('LoginCtrl', function ($location, $scope, Session, $state) {
-    $scope.doLogin = function (inputUsername, inputPassword) {
-      Session.login(inputUsername, inputPassword, function (err) {
+    $scope.doLogin = function (inputEmail, inputPassword) {
+      Session.login(inputEmail, inputPassword, function (err) {
         if (err) {
-          alertify.error(err.data);
+          alertify.error(err.headers('WWW-Authenticate'));
           return;
         }
 
