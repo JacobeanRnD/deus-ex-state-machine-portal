@@ -11,8 +11,8 @@ angular.module('deusExStateMachinePortalApp')
   .controller('RegisterCtrl', function ($scope, $state, dataService) {
     $scope.doRegister = function (inputEmail, inputPassword) {
       dataService.createAccount(inputEmail, inputPassword).then(function () {
-        alertify.success('Account created, please check your email.');
-        $state.go('login');
+        alertify.success('Your account is on the wait list, pending for approval.');
+        $scope.showWaitListMessage = true;
       }, function (error) {
         alertify.error(error.data);
       });
