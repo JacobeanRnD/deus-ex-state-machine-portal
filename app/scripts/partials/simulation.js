@@ -31,14 +31,19 @@ angular.module('deusExStateMachinePortalApp')
         } else {
           scxmlTrace.empty();
           $scope.layout = new forceLayout.Layout({ // jshint ignore:line
+            kielerAlgorithm: '__klayjs',
             parent: scxmlTrace[0],
             doc: doc,
-            kielerAlgorithm: '__klayjs',
-            debug: false,
-            routing: 'ORTHOGONAL',
             textOnPath: false,
-            geometry: $cookies[chartName + '/geometry']
+            routing: 'ORTHOGONAL',
+            debug: false
+              // ,
+              // geometry: $cookies[chartName + '/geometry']
           });
+
+          $scope.layout.initialized.catch(function (err) {
+            throw (err);
+          }).done();
         }
       } catch (e) {
         errorMessage = e.message;
