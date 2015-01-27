@@ -29,10 +29,10 @@
       </div>
       <nav class="clearfix">
         <ul class="nav nav-pills pull-right" ng-show="Session.username">
-          <li class="active">
+          <li ng-class="{ active: state.current.name.indexOf('main') === 0 }">
             <a href="#">Home</a>
           </li>
-          <li>
+          <li ng-class="{ active: state.current.name === 'channels' }">
             <a href="#channels">Channels</a>
           </li>
           <li>
