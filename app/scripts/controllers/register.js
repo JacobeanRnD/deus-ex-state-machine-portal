@@ -11,7 +11,7 @@ angular.module('deusExStateMachinePortalApp')
   .controller('RegisterCtrl', function ($scope, $state, dataService) {
     $scope.doRegister = function (inputEmail, inputPassword) {
       dataService.createAccount(inputEmail, inputPassword).then(function () {
-        alertify.success('Account created.');
+        alertify.success('Account created, please check your email.');
         $state.go('login');
       }, function (error) {
         alertify.error(error.data);

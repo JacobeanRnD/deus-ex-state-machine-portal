@@ -10,8 +10,8 @@
 angular.module('deusExStateMachinePortalApp')
   .service('Session', function Session($rootScope, $http, $q, $cookies, dataService) {
     var session = {
-      login: function (username, password, cb) {
-        dataService.login(username, password).then(function () {
+      login: function (username, password, emailtoken, cb) {
+        dataService.login(username, password, emailtoken).then(function () {
           session.username = username;
           cb(null);
         }, function (error) {

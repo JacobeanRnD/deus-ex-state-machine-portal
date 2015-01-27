@@ -22,13 +22,14 @@ angular.module('deusExStateMachinePortalApp')
           }
         });
       },
-      login: function (email, password) {
+      login: function (email, password, emailtoken) {
         return $http({
           method: 'POST',
           url: hostname + '/api/' + email + '/_session',
           params: {
             username: email,
-            password: password
+            password: password,
+            emailtoken: emailtoken
           },
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

@@ -51,7 +51,22 @@ var app = angular.module('deusExStateMachinePortalApp', [
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        resolve: {
+          emailtoken: function () {
+            return null;
+          }
+        }
+      })
+      .state('verify', {
+        url: '/verify/:emailtoken',
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        resolve: {
+          emailtoken: function ($stateParams) {
+            return $stateParams.emailtoken;
+          }
+        }
       })
       .state('register', {
         url: '/register',
