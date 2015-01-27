@@ -46,10 +46,22 @@ angular.module('deusExStateMachinePortalApp')
           $scope.layout = new forceLayout.Layout({ // jshint ignore:line
             parent: scxmlTrace[0],
             doc: doc,
-            kielerAlgorithm: algorithm.id,
+            kielerAlgorithm: {
+              algo: '__klayjs'
+            },
             debug: false,
+            routing: 'ORTHOGONAL',
+            textOnPath: false,
             geometry: $cookies[chartName + '/geometry']
           });
+
+          // $scope.layout = new forceLayout.Layout({ // jshint ignore:line
+          //   parent: scxmlTrace[0],
+          //   doc: doc,
+          //   kielerAlgorithm: algorithm.id,
+          //   debug: false,
+          //   geometry: $cookies[chartName + '/geometry']
+          // });
 
           $scope.toggleLayout();
         }
