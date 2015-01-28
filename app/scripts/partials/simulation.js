@@ -26,25 +26,20 @@ angular.module('deusExStateMachinePortalApp')
           });
         }
 
-        if ($scope.layout) {
-          $scope.layout.update(doc);
-        } else {
-          scxmlTrace.empty();
-          $scope.layout = new forceLayout.Layout({ // jshint ignore:line
-            kielerAlgorithm: '__klayjs',
-            parent: scxmlTrace[0],
-            doc: doc,
-            textOnPath: false,
-            routing: 'ORTHOGONAL',
-            debug: false
-              // ,
-              // geometry: $cookies[chartName + '/geometry']
-          });
+        scxmlTrace.empty();
+        $scope.layout = new forceLayout.Layout({ // jshint ignore:line
+          kielerAlgorithm: '__klayjs',
+          parent: scxmlTrace[0],
+          doc: doc,
+          textOnPath: false,
+          routing: 'ORTHOGONAL',
+          debug: false,
+          geometry: $cookies[chartName + '/geometry']
+        });
 
-          $scope.layout.initialized.catch(function (err) {
-            throw (err);
-          }).done();
-        }
+        $scope.layout.initialized.catch(function (err) {
+          $scope.error = err.message;
+        }).done();
       } catch (e) {
         errorMessage = e.message;
       } finally {
