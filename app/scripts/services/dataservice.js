@@ -15,7 +15,7 @@ angular.module('deusExStateMachinePortalApp')
       createAccount: function (username, password) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/',
+          url: hostname + '/api/v1/',
           data: {
             username: username,
             password: password
@@ -25,7 +25,7 @@ angular.module('deusExStateMachinePortalApp')
       login: function (username, password) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/' + username + '/_session',
+          url: hostname + '/api/v1/' + username + '/_session',
           params: {
             username: username,
             password: password
@@ -36,32 +36,32 @@ angular.module('deusExStateMachinePortalApp')
         });
       },
       logout: function (username) {
-        return $http.delete(hostname + '/api/' + username + '/_session');
+        return $http.delete(hostname + '/api/v1/' + username + '/_session');
       },
       checkAccount: function () {
-        return $http.get(hostname + '/api/_session');
+        return $http.get(hostname + '/api/v1/_session');
       },
       getToken: function (username) {
-        return $http.get(hostname + '/api/' + username + '/_token');
+        return $http.get(hostname + '/api/v1/' + username + '/_token');
       },
       refreshToken: function (username) {
-        return $http.post(hostname + '/api/' + username + '/_token');
+        return $http.post(hostname + '/api/v1/' + username + '/_token');
       },
       getAllStateCharts: function (username) {
-        return $http.get(hostname + '/api/' + username + '/_all_statechart_definitions');
+        return $http.get(hostname + '/api/v1/' + username + '/_all_statechart_definitions');
       },
       getStateChart: function (username, stateChartName) {
-        return $http.get(hostname + '/api/' + username + '/' + stateChartName);
+        return $http.get(hostname + '/api/v1/' + username + '/' + stateChartName);
       },
       getInstances: function (username, stateChartName) {
-        return $http.get(hostname + '/api/' + username + '/' + stateChartName + '/_all_instances');
+        return $http.get(hostname + '/api/v1/' + username + '/' + stateChartName + '/_all_instances');
       },
       saveStateChart: function (stateChartName, username, content) {
         if (stateChartName) {
           //Update current statechart
           return $http({
             method: 'PUT',
-            url: hostname + '/api/' + username + '/' + stateChartName,
+            url: hostname + '/api/v1/' + username + '/' + stateChartName,
             headers: {
               'Content-Type': 'application/xml'
             },
@@ -71,7 +71,7 @@ angular.module('deusExStateMachinePortalApp')
           //Insert new statechart
           return $http({
             method: 'POST',
-            url: hostname + '/api/' + username,
+            url: hostname + '/api/v1/' + username,
             headers: {
               'Content-Type': 'application/xml'
             },
@@ -80,21 +80,21 @@ angular.module('deusExStateMachinePortalApp')
         }
       },
       deleteStateChart: function (username, stateChartName) {
-        return $http.delete(hostname + '/api/' + username + '/' + stateChartName);
+        return $http.delete(hostname + '/api/v1/' + username + '/' + stateChartName);
       },
       getInstanceDetails: function (username, stateChartName, instanceId) {
-        return $http.get(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId);
+        return $http.get(hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId);
       },
       createInstance: function (username, stateChartName) {
-        return $http.post(hostname + '/api/' + username + '/' + stateChartName);
+        return $http.post(hostname + '/api/v1/' + username + '/' + stateChartName);
       },
       deleteInstance: function (username, stateChartName, instanceId) {
-        return $http.delete(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId);
+        return $http.delete(hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId);
       },
       sendEvent: function (username, stateChartName, instanceId, eventname, eventdata) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId,
+          url: hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId,
           data: {
             name: eventname,
             data: eventdata ? JSON.parse(eventdata) : ''
@@ -103,7 +103,7 @@ angular.module('deusExStateMachinePortalApp')
       },
       subscribeInstance: function (username, stateChartName, instanceId) {
         if (!!window.EventSource) {
-          var source = new EventSource(hostname + '/api/' + username + '/' + stateChartName + '/' + instanceId + '/_changes', {
+          var source = new EventSource(hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId + '/_changes', {
             withCredentials: true
           });
 
