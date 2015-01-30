@@ -58,7 +58,7 @@ angular.module('deusExStateMachinePortalApp')
           }
         }, false);
 
-        popupWindow = window.open($rootScope.simulationServerUrl + '/channels/twitter', '_blank');
+        popupWindow = window.open(window.simulationServerUrl + '/channels/twitter', '_blank');
 
         activatePopupMessage();
       } else if (channelname === 'spark') {
