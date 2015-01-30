@@ -12,9 +12,9 @@ angular.module('deusExStateMachinePortalApp')
     $scope.charts = charts.data;
 
     $scope.deleteStateChart = function (chart) {
-      dataService.deleteStateChart(username, chart.name).then(function () {
+      dataService.deleteStateChart(username, chart).then(function () {
 
-        if (chart.name === $state.params.chartName) {
+        if (chart === $state.params.chartName) {
           $state.go('main.charts', {}, {
             reload: true
           });
