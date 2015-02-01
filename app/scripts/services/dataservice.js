@@ -12,13 +12,14 @@ angular.module('deusExStateMachinePortalApp')
     var hostname = window.simulationServerUrl;
 
     return {
-      createAccount: function (username, password) {
+      createAccount: function (username, email, password) {
         return $http({
           method: 'POST',
           url: hostname + '/api/',
           data: {
             username: username,
-            password: password
+            password: password,
+            email: email
           }
         });
       },
