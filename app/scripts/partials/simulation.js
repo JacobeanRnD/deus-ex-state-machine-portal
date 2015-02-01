@@ -8,24 +8,11 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('SimulationCtrl', function ($scope, $rootScope, $timeout, $cookies, $state, chartName, simulateService, dataService) {
+  .controller('SimulationCtrl', function ($scope, $rootScope, $timeout, $cookies, $state, chartName, simulateService) {
     $scope.forceLayoutEnabled = true;
     var scxmlTrace = $('#scxmlTrace');
 
-    dataService.getAlgorithms().then(function (result) {
-      $scope.algorithms = result.data.layoutAlgorithms;
-      $scope.selectedAlgorithm = $scope.algorithms.filter(function (algorithm) {
-        if ($cookies.userAlgorithm) {
-          return algorithm.id === $cookies.userAlgorithm;
-        } else {
-          return algorithm.id === 'de.cau.cs.kieler.klay.force';
-        }
-      })[0];
-
-      drawSimulation(simulateService.chartContent, $scope.algorithms[0]);
-    });
-
-    function drawSimulation(content, algorithm) {
+    function drawSimulation(content) {
       var errorMessage;
 
       try {
@@ -39,20 +26,20 @@ angular.module('deusExStateMachinePortalApp')
           });
         }
 
-        if ($scope.layout && !algorithm) {
-          $scope.layout.update(doc);
-        } else {
-          scxmlTrace.empty();
-          $scope.layout = new forceLayout.Layout({ // jshint ignore:line
-            parent: scxmlTrace[0],
-            doc: doc,
-            kielerAlgorithm: algorithm.id,
-            debug: false,
-            geometry: $cookies[chartName + '/geometry']
-          });
+        scxmlTrace.empty();
+        $scope.layout = new forceLayout.Layout({ // jshint ignore:line
+          kielerAlgorithm: '__klayjs',
+          parent: scxmlTrace[0],
+          doc: doc,
+          textOnPath: false,
+          routing: 'ORTHOGONAL',
+          debug: false,
+          geometry: $cookies[chartName + '/geometry']
+        });
 
-          $scope.toggleLayout();
-        }
+        $scope.layout.initialized.catch(function (err) {
+          $scope.error = err.message;
+        }).done();
       } catch (e) {
         errorMessage = e.message;
       } finally {
@@ -64,19 +51,7 @@ angular.module('deusExStateMachinePortalApp')
       }
     }
 
-    $scope.toggleLayout = function () {
-      if ($scope.forceLayoutEnabled) {
-        $scope.layout.start();
-      } else {
-        $scope.layout.stop();
-      }
-    };
-
-    $scope.changeAlgorithm = function (selectedAlgorithm) {
-      drawSimulation(simulateService.chartContent, selectedAlgorithm);
-
-      $cookies.userAlgorithm = selectedAlgorithm.id;
-    };
+    drawSimulation(simulateService.chartContent);
 
     var updateLayout = _.debounce(function () {
       drawSimulation(simulateService.chartContent);
