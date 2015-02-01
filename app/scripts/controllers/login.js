@@ -13,8 +13,8 @@ angular.module('deusExStateMachinePortalApp')
       $scope.emailtoken = emailtoken;
     }
 
-    $scope.doLogin = function (inputEmail, inputPassword) {
-      Session.login(inputEmail, inputPassword, $scope.emailtoken, function (err) {
+    $scope.doLogin = function (inputUsername, inputPassword) {
+      Session.login(inputUsername, inputPassword, $scope.emailtoken, function (err) {
         if (err) {
           alertify.error(err.headers('WWW-Authenticate'));
           return;
