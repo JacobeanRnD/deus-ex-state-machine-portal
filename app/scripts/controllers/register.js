@@ -9,10 +9,10 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('RegisterCtrl', function ($scope, $state, dataService) {
-    $scope.doRegister = function (inputUsername, inputPassword) {
-      dataService.createAccount(inputUsername, inputPassword).then(function () {
-        alertify.success('Account created.');
-        $state.go('login');
+    $scope.doRegister = function (inputUsername, inputEmail, inputPassword) {
+      dataService.createAccount(inputUsername, inputEmail, inputPassword).then(function () {
+        alertify.success('Your account is on the wait list, pending for approval.');
+        $scope.showWaitListMessage = true;
       }, function (error) {
         alertify.error(error.data);
       });

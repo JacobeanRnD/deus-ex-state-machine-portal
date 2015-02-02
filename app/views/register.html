@@ -1,9 +1,27 @@
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
-    <form role="form" name="register" ng-submit="doRegister(inputUsername,inputPassword)">
+    <h3>
+      Register
+    </h3>
+  </div>
+
+  <div class="col-md-4 col-md-offset-4" ng-show="showWaitListMessage">
+    <p>
+      Thank you for signing up to SCXML.io.
+      <br> Your account is on our wait list, we will notify you in the future.
+      <br> Don't forget to check your email!
+    </p>
+  </div>
+
+  <div class="col-md-4 col-md-offset-4" ng-hide="showWaitListMessage">
+    <form role="form" name="register" ng-submit="doRegister(inputUsername,inputEmail,inputPassword)">
       <div class="form-group">
         <label for="inputUsername">Username</label>
         <input class="form-control" id="inputUsername" ng-model="inputUsername" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">Email</label>
+        <input class="form-control" id="inputEmail" ng-model="inputEmail" placeholder="Email">
       </div>
       <div class="form-group">
         <label for="inputPassword">Password</label>
