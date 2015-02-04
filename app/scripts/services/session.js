@@ -26,7 +26,7 @@ angular.module('deusExStateMachinePortalApp')
           deferred.resolve();
         } else if ($cookies.username) {
           dataService.checkAccount($cookies.username).then(function (result) {
-            session.username = result.data.name;
+            session.username = result.data.username;
             deferred.resolve();
           }, function () {
             delete $cookies.username;
