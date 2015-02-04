@@ -35,8 +35,10 @@ angular.module('deusExStateMachinePortalApp')
       }
 
       dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-        $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
-        addDataToDashboard(instance.snapshot[3]);
+        var dataModel = instance.data.data.snapshot[3];
+
+        $scope.dataModel = JSON.stringify(dataModel, null, 4);
+        addDataToDashboard(dataModel);
       });
     });
 
