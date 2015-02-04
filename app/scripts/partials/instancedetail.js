@@ -9,11 +9,10 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
-    var instance = instanceDetails.data.instance;
+    var instance = instanceDetails.data.data;
 
     $scope.chartName = chartName;
     $scope.instanceId = instanceId;
-    $scope.instanceuuid = instance.instanceuuid;
     $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
     $scope.currentChartState = [];
 
@@ -36,8 +35,8 @@ angular.module('deusExStateMachinePortalApp')
       }
 
       dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-        $scope.dataModel = JSON.stringify(instance.data.snapshot[3], null, 4);
-        addDataToDashboard(instance.data.snapshot[3]);
+        $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
+        addDataToDashboard(instance.snapshot[3]);
       });
     });
 
