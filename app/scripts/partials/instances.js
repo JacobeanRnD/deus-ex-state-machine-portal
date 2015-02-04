@@ -9,7 +9,7 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
-    $scope.instances = instances.data;
+    $scope.instances = instances.data.instances;
     $scope.chartName = chartName;
 
     $scope.createInstance = function () {
