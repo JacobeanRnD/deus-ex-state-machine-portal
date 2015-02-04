@@ -14,7 +14,7 @@ angular.module('deusExStateMachinePortalApp')
         alertify.success('Your account is on the wait list, pending for approval.');
         $scope.showWaitListMessage = true;
       }, function (error) {
-        alertify.error(error.data);
+        alertify.error(error.data.data || error.data);
       });
     };
   });

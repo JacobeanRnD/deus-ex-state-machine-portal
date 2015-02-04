@@ -40,8 +40,8 @@ angular.module('deusExStateMachinePortalApp')
       logout: function (username) {
         return $http.delete(hostname + '/api/v1/' + username + '/_session');
       },
-      checkAccount: function () {
-        return $http.get(hostname + '/api/v1/_session');
+      checkAccount: function (username) {
+        return $http.get(hostname + '/api/v1/' + username + '/_session');
       },
       getToken: function (username) {
         return $http.get(hostname + '/api/v1/' + username + '/_token');
