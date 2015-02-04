@@ -51,6 +51,8 @@ angular.module('deusExStateMachinePortalApp')
       $scope.events.unshift('event sent -> ' + eventname + (eventdata ? (' - ' + eventdata) : ''));
       dataService.sendEvent(username, chartName, instanceId, eventname, eventdata).then(function () {
 
+      }, function (response) {
+        alertify.error(response.data.data ||  response.data.name ||  response.data);
       });
     };
 

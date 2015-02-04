@@ -124,15 +124,17 @@ var app = angular.module('deusExStateMachinePortalApp', [
               },
               chartContent: function () {
                 return {
-                  data: '<?xml version="1.0" encoding="UTF-8"?>\n' +
-                    '<scxml name="helloworld" datamodel="ecmascript"\n' +
-                    '   xmlns="http://www.w3.org/2005/07/scxml"\n' +
-                    '   version="1.0">\n' +
-                    '   <state id="a">\n' +
-                    '       <transition target="b" event="e1"/>\n' +
-                    '   </state>\n' +
-                    '   <state id="b"/>\n' +
-                    '</scxml>'
+                  data: {
+                    scxml: '<?xml version="1.0" encoding="UTF-8"?>\n' +
+                      '<scxml name="helloworld" datamodel="ecmascript"\n' +
+                      '   xmlns="http://www.w3.org/2005/07/scxml"\n' +
+                      '   version="1.0">\n' +
+                      '   <state id="a">\n' +
+                      '       <transition target="b" event="e1"/>\n' +
+                      '   </state>\n' +
+                      '   <state id="b"/>\n' +
+                      '</scxml>'
+                  }
                 };
               }
             }
