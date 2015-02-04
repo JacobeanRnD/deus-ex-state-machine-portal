@@ -13,8 +13,8 @@ angular.module('deusExStateMachinePortalApp')
       dataService.createAccount(inputUsername, inputEmail, inputPassword).then(function () {
         alertify.success('Your account is on the wait list, pending for approval.');
         $scope.showWaitListMessage = true;
-      }, function (error) {
-        alertify.error(error.data);
+      }, function (response) {
+        alertify.error(response.data.data || response.data.name || response.data);
       });
     };
   });

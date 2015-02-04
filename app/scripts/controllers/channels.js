@@ -21,7 +21,7 @@ angular.module('deusExStateMachinePortalApp')
       }
     };
 
-    $scope.token = token.data;
+    $scope.token = token.data.data;
 
     $scope.activate = function (channelname, accessToken) {
       function activatePopupMessage() {
