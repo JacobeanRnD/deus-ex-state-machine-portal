@@ -113,48 +113,6 @@ angular.module('deusExStateMachinePortalApp')
         } else {
           return false;
         }
-      },
-      getAlgorithms: function () {
-        return $http.get('http://kieler.herokuapp.com/layout/serviceData', {
-          cache: true,
-          withCredentials: false
-        });
-      },
-      saveChannelData: function (username, channelname, tokenData) {
-        return $http({
-          method: 'POST',
-          url: hostname + '/channels/' + username + '/' + channelname,
-          data: tokenData
-        });
-      },
-      getSparkDevicesOnSpark: function (accessToken) {
-        return $http.get('https://api.spark.io/v1/devices?access_token=' + accessToken);
-      },
-      saveSparkDevices: function (username, channelname, accessToken, devices) {
-        return $http({
-          method: 'POST',
-          url: hostname + '/channels/' + username + '/' + channelname,
-          data: {
-            token: accessToken,
-            devices: devices
-          }
-        });
-      },
-      getSparkDevices: function (username) {
-        return $http.get(hostname + '/channels/' + username + '/spark');
-      },
-      getConnectedSparkDevice: function (username, stateChartName, instanceId) {
-        return $http.get(hostname + '/channels/' + username + '/spark/' + stateChartName + '/' + instanceId);
-      },
-      connectSparkDevice: function (username, device, listeningEvents, stateChartName, instanceId) {
-        return $http({
-          method: 'POST',
-          url: hostname + '/channels/' + username + '/spark/' + stateChartName + '/' + instanceId,
-          data: {
-            device: device,
-            listeningEvents: listeningEvents
-          }
-        });
       }
     };
   });
