@@ -32,8 +32,8 @@
           <li ng-class="{ active: state.current.name.indexOf('main') === 0 }">
             <a href="#">Home</a>
           </li>
-          <li ng-class="{ active: state.current.name === 'channels' }">
-            <a href="#channels">Channels</a>
+          <li ng-class="{ active: state.current.name === 'profile' }">
+            <a href="#profile">Profile</a>
           </li>
           <li>
             <a ng-click="logout()">Logout</a>
@@ -116,7 +116,7 @@
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/services/session.js"></script>
   <script src="scripts/controllers/login.js"></script>
-  <script src="scripts/controllers/channels.js"></script>
+  <script src="scripts/controllers/profile.js"></script>
   <script src="scripts/services/dataservice.js"></script>
   <script src="scripts/partials/charts.js"></script>
   <script src="scripts/partials/instances.js"></script>
