@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Profile</h1>
+  <ul>
+    <li>
+      <label>SCXML Token</label>
+      <a ng-click="getToken()" ng-hide="token">
+        Activate
+      </a>
+      <a ng-click="getToken()" ng-show="token">
+        Refresh
+      </a>
+      <span ng-show="token">Current token: {{token}}</span>
+    </li>
+  </ul>
+</div>
