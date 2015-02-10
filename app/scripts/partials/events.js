@@ -33,7 +33,7 @@ angular.module('deusExStateMachinePortalApp')
       dataService.sendEvent(username, chartName, instanceId, eventname, eventdata).then(function () {
 
       }, function (response) {
-        alertify.error(response.data.data ||  response.data.name ||  response.data);
+        alertify.error(response.data.data.message ||  response.data.data ||  response.data.name ||  response.data);
       });
     };
 

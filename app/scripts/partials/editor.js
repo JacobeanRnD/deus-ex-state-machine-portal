@@ -10,7 +10,7 @@
 angular.module('deusExStateMachinePortalApp')
   .controller('EditorCtrl', function ($scope, $state, simulateService, dataService, chartName, chartContent, username) {
     $scope.chartName = chartName;
-    $scope.chartContent = chartContent.data.data;
+    $scope.chartContent = chartContent.data.data.scxml;
     $scope.username = username;
 
     simulateService.update($scope.chartContent);
@@ -38,7 +38,7 @@ angular.module('deusExStateMachinePortalApp')
           });
           alertify.success('Statechart saved');
         }, function (response) {
-          alertify.error(response.data.data ||  response.data.name ||  response.data);
+          alertify.error(response.data.data.message ||  response.data.data ||  response.data.name ||  response.data);
         });
       });
     };

@@ -9,7 +9,7 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('ProfileCtrl', function ($rootScope, $timeout, $location, $scope, Session, $state, dataService, username, token) {
-    $scope.token = token.data.data;
+    $scope.token = token.data.data.token;
 
     $scope.getToken = function () {
       dataService.refreshToken(username).then(function () {

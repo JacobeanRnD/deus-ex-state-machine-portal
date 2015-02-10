@@ -9,7 +9,7 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
-    var instance = instanceDetails.data.data;
+    var instance = instanceDetails.data.data.instance;
 
     $scope.chartName = chartName;
     $scope.instanceId = instanceId;
@@ -35,7 +35,7 @@ angular.module('deusExStateMachinePortalApp')
       }
 
       dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-        var dataModel = instance.data.data.snapshot[3];
+        var dataModel = instance.data.data.instance[3];
 
         $scope.dataModel = JSON.stringify(dataModel, null, 4);
         addDataToDashboard(dataModel);

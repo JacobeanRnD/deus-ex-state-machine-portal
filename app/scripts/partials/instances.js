@@ -9,20 +9,20 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
-    $scope.instances = instances.data.data;
+    $scope.instances = instances.data.data.instances;
     $scope.chartName = chartName;
 
     $scope.createInstance = function () {
       dataService.createInstance(username, chartName).then(function (result) {
         $state.go('main.charts.detail.instance', {
-          instanceId: result.data.id
+          instanceId: result.data.data.id
         }, {
           reload: true
         });
         alertify.success('Instance created');
       }, function (response) {
-        if (response.data.message) {
-          alertify.error(response.data.message);
+        if (response.data.data.message) {
+          alertify.error(response.data.data.message);
         } else {
           alertify.error('An error occured');
         }
