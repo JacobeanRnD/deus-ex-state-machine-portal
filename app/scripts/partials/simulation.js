@@ -11,16 +11,16 @@ angular.module('deusExStateMachinePortalApp')
   .controller('SimulationCtrl', function ($scope, $rootScope, $timeout, $cookies, $state, chartName, simulateService) {
     var scxmlTrace = $('#scxmlTrace');
 
-    function drawSimulation(content, done) {
+    function drawSimulation(content, onDone, onError) {
       var doc = (new DOMParser()).parseFromString(content, 'application/xml');
 
       if (doc.getElementsByTagName('parsererror').length) {
-        return done({ message: $(doc).find('parsererror div').html() });
+        return onDone({ message: $(doc).find('parsererror div').html() });
       }
 
       if($scope.layout) {
         $scope.layout.unhighlightAllStates();
-        $scope.layout.update(doc).then(done);
+        $scope.layout.update(doc).then(onDone, onError);
       } else {
         scxmlTrace.empty();
 
@@ -34,7 +34,7 @@ angular.module('deusExStateMachinePortalApp')
           geometry: $cookies[chartName + '/geometry']
         });
 
-        $scope.layout.initialized.then(done);
+        $scope.layout.initialized.then(onDone, onError);
       }
     }   
 
@@ -48,33 +48,36 @@ angular.module('deusExStateMachinePortalApp')
       }
     });
 
-    function onSimulationDone (err) {
-      if(err && err.message) {
-        console.log('err', err);
-        $scope.error = err.message;
-      } else {
-        console.log('no err');
-        delete $scope.error;
-        $scope.layout.fit();
-
-        if(waitingHighlights.length) {
-          waitingHighlights.forEach(function (highlight) {
-            simulateService.events.highlight(highlight.eventName, highlight.event);
-          });
-
-          //Clean the queue
-          waitingHighlights = [];
-        }
-      }
-
-      //Propagate scope update because this function is async 
+    function onSimulationError (err) {
+      $scope.error = err.message;
       $scope.$apply();
     }
 
-    drawSimulation(simulateService.chartContent, onSimulationDone);
+    function onSimulationDone () {
+      if(waitingHighlights.length) {
+        waitingHighlights.forEach(function (highlight) {
+          simulateService.events.highlight(highlight.eventName, highlight.event);
+        });
+
+        //Clean the queue
+        waitingHighlights = [];
+      }
+
+      if($scope.error) {
+        delete $scope.error;
+        $scope.$apply();
+      }
+    }
+
+    drawSimulation(simulateService.chartContent, function (result) {
+      //Fit the simulation just for the first time
+      $scope.layout.fit();
+      
+      onSimulationDone(result);
+    }, onSimulationError);
 
     var updateLayout = _.debounce(function () {
-      drawSimulation(simulateService.chartContent, onSimulationDone);
+      drawSimulation(simulateService.chartContent, onSimulationDone, onSimulationError);
     }, 500);
 
     $scope.$on('simulationContentUploaded', function () {
