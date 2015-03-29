@@ -15,7 +15,7 @@ angular.module('deusExStateMachinePortalApp')
       var doc = (new DOMParser()).parseFromString(content, 'application/xml');
 
       if (doc.getElementsByTagName('parsererror').length) {
-        return onDone({ message: $(doc).find('parsererror div').html() });
+        return onError({ message: $(doc).find('parsererror div').html() });
       }
 
       if($scope.layout) {
