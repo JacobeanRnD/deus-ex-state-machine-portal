@@ -16,4 +16,17 @@ angular.module('deusExStateMachinePortalApp')
         datamodel: instance.snapshot[3]
       };
     });
+
+    var stats = {};
+    instances.forEach(function(instance) {
+      var state = instance.snapshot[0][0];
+      stats[state] = (stats[state] || 0) + 1;
+    });
+    $scope.stats = stats;
+
+    function renderStats() {
+      $('#dashboardStats').text(JSON.stringify($scope.stats));
+    }
+
+    renderStats();
   });
