@@ -232,6 +232,17 @@ var app = angular.module('deusExStateMachinePortalApp', [
             simulateService.events.eventSource.close();
           }
         }
+      })
+      .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardOverviewCtrl',
+        resolve: {
+          username: checkLoggedin,
+          charts: function(dataService, username) {
+            return dataService.getAllStateCharts(username);
+          }
+        }
       });
   });
 
