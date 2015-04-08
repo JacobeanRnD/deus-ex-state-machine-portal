@@ -243,6 +243,32 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService.getAllStateCharts(username);
           }
         }
+      })
+      .state('dashboardChart', {
+        url: '/dashboard/:chartName',
+        templateUrl: 'views/dashboardChart.html',
+        controller: 'DashboardChartCtrl',
+        resolve: {
+          username: checkLoggedin,
+          chartContent: function (dataService, username, $stateParams) {
+            return dataService.getStateChart(username, $stateParams.chartName);
+          },
+          instances: function (dataService, username, $stateParams, $q) {
+            return dataService
+              .getInstances(username, $stateParams.chartName)
+              .then(function(req) {
+                return $q.all(req.data.data.instances.map(function(instance) {
+                  return dataService
+                    .getInstanceDetails(username, $stateParams.chartName, instance.id)
+                    .then(function(req) {
+                      var rv = req.data.data.instance;
+                      rv.id = instance.id;
+                      return rv;
+                    });
+                }));
+              });
+          }
+        }
       });
   });
 

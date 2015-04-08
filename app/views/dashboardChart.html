@@ -1,0 +1,19 @@
+<div class="main-row row">
+  <div id="dashboardStats"></div>
+
+  <h4>Instances</h4>
+
+  <table class="table table-striped">
+    <tr>
+      <th>id</th>
+      <th>state</th>
+      <th>datamodel</th>
+    </tr>
+
+    <tr ng-repeat="instance in instances">
+      <td>{{ instance.id }}</td>
+      <td>{{ instance.state }}</td>
+      <td>{{ instance.datamodel }}</td>
+    </tr>
+  </table>
+</div>

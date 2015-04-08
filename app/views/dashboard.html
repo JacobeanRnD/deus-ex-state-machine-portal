@@ -6,7 +6,7 @@
 
     <tr ng-repeat="chart in charts">
       <td>
-        {{chart}}
+        <a ui-sref="dashboardChart({chartName: chart})">{{chart}}</a>
       </td>
     </tr>
   </table>
