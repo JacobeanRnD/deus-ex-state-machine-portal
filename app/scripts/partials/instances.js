@@ -9,13 +9,16 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
-    $scope.instances = instances.data.data.instances;
+    $scope.instances = instances.data.map(function (instance) {
+      return instance.replace(chartName + '/', '');
+    });
+
     $scope.chartName = chartName;
 
     $scope.createInstance = function () {
       dataService.createInstance(username, chartName).then(function (result) {
         $state.go('main.charts.detail.instance', {
-          instanceId: result.data.data.id
+          instanceId: result.headers('Location').split('/')[1]
         }, {
           reload: true
         });
@@ -30,8 +33,8 @@ angular.module('deusExStateMachinePortalApp')
     };
 
     $scope.deleteInstance = function (instance) {
-      dataService.deleteInstance(username, chartName, instance.id).then(function () {
-        if (instance.id === $state.params.instanceId) {
+      dataService.deleteInstance(username, chartName, instance).then(function () {
+        if (instance === $state.params.instanceId) {
           $state.go('main.charts.detail', {
             chartName: chartName
           }, {
