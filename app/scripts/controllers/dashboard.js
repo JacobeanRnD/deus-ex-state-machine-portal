@@ -59,7 +59,31 @@ angular.module('deusExStateMachinePortalApp')
     $scope.stats = stats;
 
     function renderStats() {
-      $('#dashboardStats').text(JSON.stringify($scope.stats));
+      var data = d3.entries($scope.stats).sort();
+      var total = d3.sum(data, function(d) { return d.value; });
+      var height = 20 + data.length * 30;
+
+      var svg = d3.select('#dashboardStats').append('svg')
+          .attr('width', 600)
+          .attr('height', height);
+
+      var stats = svg.selectAll('.stat')
+          .data(data)
+        .enter().append('g')
+          .attr('class', 'stat')
+          .attr('transform',
+            function(d, i) { return 'translate(30,' + (10+30*i) + ')'; });
+
+      stats.append('rect')
+          .attr('height', 20)
+          .attr('width', function(d) { return 100 * d.value / total; })
+          .attr('x', function(d) { return 100 - 100 * d.value / total; });
+
+      stats.append('text')
+          .attr('dx', 110)
+          .attr('dy', 15)
+          .attr('style', 'font-size: 20px')
+          .text(function(d) { return d.key; });
     }
 
     renderStats();
