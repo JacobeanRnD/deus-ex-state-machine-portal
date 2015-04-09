@@ -12,7 +12,7 @@
     "angular-animate": "~1.2.0",
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
-    "angular-ui-ace": "bower",
+    "angular-ui-ace": "0.2.3",
     "alertifyjs": "~0.3.12",
     "angular-ui-router": "~0.2.11",
     "desm-force-layout": "https://github.com/JacobeanRnD/SCHVIZ.git",
