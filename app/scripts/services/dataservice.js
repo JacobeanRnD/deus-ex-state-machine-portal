@@ -103,6 +103,9 @@ angular.module('deusExStateMachinePortalApp')
           }
         });
       },
+      getInstanceEvents: function (username, stateChartName, instanceId) {
+        return $http.get(hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId + '/_eventLog');
+      },
       subscribeInstance: function (username, stateChartName, instanceId) {
         if (!!window.EventSource) {
           var source = new EventSource(hostname + '/api/v1/' + username + '/' + stateChartName + '/' + instanceId + '/_changes', {

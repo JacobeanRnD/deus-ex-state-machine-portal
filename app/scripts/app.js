@@ -321,15 +321,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 };
               });
           },
-          events: function() {
-            return [
-              {instance: 'foo', name: 't', origin: 'a', target: 'b',
-               data: {}, timestamp: '2015-04-08T12:34:56Z'},
-              {instance: 'foo', name: 't', origin: 'b', target: 'c',
-               data: {}, timestamp: '2015-04-08T12:34:57Z'},
-              {instance: 'foo', name: 't', origin: 'c', target: 'a',
-               data: {}, timestamp: '2015-04-08T12:34:58Z'}
-            ];
+          events: function(dataService, username, $stateParams) {
+            return dataService
+              .getInstanceEvents(username, $stateParams.chartName, $stateParams.instanceId)
+              .then(function(req) {
+                return req.data;
+              });
           }
         }
       });

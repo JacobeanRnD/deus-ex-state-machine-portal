@@ -87,7 +87,14 @@ angular.module('deusExStateMachinePortalApp')
   .controller('DashboardInstanceCtrl', function ($scope, $stateParams, chartContent, instance, events) {
     $scope.scxml = chartContent;
     $scope.instance = instance;
-    $scope.events = events;
+    $scope.events = events.map(function(item) {
+      return {
+        name: item.event.name,
+        target: item.snapshot[0],
+        data: JSON.stringify(item.event.data),
+        timestamp: item.created
+      };
+    });
 
     var layout = new window.forceLayout.Layout({
       parent: $('#dashboardVisualization').css({height: 200})[0],
@@ -103,9 +110,8 @@ angular.module('deusExStateMachinePortalApp')
     $('#dashboardEventLog').DataTable({
       columns: [
         {data: 'name', title: 'Name'},
-        {data: 'origin', title: 'Origin'},
         {data: 'target', title: 'Target'},
-        {data: function(d) { return JSON.stringify(d.data); }, title: 'Data'},
+        {data: 'data', title: 'Data'},
         {data: function(d) { return window.moment(d.timestamp).calendar(); }, title: 'Time'}
       ],
       data: $scope.events
