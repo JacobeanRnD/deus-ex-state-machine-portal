@@ -25,13 +25,8 @@ angular.module('deusExStateMachinePortalApp')
         scxmlTrace.empty();
 
         $scope.layout = new forceLayout.Layout({ // jshint ignore:line
-          kielerAlgorithm: '__klayjs',
           parent: scxmlTrace[0],
-          doc: doc,
-          textOnPath: false,
-          routing: 'ORTHOGONAL',
-          debug: false,
-          geometry: $cookies[chartName + '/geometry']
+          doc: doc
         });
 
         $scope.layout.initialized.then(onDone, onError);
@@ -82,10 +77,6 @@ angular.module('deusExStateMachinePortalApp')
 
     $scope.$on('simulationContentUploaded', function () {
       updateLayout();
-    });
-
-    $scope.$on('chartSaved', function (e, chartName) {
-      $cookies[chartName + '/geometry'] = $scope.layout.saveGeometry();
     });
   });
 
