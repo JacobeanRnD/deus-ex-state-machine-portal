@@ -17,7 +17,7 @@ angular.module('deusExStateMachinePortalApp')
       };
     });
     $scope.events = events.map(function(event) {
-      event.timestamp = new Date(event.timestamp);
+      event.timestampCalendar = window.moment(event.timestamp).calendar();
       return event;
     });
 
