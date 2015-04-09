@@ -89,6 +89,17 @@ angular.module('deusExStateMachinePortalApp')
     $scope.instance = instance;
     $scope.events = events;
 
+    var layout = new window.forceLayout.Layout({
+      parent: $('#dashboardVisualization').css({height: 200})[0],
+      doc: (new DOMParser()).parseFromString($scope.scxml, 'application/xml')
+    });
+    layout.initialized
+      .then(function() {
+        layout.fit();
+        layout.highlightState($scope.instance.state, true);
+      })
+      .done();
+
     $('#dashboardEventLog').DataTable({
       columns: [
         {data: 'name', title: 'Name'},
