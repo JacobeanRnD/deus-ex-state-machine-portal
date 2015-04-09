@@ -267,6 +267,22 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     });
                 }));
               });
+          },
+          events: function () {
+            return [
+              {instance: 'foo', name: 't', origin: 'a', target: 'b',
+               data: {}, timestamp: '2015-04-08T12:34:56Z'},
+              {instance: 'foo', name: 't', origin: 'b', target: 'c',
+               data: {}, timestamp: '2015-04-08T12:34:57Z'},
+              {instance: 'foo', name: 't', origin: 'c', target: 'a',
+               data: {}, timestamp: '2015-04-08T12:34:58Z'},
+              {instance: 'bar', name: 't', origin: 'a', target: 'b',
+               data: {}, timestamp: '2015-04-08T12:34:53Z'},
+              {instance: 'bar', name: 't', origin: 'b', target: 'c',
+               data: {}, timestamp: '2015-04-08T12:34:54Z'},
+              {instance: 'bar', name: 't', origin: 'c', target: 'a',
+               data: {}, timestamp: '2015-04-08T12:34:55Z'}
+            ];
           }
         }
       });

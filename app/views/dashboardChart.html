@@ -16,4 +16,26 @@
       <td>{{ instance.datamodel }}</td>
     </tr>
   </table>
+
+  <h4>Event log</h4>
+
+  <table class="table table-striped">
+    <tr>
+      <th>instance</th>
+      <th>name</th>
+      <th>origin</th>
+      <th>target</th>
+      <th>data</th>
+      <th>timestamp</th>
+    </tr>
+
+    <tr ng-repeat="event in events">
+      <td>{{ event.instance }}</td>
+      <td>{{ event.name }}</td>
+      <td>{{ event.origin }}</td>
+      <td>{{ event.target }}</td>
+      <td>{{ event.data }}</td>
+      <td>{{ event.timestamp }}</td>
+    </tr>
+  </table>
 </div>

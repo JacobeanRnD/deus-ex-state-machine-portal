@@ -7,7 +7,7 @@ angular.module('deusExStateMachinePortalApp')
 
 
 angular.module('deusExStateMachinePortalApp')
-  .controller('DashboardChartCtrl', function ($scope, $stateParams, chartContent, instances) {
+  .controller('DashboardChartCtrl', function ($scope, $stateParams, chartContent, instances, events) {
     $scope.scxml = chartContent.data.data.scxml;
     $scope.instances = instances.map(function(instance) {
       return {
@@ -15,6 +15,10 @@ angular.module('deusExStateMachinePortalApp')
         state: instance.snapshot[0][0],
         datamodel: instance.snapshot[3]
       };
+    });
+    $scope.events = events.map(function(event) {
+      event.timestamp = new Date(event.timestamp);
+      return event;
     });
 
     var stats = {};
