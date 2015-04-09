@@ -53,7 +53,7 @@ angular.module('deusExStateMachinePortalApp')
       }.bind(this));
     });
 
-    $('#dashboardChart').on('click .dashboardInstanceLink', function(evt) {
+    $('#dashboardChart').on('click', '.dashboardInstanceLink', function(evt) {
       evt.preventDefault();
       $state.go('dashboardInstance', {
         chartName: $stateParams.chartName,

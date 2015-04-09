@@ -19,7 +19,8 @@
     "highcharts-ng": "~0.0.7",
     "moment": "~2.10.2",
     "datatables": "~1.10.6",
-    "ace-builds": "1.1.8"
+    "ace-builds": "1.1.8",
+    "datatables-bootstrap3": "*"
   },
   "overrides": {
     "ace-builds": {

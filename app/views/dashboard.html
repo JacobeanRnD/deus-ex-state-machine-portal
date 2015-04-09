@@ -1,13 +1,15 @@
 <div class="main-row row">
-  <table class="table table-striped">
-    <tr>
-      <th>name</th>
-    </tr>
+  <div class="col-sm-12">
+    <table class="table table-striped">
+      <tr>
+        <th>name</th>
+      </tr>
 
-    <tr ng-repeat="chart in charts">
-      <td>
-        <a ui-sref="dashboardChart({chartName: chart})">{{chart}}</a>
-      </td>
-    </tr>
-  </table>
+      <tr ng-repeat="chart in charts">
+        <td>
+          <a ui-sref="dashboardChart({chartName: chart})">{{chart}}</a>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
