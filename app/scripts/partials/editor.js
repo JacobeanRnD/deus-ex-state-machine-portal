@@ -15,6 +15,10 @@ angular.module('deusExStateMachinePortalApp')
 
     simulateService.update($scope.chartContent);
 
+    $scope.aceLoaded = function (_editor) {
+      _editor.$blockScrolling = Infinity;
+    };
+
     $scope.aceChanged = function () {
       simulateService.update($scope.chartContent);
     };

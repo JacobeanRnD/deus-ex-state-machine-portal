@@ -18,7 +18,8 @@
     "desm-force-layout": "https://github.com/JacobeanRnD/SCHVIZ.git",
     "highcharts-ng": "~0.0.7",
     "moment": "~2.10.2",
-    "datatables": "~1.10.6"
+    "datatables": "~1.10.6",
+    "ace-builds": "1.1.8"
   },
   "overrides": {
     "ace-builds": {
