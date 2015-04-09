@@ -8,6 +8,7 @@ angular.module('deusExStateMachinePortalApp')
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardChartCtrl', function ($scope, $state, $stateParams, chartContent, instances, events) {
+    $scope.chart = $stateParams.chartName;
     $scope.scxml = chartContent;
     $scope.instances = instances;
     $scope.events = events;
@@ -93,6 +94,7 @@ angular.module('deusExStateMachinePortalApp')
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardInstanceCtrl', function ($scope, $stateParams, chartContent, instance, events) {
+    $scope.chart = $stateParams.chartName;
     $scope.scxml = chartContent;
     $scope.instance = instance;
     $scope.events = events.map(function(item) {
