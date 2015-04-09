@@ -257,13 +257,16 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getInstances(username, $stateParams.chartName)
               .then(function(req) {
-                return $q.all(req.data.data.instances.map(function(instance) {
+                return $q.all(req.data.map(function(instance) {
+                  var instanceId = instance.split('/')[1];
                   return dataService
-                    .getInstanceDetails(username, $stateParams.chartName, instance.id)
+                    .getInstanceDetails(username, $stateParams.chartName, instanceId)
                     .then(function(req) {
-                      var rv = req.data.data.instance;
-                      rv.id = instance.id;
-                      return rv;
+                      return {
+                        id: instanceId,
+                        state: req.data[0][0],
+                        datamodel: req.data[3]
+                      };
                     });
                 }));
               });

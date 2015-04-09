@@ -2,20 +2,14 @@
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardOverviewCtrl', function ($scope, charts) {
-    $scope.charts = charts.data.data.charts;
+    $scope.charts = charts.data;
   });
 
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardChartCtrl', function ($scope, $stateParams, chartContent, instances, events) {
-    $scope.scxml = chartContent.data.data.scxml;
-    $scope.instances = instances.map(function(instance) {
-      return {
-        id: instance.id,
-        state: instance.snapshot[0][0],
-        datamodel: instance.snapshot[3]
-      };
-    });
+    $scope.scxml = chartContent.data;
+    $scope.instances = instances;
     $scope.events = events;
 
     $('#dashboardInstances').DataTable({
@@ -53,8 +47,7 @@ angular.module('deusExStateMachinePortalApp')
 
     var stats = {};
     instances.forEach(function(instance) {
-      var state = instance.snapshot[0][0];
-      stats[state] = (stats[state] || 0) + 1;
+      stats[instance.state] = (stats[instance.state] || 0) + 1;
     });
     $scope.stats = stats;
 
