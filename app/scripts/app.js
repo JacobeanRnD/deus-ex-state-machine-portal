@@ -279,21 +279,21 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 }));
               });
           },
-          events: function () {
-            return [
-              {instance: 'foo', name: 't', origin: 'a', target: 'b',
-               data: {}, timestamp: '2015-04-08T12:34:56Z'},
-              {instance: 'foo', name: 't', origin: 'b', target: 'c',
-               data: {}, timestamp: '2015-04-08T12:34:57Z'},
-              {instance: 'foo', name: 't', origin: 'c', target: 'a',
-               data: {}, timestamp: '2015-04-08T12:34:58Z'},
-              {instance: 'bar', name: 't', origin: 'a', target: 'b',
-               data: {}, timestamp: '2015-04-08T12:34:53Z'},
-              {instance: 'bar', name: 't', origin: 'b', target: 'c',
-               data: {}, timestamp: '2015-04-08T12:34:54Z'},
-              {instance: 'bar', name: 't', origin: 'c', target: 'a',
-               data: {}, timestamp: '2015-04-08T12:34:55Z'}
-            ];
+          events: function (dataService, username, $stateParams, instances, $q) {
+            return $q.all(instances.map(function(instance) {
+              return dataService
+                .getInstanceEvents(username, $stateParams.chartName, instance.id)
+                .then(function(req) {
+                  req.data.instance = instance.id;
+                  return req.data;
+                });
+            }))
+              .then(function(nestedEventList) {
+                var eventList = [].concat.apply([], nestedEventList);
+                return eventList.sort(function(a, b) {
+                  return window.d3.descending(a.created, b.created);
+                });
+              });
           }
         }
       })

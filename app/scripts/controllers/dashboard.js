@@ -11,7 +11,15 @@ angular.module('deusExStateMachinePortalApp')
     $scope.chart = $stateParams.chartName;
     $scope.scxml = chartContent;
     $scope.instances = instances;
-    $scope.events = events;
+    $scope.events = events.map(function(item) {
+      return {
+        instance: item.instanceid.split('/')[1],
+        name: item.event.name,
+        target: item.snapshot[0],
+        data: JSON.stringify(item.event.data),
+        timestamp: item.created
+      };
+    });
 
     $('#dashboardInstances').DataTable({
       columns: [
@@ -28,21 +36,12 @@ angular.module('deusExStateMachinePortalApp')
       }.bind(this));
     });
 
-    $('#dashboardInstances').on('click .dashboardInstanceLink', function(evt) {
-      evt.preventDefault();
-      $state.go('dashboardInstance', {
-        chartName: $stateParams.chartName,
-        instanceId: $(evt.target).data('instanceid')
-      });
-    });
-
     $('#dashboardEventLog').DataTable({
       columns: [
-        {data: 'instance', title: 'Instance'},
+        {data: 'instance', title: 'Instance', render: function(d) { return '<a class="dashboardInstanceLink" data-instanceid="' + d + '">' + d + '</a>'; }},
         {data: 'name', title: 'Name'},
-        {data: 'origin', title: 'Origin'},
         {data: 'target', title: 'Target'},
-        {data: function(d) { return JSON.stringify(d.data); }, title: 'Data'},
+        {data: 'data', title: 'Data'},
         {data: function(d) { return window.moment(d.timestamp).calendar(); }, title: 'Time'}
       ],
       data: $scope.events
@@ -52,6 +51,14 @@ angular.module('deusExStateMachinePortalApp')
       $input.on('keyup change', function() {
         this.search($input.val()).draw();
       }.bind(this));
+    });
+
+    $('#dashboardChart').on('click .dashboardInstanceLink', function(evt) {
+      evt.preventDefault();
+      $state.go('dashboardInstance', {
+        chartName: $stateParams.chartName,
+        instanceId: $(evt.target).data('instanceid')
+      });
     });
 
     var stats = {};
