@@ -18,16 +18,22 @@ angular.module('deusExStateMachinePortalApp')
     });
     $scope.events = events;
 
-    $('#dashboardInstances').dataTable({
+    $('#dashboardInstances').DataTable({
       columns: [
         {data: 'id', title: 'ID'},
         {data: 'state', title: 'State'},
         {data: function(d) { return JSON.stringify(d.datamodel); }, title: 'Data'},
       ],
       data: $scope.instances
+    }).columns().every(function() {
+      var $input = $('<input type=search>');
+      $input.appendTo($('<th>').appendTo('#dashboardInstances tfoot'));
+      $input.on('keyup change', function() {
+        this.search($input.val()).draw();
+      }.bind(this));
     });
 
-    $('#dashboardEventLog').dataTable({
+    $('#dashboardEventLog').DataTable({
       columns: [
         {data: 'instance', title: 'Instance'},
         {data: 'name', title: 'Name'},
@@ -37,6 +43,12 @@ angular.module('deusExStateMachinePortalApp')
         {data: function(d) { return window.moment(d.timestamp).calendar(); }, title: 'Time'}
       ],
       data: $scope.events
+    }).columns().every(function() {
+      var $input = $('<input type=search>');
+      $input.appendTo($('<th>').appendTo('#dashboardEventLog tfoot'));
+      $input.on('keyup change', function() {
+        this.search($input.val()).draw();
+      }.bind(this));
     });
 
     var stats = {};
