@@ -17,7 +17,8 @@
     "angular-ui-router": "~0.2.11",
     "desm-force-layout": "https://github.com/JacobeanRnD/deus-ex-state-machine-visualization.git",
     "highcharts-ng": "~0.0.7",
-    "moment": "~2.10.2"
+    "moment": "~2.10.2",
+    "datatables": "~1.10.6"
   },
   "overrides": {
     "ace-builds": {

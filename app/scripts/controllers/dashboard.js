@@ -16,9 +16,18 @@ angular.module('deusExStateMachinePortalApp')
         datamodel: instance.snapshot[3]
       };
     });
-    $scope.events = events.map(function(event) {
-      event.timestampCalendar = window.moment(event.timestamp).calendar();
-      return event;
+    $scope.events = events;
+
+    $('#dashboardEventLog').dataTable({
+      columns: [
+        {data: 'instance', title: 'Instance'},
+        {data: 'name', title: 'Name'},
+        {data: 'origin', title: 'Origin'},
+        {data: 'target', title: 'Target'},
+        {data: function(d) { return JSON.stringify(d.data); }, title: 'Data'},
+        {data: function(d) { return window.moment(d.timestamp).calendar(); }, title: 'Time'}
+      ],
+      data: $scope.events
     });
 
     var stats = {};
