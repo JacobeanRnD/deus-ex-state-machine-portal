@@ -2,13 +2,13 @@
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardOverviewCtrl', function ($scope, charts) {
-    $scope.charts = charts.data;
+    $scope.charts = charts;
   });
 
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardChartCtrl', function ($scope, $stateParams, chartContent, instances, events) {
-    $scope.scxml = chartContent.data;
+    $scope.scxml = chartContent;
     $scope.instances = instances;
     $scope.events = events;
 

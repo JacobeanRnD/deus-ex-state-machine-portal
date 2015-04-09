@@ -240,7 +240,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
         resolve: {
           username: checkLoggedin,
           charts: function(dataService, username) {
-            return dataService.getAllStateCharts(username);
+            return dataService
+              .getAllStateCharts(username)
+              .then(function(req) {
+                return req.data;
+              });
           }
         }
       })
@@ -251,7 +255,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
         resolve: {
           username: checkLoggedin,
           chartContent: function (dataService, username, $stateParams) {
-            return dataService.getStateChart(username, $stateParams.chartName);
+            return dataService
+              .getStateChart(username, $stateParams.chartName)
+              .then(function(req) {
+                return req.data;
+              });
           },
           instances: function (dataService, username, $stateParams, $q) {
             return dataService
