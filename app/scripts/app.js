@@ -232,6 +232,62 @@ var app = angular.module('deusExStateMachinePortalApp', [
             simulateService.events.eventSource.close();
           }
         }
+      })
+      .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardOverviewCtrl',
+        resolve: {
+          username: checkLoggedin,
+          charts: function(dataService, username) {
+            return dataService.getAllStateCharts(username);
+          }
+        }
+      })
+      .state('dashboardChart', {
+        url: '/dashboard/:chartName',
+        templateUrl: 'views/dashboardChart.html',
+        controller: 'DashboardChartCtrl',
+        resolve: {
+          username: checkLoggedin,
+          chartContent: function (dataService, username, $stateParams) {
+            return dataService.getStateChart(username, $stateParams.chartName);
+          },
+          instances: function (dataService, username, $stateParams, $q) {
+            return dataService
+              .getInstances(username, $stateParams.chartName)
+              .then(function(req) {
+                return $q.all(req.data.map(function(instance) {
+                  var instanceId = instance.split('/')[1];
+                  return dataService
+                    .getInstanceDetails(username, $stateParams.chartName, instanceId)
+                    .then(function(req) {
+                      return {
+                        id: instanceId,
+                        state: req.data[0][0],
+                        datamodel: req.data[3]
+                      };
+                    });
+                }));
+              });
+          },
+          events: function () {
+            return [
+              {instance: 'foo', name: 't', origin: 'a', target: 'b',
+               data: {}, timestamp: '2015-04-08T12:34:56Z'},
+              {instance: 'foo', name: 't', origin: 'b', target: 'c',
+               data: {}, timestamp: '2015-04-08T12:34:57Z'},
+              {instance: 'foo', name: 't', origin: 'c', target: 'a',
+               data: {}, timestamp: '2015-04-08T12:34:58Z'},
+              {instance: 'bar', name: 't', origin: 'a', target: 'b',
+               data: {}, timestamp: '2015-04-08T12:34:53Z'},
+              {instance: 'bar', name: 't', origin: 'b', target: 'c',
+               data: {}, timestamp: '2015-04-08T12:34:54Z'},
+              {instance: 'bar', name: 't', origin: 'c', target: 'a',
+               data: {}, timestamp: '2015-04-08T12:34:55Z'}
+            ];
+          }
+        }
       });
   });
 
