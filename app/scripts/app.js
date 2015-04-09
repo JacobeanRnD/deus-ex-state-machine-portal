@@ -297,7 +297,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           }
         }
       })
-      .state('DashboardInstance', {
+      .state('dashboardInstance', {
         url: '/dashboard/:chartName/:instanceId',
         templateUrl: 'views/dashboardInstance.html',
         controller: 'DashboardInstanceCtrl',

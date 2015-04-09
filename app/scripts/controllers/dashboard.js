@@ -7,14 +7,14 @@ angular.module('deusExStateMachinePortalApp')
 
 
 angular.module('deusExStateMachinePortalApp')
-  .controller('DashboardChartCtrl', function ($scope, $stateParams, chartContent, instances, events) {
+  .controller('DashboardChartCtrl', function ($scope, $state, $stateParams, chartContent, instances, events) {
     $scope.scxml = chartContent;
     $scope.instances = instances;
     $scope.events = events;
 
     $('#dashboardInstances').DataTable({
       columns: [
-        {data: 'id', title: 'ID'},
+        {data: 'id', title: 'ID', render: function(d) { return '<a class="dashboardInstanceLink" data-instanceid="' + d + '">' + d + '</a>'; }},
         {data: 'state', title: 'State'},
         {data: function(d) { return JSON.stringify(d.datamodel); }, title: 'Data'},
       ],
@@ -25,6 +25,14 @@ angular.module('deusExStateMachinePortalApp')
       $input.on('keyup change', function() {
         this.search($input.val()).draw();
       }.bind(this));
+    });
+
+    $('#dashboardInstances').on('click .dashboardInstanceLink', function(evt) {
+      evt.preventDefault();
+      $state.go('dashboardInstance', {
+        chartName: $stateParams.chartName,
+        instanceId: $(evt.target).data('instanceid')
+      });
     });
 
     $('#dashboardEventLog').DataTable({
