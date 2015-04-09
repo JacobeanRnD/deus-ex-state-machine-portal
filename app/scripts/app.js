@@ -296,6 +296,42 @@ var app = angular.module('deusExStateMachinePortalApp', [
             ];
           }
         }
+      })
+      .state('DashboardInstance', {
+        url: '/dashboard/:chartName/:instanceId',
+        templateUrl: 'views/dashboardInstance.html',
+        controller: 'DashboardInstanceCtrl',
+        resolve: {
+          username: checkLoggedin,
+          chartContent: function (dataService, username, $stateParams) {
+            return dataService
+              .getStateChart(username, $stateParams.chartName)
+              .then(function(req) {
+                return req.data;
+              });
+          },
+          instance: function(dataService, username, $stateParams) {
+            return dataService
+              .getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId)
+              .then(function(req) {
+                return {
+                  id: $stateParams.instanceId,
+                  state: req.data[0][0],
+                  datamodel: req.data[3]
+                };
+              });
+          },
+          events: function() {
+            return [
+              {instance: 'foo', name: 't', origin: 'a', target: 'b',
+               data: {}, timestamp: '2015-04-08T12:34:56Z'},
+              {instance: 'foo', name: 't', origin: 'b', target: 'c',
+               data: {}, timestamp: '2015-04-08T12:34:57Z'},
+              {instance: 'foo', name: 't', origin: 'c', target: 'a',
+               data: {}, timestamp: '2015-04-08T12:34:58Z'}
+            ];
+          }
+        }
       });
   });
 
