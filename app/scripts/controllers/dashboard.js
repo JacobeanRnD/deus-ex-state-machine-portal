@@ -18,6 +18,15 @@ angular.module('deusExStateMachinePortalApp')
     });
     $scope.events = events;
 
+    $('#dashboardInstances').dataTable({
+      columns: [
+        {data: 'id', title: 'ID'},
+        {data: 'state', title: 'State'},
+        {data: function(d) { return JSON.stringify(d.datamodel); }, title: 'Data'},
+      ],
+      data: $scope.instances
+    });
+
     $('#dashboardEventLog').dataTable({
       columns: [
         {data: 'instance', title: 'Instance'},
