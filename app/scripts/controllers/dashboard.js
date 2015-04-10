@@ -29,7 +29,7 @@ angular.module('deusExStateMachinePortalApp')
       ],
       data: $scope.instances
     }).columns().every(function() {
-      var $input = $('<input type=search>');
+      var $input = $('<input type="search" class="form-control" placeholder="search">');
       $input.appendTo($('<th>').appendTo('#dashboardInstances tfoot'));
       $input.on('keyup change', function() {
         this.search($input.val()).draw();
@@ -46,12 +46,14 @@ angular.module('deusExStateMachinePortalApp')
       ],
       data: $scope.events
     }).columns().every(function() {
-      var $input = $('<input type=search>');
+      var $input = $('<input type="search" class="form-control" placeholder="search">');
       $input.appendTo($('<th>').appendTo('#dashboardEventLog tfoot'));
       $input.on('keyup change', function() {
         this.search($input.val()).draw();
       }.bind(this));
     });
+
+    $('.dataTables_filter input').addClass('form-control');
 
     $('#dashboardChart').on('click', '.dashboardInstanceLink', function(evt) {
       evt.preventDefault();
