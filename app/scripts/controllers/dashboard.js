@@ -119,10 +119,16 @@ angular.module('deusExStateMachinePortalApp')
       parent: $('#dashboardVisualization').css({height: 200})[0],
       doc: (new DOMParser()).parseFromString($scope.scxml, 'application/xml')
     });
+
+    var highlight = function(state) {
+      layout.unhighlightAllStates();
+      layout.highlightState(state, true);
+    };
+
     layout.initialized
       .then(function() {
         layout.fit();
-        layout.highlightState($scope.instance.state, true);
+        highlight($scope.instance.state);
       })
       .done();
 
@@ -131,9 +137,10 @@ angular.module('deusExStateMachinePortalApp')
         {data: 'name', title: 'Name'},
         {data: 'target', title: 'Target'},
         {data: 'data', title: 'Data'},
-        {data: function(d) { return window.moment(d.timestamp).calendar(); }, title: 'Time'}
+        {data: 'timestamp', title: 'Time'}
       ],
-      data: $scope.events
+      data: $scope.events,
+      order: [[3, 'desc']]
     }).columns().every(function() {
       var $input = $('<input type=search>');
       $input.appendTo($('<th>').appendTo('#dashboardEventLog tfoot'));
@@ -141,4 +148,15 @@ angular.module('deusExStateMachinePortalApp')
         this.search($input.val()).draw();
       }.bind(this));
     });
+
+    var select = function(tr) {
+      $('#dashboardEventLog tbody tr.selected').removeClass('selected');
+      $(tr).addClass('selected');
+      highlight($('td', tr).eq(1).text());
+    };
+
+    $('#dashboardEventLog tbody').on('click', 'tr', function() {
+      select(this);
+    });
+    select($('#dashboardEventLog tbody tr')[0]);
   });
