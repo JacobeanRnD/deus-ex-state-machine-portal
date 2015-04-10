@@ -277,7 +277,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                     .then(function(req) {
                       return {
                         id: instanceId,
-                        state: req.data[0][0],
+                        state: req.data[0],
                         datamodel: req.data[3]
                       };
                     });
@@ -321,7 +321,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
               .then(function(req) {
                 return {
                   id: $stateParams.instanceId,
-                  state: req.data[0][0],
+                  state: req.data[0],
                   datamodel: req.data[3]
                 };
               });
