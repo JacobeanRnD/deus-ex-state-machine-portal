@@ -124,18 +124,23 @@ var app = angular.module('deusExStateMachinePortalApp', [
               },
               chartContent: function () {
                 return {
-                  data: '<?xml version="1.0" encoding="UTF-8"?>\n' +
-                        '<scxml xmlns="http://www.w3.org/2005/07/scxml" name="helloworld" datamodel="ecmascript" version="1.0">\n' +
-                        '  <state id="a">\n' +
-                        '    <transition target="b" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="b">\n' +
-                        '    <transition target="c" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="c">\n' +
-                        '    <transition target="a" event="t"/>\n' +
-                        '  </state>\n' +
-                        '</scxml>'};
+                  data: {
+                    data: {
+                      scxml:  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+                              '<scxml xmlns="http://www.w3.org/2005/07/scxml" name="helloworld" datamodel="ecmascript" version="1.0">\n' +
+                              '  <state id="a">\n' +
+                              '    <transition target="b" event="t"/>\n' +
+                              '  </state>\n' +
+                              '  <state id="b">\n' +
+                              '    <transition target="c" event="t"/>\n' +
+                              '  </state>\n' +
+                              '  <state id="c">\n' +
+                              '    <transition target="a" event="t"/>\n' +
+                              '  </state>\n' +
+                              '</scxml>'
+                    }
+                  }
+                };
               }
             }
           },

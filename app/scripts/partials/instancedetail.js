@@ -9,11 +9,11 @@
  */
 angular.module('deusExStateMachinePortalApp')
   .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
-    var instance = instanceDetails.data;
+    var instance = instanceDetails.data.data.instance;
 
     $scope.chartName = chartName;
     $scope.instanceId = instanceId;
-    $scope.dataModel = JSON.stringify(instance[3], null, 4);
+    $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
     $scope.currentChartState = [];
 
     //Redraw to remove event changes
@@ -21,7 +21,7 @@ angular.module('deusExStateMachinePortalApp')
 
     //Wait till everything is loaded so the event listener on simulation controller can bind
     $timeout(function () {
-      simulateService.events.highlight('onEntry', instance[0]);
+      simulateService.events.highlight('onEntry', instance.snapshot[0]);
     }, 1000);
 
     $scope.oneSecondPassed = true;
@@ -35,7 +35,7 @@ angular.module('deusExStateMachinePortalApp')
       }
 
       dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
-        var dataModel = instance.data[3];
+        var dataModel = instance.data.data.instance.snapshot[3];
 
         $scope.dataModel = JSON.stringify(dataModel, null, 4);
         addDataToDashboard(dataModel);
@@ -56,7 +56,7 @@ angular.module('deusExStateMachinePortalApp')
 
     var dataModelLegend = [];
 
-    for (var item in instance[3]) {
+    for (var item in instance.snapshot[3]) {
       dataModelLegend.push({
         name: item,
         data: [],

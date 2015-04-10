@@ -12,12 +12,12 @@
         New Instance
       </a>
     </li>
-    <li ng-repeat="instance in instances" ng-class="instance
+    <li ng-repeat="instance in instances" ng-class="instance.id
  === state.params.instanceId ? 'selected' : ''">
-      <a ng-click="deleteInstance(instance)" title="Delete instance {{instance}}">
+      <a ng-click="deleteInstance(instance)" title="Delete instance {{instance.id}}">
         <span class="glyphicon glyphicon-remove"></span>
       </a>
-      <a ui-sref="main.charts.detail.instance({ chartName:chartName, instanceId: instance })">{{ instance}}</a>
+      <a ui-sref="main.charts.detail.instance({ chartName:chartName, instanceId: instance.id })">{{ instance.id }}</a>
     </li>
   </ul>
 </div>
