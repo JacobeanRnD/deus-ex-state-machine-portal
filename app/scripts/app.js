@@ -33,18 +33,19 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'highcharts-ng'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-    function checkLoggedin(Session, $state) {
-      return Session.refresh().then(function () {
-        if (Session.username) {
-          return Session.username;
-        } else {
-          $state.go('login');
-          return;
-        }
-      });
-    }
+    function checkLoggedin() { return null; }
+    // function checkLoggedin(Session, $state) {
+    //   return Session.refresh().then(function () {
+    //     if (Session.username) {
+    //       return Session.username;
+    //     } else {
+    //       $state.go('login');
+    //       return;
+    //     }
+    //   });
+    // }
 
-    $httpProvider.defaults.withCredentials = true;
+    // $httpProvider.defaults.withCredentials = true;
     $urlRouterProvider.otherwise('/charts');
 
     $stateProvider
@@ -100,11 +101,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/charts.html',
             controller: 'ChartsCtrl',
             resolve: {
-              charts: function (dataService, username, $state) {
-                if (!username) {
-                  $state.go('login');
-                  return;
-                }
+              charts: function (dataService, username) {
+                // if (!username) {
+                //   $state.go('login');
+                //   return;
+                // }
 
                 return dataService.getAllStateCharts(username);
               }
