@@ -2,7 +2,7 @@
 
 angular.module('deusExStateMachinePortalApp')
   .controller('DashboardOverviewCtrl', function ($scope, charts) {
-    $scope.charts = charts.data.charts;
+    $scope.charts = charts;
   });
 
 
