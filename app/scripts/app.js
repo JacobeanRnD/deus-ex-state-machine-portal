@@ -20,6 +20,7 @@ var url = getParameterByName('simulationServer');
 url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
 
 window.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
+window.isSCXMLD = getParameterByName('isSCXMLD') === 'true';
 
 var app = angular.module('deusExStateMachinePortalApp', [
     'ngAnimate',
@@ -33,19 +34,20 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'highcharts-ng'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-    function checkLoggedin() { return null; }
-    // function checkLoggedin(Session, $state) {
-    //   return Session.refresh().then(function () {
-    //     if (Session.username) {
-    //       return Session.username;
-    //     } else {
-    //       $state.go('login');
-    //       return;
-    //     }
-    //   });
-    // }
+    function checkLoggedin(Session, $state) {
+      return Session.refresh().then(function () {
+        if (Session.username) {
+          return Session.username;
+        } else {
+          $state.go('login');
+          return;
+        }
+      });
+    }
 
-    // $httpProvider.defaults.withCredentials = true;
+    if(!window.isSCXMLD)
+      $httpProvider.defaults.withCredentials = true;
+    
     $urlRouterProvider.otherwise('/charts');
 
     $stateProvider
@@ -341,6 +343,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
 app.run(function ($rootScope, Session, $location, $state) {
   $rootScope.state = $state;
   $rootScope.Session = Session;
+  $rootScope.isSCXMLD = window.isSCXMLD;
 
   $rootScope.logout = function () {
     Session.logout().then(function () {
