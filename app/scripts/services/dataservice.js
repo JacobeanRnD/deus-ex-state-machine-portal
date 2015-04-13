@@ -1,7 +1,5 @@
 'use strict';
 
-/* jshint ignore:start */
-
 /**
  * @ngdoc service
  * @name deusExStateMachinePortalApp.dataService
@@ -12,12 +10,15 @@
 angular.module('deusExStateMachinePortalApp')
   .factory('dataService', function ($resource, $http) {
     var hostname = window.simulationServerUrl;
+    var baseUrl = function (username) {
+      return hostname + '/api/v1' + (window.isSCXMLD ? '' : '/' + username) + '/';
+    };
 
     return {
       createAccount: function (username, email, password) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/v1/_users',
+          url: baseUrl('') + '_users',
           data: {
             username: username,
             password: password,
@@ -28,7 +29,7 @@ angular.module('deusExStateMachinePortalApp')
       login: function (username, password, emailtoken) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/v1/_session',
+          url: baseUrl(username) + '_session',
           params: {
             username: username,
             password: password,
@@ -40,32 +41,32 @@ angular.module('deusExStateMachinePortalApp')
         });
       },
       logout: function (username) {
-        return $http.delete(hostname + '/api/v1/_session');
+        return $http.delete(baseUrl(username) + '_session');
       },
       checkAccount: function (username) {
-        return $http.get(hostname + '/api/v1/_session');
+        return $http.get(baseUrl(username) + '_session');
       },
       getToken: function (username) {
-        return $http.get(hostname + '/api/v1/_token');
+        return $http.get(baseUrl(username) + '_token');
       },
       refreshToken: function (username) {
-        return $http.post(hostname + '/api/v1/_token');
+        return $http.post(baseUrl(username) + '_token');
       },
       getAllStateCharts: function (username) {
-        return $http.get(hostname + '/api/v1/_all_statechart_definitions');
+        return $http.get(baseUrl(username) + '_all_statechart_definitions');
       },
       getStateChart: function (username, stateChartName) {
-        return $http.get(hostname + '/api/v1/' + stateChartName);
+        return $http.get(baseUrl(username) + stateChartName);
       },
       getInstances: function (username, stateChartName) {
-        return $http.get(hostname + '/api/v1/' + stateChartName + '/_all_instances');
+        return $http.get(baseUrl(username) + stateChartName + '/_all_instances');
       },
       saveStateChart: function (stateChartName, username, content) {
         if (stateChartName) {
           //Update current statechart
           return $http({
             method: 'PUT',
-            url: hostname + '/api/v1/' + stateChartName,
+            url: baseUrl(username) + stateChartName,
             headers: {
               'Content-Type': 'application/xml'
             },
@@ -75,7 +76,7 @@ angular.module('deusExStateMachinePortalApp')
           //Insert new statechart
           return $http({
             method: 'POST',
-            url: hostname + '/api/v1/',
+            url: baseUrl(username),
             headers: {
               'Content-Type': 'application/xml'
             },
@@ -84,21 +85,21 @@ angular.module('deusExStateMachinePortalApp')
         }
       },
       deleteStateChart: function (username, stateChartName) {
-        return $http.delete(hostname + '/api/v1/' + stateChartName);
+        return $http.delete(baseUrl(username) + stateChartName);
       },
       getInstanceDetails: function (username, stateChartName, instanceId) {
-        return $http.get(hostname + '/api/v1/' + stateChartName + '/' + instanceId);
+        return $http.get(baseUrl(username) + stateChartName + '/' + instanceId);
       },
       createInstance: function (username, stateChartName) {
-        return $http.post(hostname + '/api/v1/' + stateChartName);
+        return $http.post(baseUrl(username) + stateChartName);
       },
       deleteInstance: function (username, stateChartName, instanceId) {
-        return $http.delete(hostname + '/api/v1/' + stateChartName + '/' + instanceId);
+        return $http.delete(baseUrl(username) + stateChartName + '/' + instanceId);
       },
       sendEvent: function (username, stateChartName, instanceId, eventname, eventdata) {
         return $http({
           method: 'POST',
-          url: hostname + '/api/v1/' + stateChartName + '/' + instanceId,
+          url: baseUrl(username) + stateChartName + '/' + instanceId,
           data: {
             name: eventname,
             data: eventdata ? JSON.parse(eventdata) : ''
@@ -106,13 +107,15 @@ angular.module('deusExStateMachinePortalApp')
         });
       },
       getInstanceEvents: function (username, stateChartName, instanceId) {
-        return $http.get(hostname + '/api/v1/' + stateChartName + '/' + instanceId + '/_eventLog');
+        return $http.get(baseUrl(username) + stateChartName + '/' + instanceId + '/_eventLog');
       },
       subscribeInstance: function (username, stateChartName, instanceId) {
         if (!!window.EventSource) {
-          var source = new EventSource(hostname + '/api/v1/' + stateChartName + '/' + instanceId + '/_changes', {
-            // withCredentials: true
-          });
+          var options = { };
+
+          if(!window.isSCXMLD) options = { withCredentials: true };
+
+          var source = new EventSource(baseUrl(username) + stateChartName + '/' + instanceId + '/_changes', options);
 
           return source;
         } else {
@@ -121,4 +124,4 @@ angular.module('deusExStateMachinePortalApp')
       }
     };
   });
-/* jshint ignore:end */
+
