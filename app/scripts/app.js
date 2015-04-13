@@ -20,6 +20,7 @@ var url = getParameterByName('simulationServer');
 url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
 
 window.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
+window.isSCXMLD = getParameterByName('isSCXMLD') === 'true';
 
 var app = angular.module('deusExStateMachinePortalApp', [
     'ngAnimate',
@@ -44,7 +45,9 @@ var app = angular.module('deusExStateMachinePortalApp', [
       });
     }
 
-    $httpProvider.defaults.withCredentials = true;
+    if(!window.isSCXMLD)
+      $httpProvider.defaults.withCredentials = true;
+    
     $urlRouterProvider.otherwise('/charts');
 
     $stateProvider
@@ -339,6 +342,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
 app.run(function ($rootScope, Session, $location, $state) {
   $rootScope.state = $state;
   $rootScope.Session = Session;
+  $rootScope.isSCXMLD = window.isSCXMLD;
 
   $rootScope.logout = function () {
     Session.logout().then(function () {

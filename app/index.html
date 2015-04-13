@@ -34,10 +34,10 @@
           <li ng-class="{ active: state.current.name.indexOf('main') === 0 }">
             <a href="#">Home</a>
           </li>
-          <li ng-class="{ active: state.current.name === 'profile' }">
+          <li ng-hide="isSCXMLD" ng-class="{ active: state.current.name === 'profile' }">
             <a href="#profile">Profile</a>
           </li>
-          <li>
+          <li ng-hide="isSCXMLD">
             <a ng-click="logout()">Logout</a>
           </li>
         </ul>

@@ -22,6 +22,11 @@ angular.module('deusExStateMachinePortalApp')
       refresh: function () {
         var deferred = $q.defer();
 
+        if(window.isSCXMLD) {
+          session.username = 'SCXMLD';
+          deferred.resolve();
+        }
+
         if (session.username) {
           deferred.resolve();
         } else if ($cookies.username) {
