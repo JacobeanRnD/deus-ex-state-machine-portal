@@ -248,7 +248,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getAllStateCharts(username)
               .then(function(req) {
-                return req.data;
+                return req.data.data.charts;
               });
           }
         }
@@ -270,15 +270,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getInstances(username, $stateParams.chartName)
               .then(function(req) {
-                return $q.all(req.data.map(function(instance) {
-                  var instanceId = instance.split('/')[1];
+                return $q.all(req.data.data.instances.map(function(instance) {
                   return dataService
-                    .getInstanceDetails(username, $stateParams.chartName, instanceId)
+                    .getInstanceDetails(username, $stateParams.chartName, instance.id)
                     .then(function(req) {
                       return {
-                        id: instanceId,
-                        state: req.data[0],
-                        datamodel: req.data[3]
+                        id: instance.id,
+                        state: req.data.data.instance.snapshot[0],
+                        datamodel: req.data.data.instance.snapshot[3]
                       };
                     });
                 }));
@@ -290,7 +289,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 .getInstanceEvents(username, $stateParams.chartName, instance.id)
                 .then(function(req) {
                   req.data.instance = instance.id;
-                  return req.data;
+                  return req.data.data.events;
                 });
             }))
               .then(function(nestedEventList) {
@@ -312,7 +311,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getStateChart(username, $stateParams.chartName)
               .then(function(req) {
-                return req.data;
+                return req.data.data.scxml;
               });
           },
           instance: function(dataService, username, $stateParams) {
@@ -321,8 +320,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
               .then(function(req) {
                 return {
                   id: $stateParams.instanceId,
-                  state: req.data[0],
-                  datamodel: req.data[3]
+                  state: req.data.data.instance.snapshot[0],
+                  datamodel: req.data.data.instance.snapshot[3]
                 };
               });
           },
@@ -330,7 +329,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getInstanceEvents(username, $stateParams.chartName, $stateParams.instanceId)
               .then(function(req) {
-                return req.data;
+                return req.data.data.events;
               });
           }
         }
