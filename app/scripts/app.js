@@ -103,11 +103,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/charts.html',
             controller: 'ChartsCtrl',
             resolve: {
-              charts: function (dataService, username) {
-                // if (!username) {
-                //   $state.go('login');
-                //   return;
-                // }
+              charts: function (dataService, username, $state) {
+                if (!username) {
+                  $state.go('login');
+                  return;
+                }
 
                 return dataService.getAllStateCharts(username);
               }
