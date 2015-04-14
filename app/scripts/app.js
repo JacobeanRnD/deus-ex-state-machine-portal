@@ -291,8 +291,11 @@ var app = angular.module('deusExStateMachinePortalApp', [
               return dataService
                 .getInstanceEvents(username, $stateParams.chartName, instance.id)
                 .then(function(req) {
-                  req.data.instance = instance.id;
-                  return req.data.data.events;
+                  var events = req.data.data.events;
+                  events.forEach(function(e) {
+                    e.instanceid = instance.id;
+                  });
+                  return events;
                 });
             }))
               .then(function(nestedEventList) {

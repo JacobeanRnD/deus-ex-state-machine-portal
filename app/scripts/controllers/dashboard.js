@@ -13,11 +13,11 @@ angular.module('deusExStateMachinePortalApp')
     $scope.instances = instances;
     $scope.events = events.map(function(item) {
       return {
-        instance: item.instanceid.split('/')[1],
+        instance: item.instanceid,
         name: item.event.name,
         target: item.snapshot[0],
         data: JSON.stringify(item.event.data),
-        timestamp: item.created
+        timestamp: item.timestamp
       };
     });
 
@@ -111,7 +111,7 @@ angular.module('deusExStateMachinePortalApp')
         name: item.event.name,
         target: item.snapshot[0],
         data: JSON.stringify(item.event.data),
-        timestamp: item.created
+        timestamp: item.timestamp
       };
     });
 
