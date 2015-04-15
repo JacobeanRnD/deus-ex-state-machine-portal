@@ -18,7 +18,7 @@ angular.module('deusExStateMachinePortalApp')
       createAccount: function (username, email, password) {
         return $http({
           method: 'POST',
-          url: baseUrl('') + '_users',
+          url: hostname + '/api/v1/_users',
           data: {
             username: username,
             password: password,
