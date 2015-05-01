@@ -15,12 +15,17 @@ angular.module('deusExStateMachinePortalApp')
 
     $scope.createInstance = function () {
       dataService.createInstance(username, chartName).then(function (result) {
-        $state.go('main.charts.detail.instance', {
-          instanceId: result.data.data.id
-        }, {
-          reload: true
+        var instanceId = result.data.data.id;
+
+        //Just start as a convenience
+        dataService.sendEvent(username, chartName, instanceId, 'system.start', null).then(function () {
+          $state.go('main.charts.detail.instance', {
+            instanceId: instanceId
+          }, {
+            reload: true
+          });
+          alertify.success('Instance created');
         });
-        alertify.success('Instance created');
       }, function (response) {
         if (response.data.data.message) {
           alertify.error(response.data.data.message);
