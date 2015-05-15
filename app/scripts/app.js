@@ -19,7 +19,7 @@ function getParameterByName(name) {
 var url = getParameterByName('simulationServer');
 url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
 
-window.simulationServerUrl = url ? url : 'http://simulation.scxml.io';
+window.simulationServerUrl = url ? url : 'http://cloud.scxml.io';
 window.isSCXMLD = getParameterByName('isSCXMLD') === 'true';
 
 var app = angular.module('deusExStateMachinePortalApp', [
