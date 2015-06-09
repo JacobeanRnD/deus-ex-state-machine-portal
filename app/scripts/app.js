@@ -41,7 +41,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     if(!window.isSCXMLD)
       $httpProvider.defaults.withCredentials = true;
     
-    $urlRouterProvider.otherwise('/charts');
+    $urlRouterProvider.otherwise('/charts/default/instances');
 
     $stateProvider
       .state('login', {
