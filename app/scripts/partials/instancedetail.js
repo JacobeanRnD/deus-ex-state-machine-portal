@@ -34,7 +34,7 @@ angular.module('deusExStateMachinePortalApp')
         $scope.currentChartState.splice(stateIndex, 1);
       }
 
-      dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
+      dataService.getInstanceDetails(instanceId).then(function (instance) {
         var dataModel = instance.data.data.instance.snapshot[3];
 
         $scope.dataModel = JSON.stringify(dataModel, null, 4);

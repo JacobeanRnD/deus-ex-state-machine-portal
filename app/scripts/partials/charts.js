@@ -9,7 +9,7 @@
 angular.module('deusExStateMachinePortalApp')
   .controller('ChartsCtrl', function ($scope, $state, dataService, charts, username) {
     $scope.username = username;
-    $scope.charts = charts.data.data.charts;
+    $scope.charts = charts;
 
     $scope.deleteStateChart = function (chart) {
       dataService.deleteStateChart(username, chart).then(function () {

@@ -34,15 +34,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'highcharts-ng'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-    function checkLoggedin(Session, $state) {
-      return Session.refresh().then(function () {
-        if (Session.username) {
-          return Session.username;
-        } else {
-          $state.go('login');
-          return;
-        }
-      });
+    function checkLoggedin() {
+      return 'root';
     }
 
     if(!window.isSCXMLD)
@@ -103,13 +96,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/charts.html',
             controller: 'ChartsCtrl',
             resolve: {
-              charts: function (dataService, username, $state) {
-                if (!username) {
-                  $state.go('login');
-                  return;
-                }
-
-                return dataService.getAllStateCharts(username);
+              charts: function () {
+                return ['default'];
               }
             }
           }
@@ -162,7 +150,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             controller: 'InstancesCtrl',
             resolve: {
               instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances(username, $stateParams.chartName);
+                return dataService.getInstances();
               },
               chartName: function ($stateParams) {
                 return $stateParams.chartName;
@@ -177,7 +165,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               chartContent: function (dataService, username, $stateParams) {
-                return dataService.getStateChart(username, $stateParams.chartName);
+                return dataService.getStateChart();
               }
             }
           },
@@ -203,7 +191,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
                 return $stateParams.chartName;
               },
               instanceDetails: function (dataService, username, $stateParams) {
-                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
+                return dataService.getInstanceDetails($stateParams.instanceId);
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
@@ -242,13 +230,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardOverviewCtrl',
         resolve: {
-          username: checkLoggedin,
-          charts: function(dataService, username) {
-            return dataService
-              .getAllStateCharts(username)
-              .then(function(req) {
-                return req.data.data.charts;
-              });
+          charts: function() {
+            return ['default'];
           }
         }
       })
@@ -260,18 +243,18 @@ var app = angular.module('deusExStateMachinePortalApp', [
           username: checkLoggedin,
           chartContent: function (dataService, username, $stateParams) {
             return dataService
-              .getStateChart(username, $stateParams.chartName)
+              .getStateChart()
               .then(function(req) {
                 return req.data;
               });
           },
           instances: function (dataService, username, $stateParams, $q) {
             return dataService
-              .getInstances(username, $stateParams.chartName)
+              .getInstances()
               .then(function(req) {
                 return $q.all(req.data.data.instances.map(function(instance) {
                   return dataService
-                    .getInstanceDetails(username, $stateParams.chartName, instance.id)
+                    .getInstanceDetails(instance.id)
                     .then(function(req) {
                       return {
                         id: instance.id,
@@ -285,7 +268,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           events: function (dataService, username, $stateParams, instances, $q) {
             return $q.all(instances.map(function(instance) {
               return dataService
-                .getInstanceEvents(username, $stateParams.chartName, instance.id)
+                .getInstanceEvents(instance.id)
                 .then(function(req) {
                   var events = req.data.data.events;
                   events.forEach(function(e) {
@@ -311,14 +294,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
           username: checkLoggedin,
           chartContent: function (dataService, username, $stateParams) {
             return dataService
-              .getStateChart(username, $stateParams.chartName)
+              .getStateChart()
               .then(function(req) {
                 return req.data;
               });
           },
           instance: function(dataService, username, $stateParams) {
             return dataService
-              .getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId)
+              .getInstanceDetails($stateParams.instanceId)
               .then(function(req) {
                 return {
                   id: $stateParams.instanceId,
@@ -329,7 +312,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           },
           events: function(dataService, username, $stateParams) {
             return dataService
-              .getInstanceEvents(username, $stateParams.chartName, $stateParams.instanceId)
+              .getInstanceEvents($stateParams.instanceId)
               .then(function(req) {
                 return req.data.data.events;
               });
