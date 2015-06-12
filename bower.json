@@ -5,7 +5,6 @@
     "angular": "~1.2.0",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
-    "bootstrap-sass-official": "~3.2.0",
     "angular-resource": "~1.2.0",
     "angular-cookies": "~1.2.0",
     "angular-sanitize": "~1.2.0",
@@ -20,7 +19,8 @@
     "moment": "~2.10.2",
     "datatables": "~1.10.6",
     "ace-builds": "1.1.8",
-    "datatables-bootstrap3": "*"
+    "datatables-bootstrap3": "*",
+    "bootstrap": "~3.3.4"
   },
   "overrides": {
     "ace-builds": {
