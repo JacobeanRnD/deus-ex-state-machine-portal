@@ -11,9 +11,10 @@ angular.module('deusExStateMachinePortalApp')
   .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
     var instance = instanceDetails.data.data.instance;
 
+    var snapshot = instance.snapshot;
     $scope.chartName = chartName;
     $scope.instanceId = instanceId;
-    $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
+    $scope.dataModel = snapshot && JSON.stringify(snapshot[3], null, 4);
     $scope.currentChartState = [];
 
     //Redraw to remove event changes
@@ -56,15 +57,17 @@ angular.module('deusExStateMachinePortalApp')
 
     var dataModelLegend = [];
 
-    for (var item in instance.snapshot[3]) {
-      dataModelLegend.push({
-        name: item,
-        data: [],
-        connectNulls: true,
-        id: item,
-        type: 'spline',
-        dashStyle: 'Solid'
-      });
+    if(snapshot){
+      for (var item in snapshot[3]) {
+        dataModelLegend.push({
+          name: item,
+          data: [],
+          connectNulls: true,
+          id: item,
+          type: 'spline',
+          dashStyle: 'Solid'
+        });
+      }
     }
 
     $scope.dashOptions = {

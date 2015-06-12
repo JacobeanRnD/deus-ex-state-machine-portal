@@ -139,8 +139,19 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/instances.html',
             controller: 'InstancesCtrl',
             resolve: {
-              instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances();
+              instances: function (dataService, username, $stateParams, $q) {
+                return dataService.getInstances()
+                  .then(function(req) {
+                    return {
+                      data : {
+                        data : {
+                          instances : req.data.data.instances.map(function(instance) {
+                            return { id : instance };
+                          })
+                        }
+                      }
+                    }
+                  });
               },
               chartName: function ($stateParams) {
                 return $stateParams.chartName;
@@ -242,6 +253,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getInstances()
               .then(function(req) {
+                debugger;
                 return $q.all(req.data.data.instances.map(function(instance) {
                   return dataService
                     .getInstanceDetails(instance.id)
