@@ -80,18 +80,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main.charts', {
-        url: '',
-        views: {
-          'chartlist': {
-            templateUrl: 'views/partials/charts.html',
-            controller: 'ChartsCtrl',
-            resolve: {
-              charts: function () {
-                return ['default'];
-              }
-            }
-          }
-        }
+        url: ''
       })
       .state('main.charts.new', {
         url: '^/new-chart',
