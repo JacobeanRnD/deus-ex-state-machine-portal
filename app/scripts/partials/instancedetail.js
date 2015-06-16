@@ -8,11 +8,10 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
+  .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId) {
     var instance = instanceDetails.data.data.instance;
 
     var snapshot = instance.snapshot;
-    $scope.chartName = chartName;
     $scope.instanceId = instanceId;
     $scope.dataModel = snapshot && JSON.stringify(snapshot[3], null, 4);
     $scope.currentChartState = [];

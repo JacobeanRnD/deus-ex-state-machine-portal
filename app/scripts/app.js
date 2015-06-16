@@ -31,7 +31,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     if(!window.isSCXMLD)
       $httpProvider.defaults.withCredentials = true;
     
-    $urlRouterProvider.otherwise('/charts/default');
+    $urlRouterProvider.otherwise('/chart');
 
     $stateProvider
       .state('login', {
@@ -71,7 +71,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main', {
-        url: '/charts',
+        url: '/chart',
         abstract: true,
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
@@ -80,7 +80,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main.detail', {
-        url: '/:chartName',
+        url: '',
         views: {
           'instancelist@main': {
             templateUrl: 'views/partials/instances.html',
@@ -99,9 +99,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
                       }
                     }
                   });
-              },
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
               }
             }
           },
@@ -109,9 +106,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/editor.html',
             controller: 'EditorCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               chartContent: function (dataService, username, $stateParams) {
                 return dataService.getStateChart();
               }
@@ -119,12 +113,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           },
           'simulation@main': {
             templateUrl: 'views/partials/simulation.html',
-            controller: 'SimulationCtrl',
-            resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              }
-            }
+            controller: 'SimulationCtrl'
           }
         }
       })
@@ -135,9 +124,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/instancedetail.html',
             controller: 'InstancedetailCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               instanceDetails: function (dataService, username, $stateParams) {
                 return dataService.getInstanceDetails($stateParams.instanceId);
               },
@@ -151,9 +137,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/events.html',
             controller: 'EventsCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
               }
