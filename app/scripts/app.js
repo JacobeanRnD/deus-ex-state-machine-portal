@@ -31,7 +31,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
     if(!window.isSCXMLD)
       $httpProvider.defaults.withCredentials = true;
     
-    $urlRouterProvider.otherwise('/charts/default/instances');
+    $urlRouterProvider.otherwise('/charts/default');
 
     $stateProvider
       .state('login', {
@@ -80,7 +80,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main.detail', {
-        url: '/:chartName/instances',
+        url: '/:chartName',
         views: {
           'instancelist@main': {
             templateUrl: 'views/partials/instances.html',
