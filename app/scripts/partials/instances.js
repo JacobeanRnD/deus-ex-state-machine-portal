@@ -18,7 +18,7 @@ angular.module('deusExStateMachinePortalApp')
 
         //Just start as a convenience
         dataService.sendEvent(instanceId, 'system.start', null).then(function () {
-          $state.go('main.charts.detail.instance', {
+          $state.go('main.detail.instance', {
             instanceId: instanceId
           }, {
             reload: true
@@ -37,7 +37,7 @@ angular.module('deusExStateMachinePortalApp')
     $scope.deleteInstance = function (instance) {
       dataService.deleteInstance(instance.id).then(function () {
         if (instance.id === $state.params.instanceId) {
-          $state.go('main.charts.detail', {
+          $state.go('main.detail', {
           }, {
             reload: true
           });
