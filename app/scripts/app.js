@@ -82,45 +82,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
       .state('main.charts', {
         url: ''
       })
-      .state('main.charts.new', {
-        url: '^/new-chart',
-        views: {
-          'editor@main': {
-            templateUrl: 'views/partials/editor.html',
-            controller: 'EditorCtrl',
-            resolve: {
-              chartName: function () {
-                return 'New Statechart';
-              },
-              chartContent: function () {
-                return {
-                  data: '<?xml version="1.0" encoding="UTF-8"?>\n' +
-                        '<scxml xmlns="http://www.w3.org/2005/07/scxml" name="helloworld" datamodel="ecmascript" version="1.0">\n' +
-                        '  <state id="a">\n' +
-                        '    <transition target="b" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="b">\n' +
-                        '    <transition target="c" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="c">\n' +
-                        '    <transition target="a" event="t"/>\n' +
-                        '  </state>\n' +
-                        '</scxml>'
-                };
-              }
-            }
-          },
-          'simulation@main': {
-            templateUrl: 'views/partials/simulation.html',
-            controller: 'SimulationCtrl',
-            resolve: {
-              chartName: function () {
-                return null;
-              }
-            }
-          }
-        }
-      })
       .state('main.charts.detail', {
         url: '/:chartName/instances',
         views: {
