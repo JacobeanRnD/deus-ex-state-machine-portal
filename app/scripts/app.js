@@ -79,10 +79,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           username: checkLoggedin
         }
       })
-      .state('main.charts', {
-        url: ''
-      })
-      .state('main.charts.detail', {
+      .state('main.detail', {
         url: '/:chartName/instances',
         views: {
           'instancelist@main': {
@@ -131,7 +128,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           }
         }
       })
-      .state('main.charts.detail.instance', {
+      .state('main.detail.instance', {
         url: '/:instanceId',
         views: {
           'instancedetail@main': {
