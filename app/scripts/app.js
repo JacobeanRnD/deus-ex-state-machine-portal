@@ -183,13 +183,12 @@ var app = angular.module('deusExStateMachinePortalApp', [
             return dataService
               .getInstances()
               .then(function(req) {
-                debugger;
-                return $q.all(req.data.data.instances.map(function(instance) {
+                return $q.all(req.data.data.instances.map(function(instanceId) {
                   return dataService
-                    .getInstanceDetails(instance.id)
+                    .getInstanceDetails(instanceId)
                     .then(function(req) {
                       return {
-                        id: instance.id,
+                        id: instanceId,
                         state: req.data.data.instance.snapshot[0],
                         datamodel: req.data.data.instance.snapshot[3]
                       };
