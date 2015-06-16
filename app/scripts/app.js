@@ -156,18 +156,8 @@ var app = angular.module('deusExStateMachinePortalApp', [
           }
         }
       })
-      .state('dashboard', {
-        url: '/dashboard',
-        templateUrl: 'views/dashboard.html',
-        controller: 'DashboardOverviewCtrl',
-        resolve: {
-          charts: function() {
-            return ['default'];
-          }
-        }
-      })
       .state('dashboardChart', {
-        url: '/dashboard/:chartName',
+        url: '/dashboard',
         templateUrl: 'views/dashboardChart.html',
         controller: 'DashboardChartCtrl',
         resolve: {
@@ -218,7 +208,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('dashboardInstance', {
-        url: '/dashboard/:chartName/:instanceId',
+        url: '/dashboard/:instanceId',
         templateUrl: 'views/dashboardInstance.html',
         controller: 'DashboardInstanceCtrl',
         resolve: {

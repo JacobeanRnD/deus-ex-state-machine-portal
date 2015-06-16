@@ -1,12 +1,6 @@
 'use strict';
 
 angular.module('deusExStateMachinePortalApp')
-  .controller('DashboardOverviewCtrl', function ($scope, charts) {
-    $scope.charts = charts;
-  });
-
-
-angular.module('deusExStateMachinePortalApp')
   .controller('DashboardChartCtrl', function ($scope, $state, $stateParams, chartContent, instances, events) {
     $scope.chart = $stateParams.chartName;
     $scope.scxml = chartContent;
