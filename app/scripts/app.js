@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-window.simulationServerUrl = window.location.href.split(/\/?#/)[0];
+window.simulationServerUrl = window.location.href.split(/#/)[0].replace(/\/$/, '');
 window.isSCXMLD = true;
 
 var app = angular.module('deusExStateMachinePortalApp', [
