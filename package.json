@@ -1,6 +1,7 @@
 {
   "name": "deus-ex-state-machine-portal",
   "version": "0.0.0",
+  "main": "./index.js",
   "dependencies": {
     "bower": "^1.4.1"
   },
