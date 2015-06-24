@@ -8,10 +8,10 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('EventsCtrl', function ($scope, dataService, simulateService, username, chartName, instanceId) {
+  .controller('EventsCtrl', function ($scope, dataService, simulateService, username, instanceId) {
     $scope.events = [];
 
-    simulateService.events.subscribe(username, chartName, instanceId, function onEntry(eventName, e) {
+    simulateService.events.subscribe(username, instanceId, function onEntry(eventName, e) {
       var today = new Date();
       var h = today.getHours();
       var m = today.getMinutes();
@@ -30,7 +30,7 @@ angular.module('deusExStateMachinePortalApp')
 
     $scope.sendEvent = function (eventname, eventdata) {
       $scope.events.unshift('event sent -> ' + eventname + (eventdata ? (' - ' + eventdata) : ''));
-      dataService.sendEvent(username, chartName, instanceId, eventname, eventdata).then(function () {
+      dataService.sendEvent(instanceId, eventname, eventdata).then(function () {
 
       }, function (response) {
         alertify.error(response.data.data.message ||  response.data.data ||  response.data.name ||  response.data);

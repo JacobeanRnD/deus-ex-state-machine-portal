@@ -1,7 +1,11 @@
 {
-  "name": "deusexstatemachineportal",
-  "version": "0.0.0",
-  "dependencies": {},
+  "name": "deus-ex-state-machine-portal",
+  "version": "1.0.0",
+  "license": "LGPL-3.0",
+  "main": "./index.js",
+  "dependencies": {
+    "bower": "1.4.0"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
@@ -37,6 +41,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "preinstall": "bower install"
+    "postinstall": "node node_modules/bower/bin/bower install"
   }
 }

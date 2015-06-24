@@ -8,7 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('SimulationCtrl', function ($scope, $rootScope, $timeout, $cookies, $state, chartName, simulateService) {
+  .controller('SimulationCtrl', function ($scope, $rootScope, $timeout, $cookies, $state, simulateService) {
     var scxmlTrace = $('#scxmlTrace');
 
     function drawSimulation(content, onDone, onError) {

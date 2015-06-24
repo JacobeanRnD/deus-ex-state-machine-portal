@@ -9,18 +9,8 @@
  * Main module of the application.
  */
 
-function getParameterByName(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-    results = regex.exec(location.search);
-  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-var url = getParameterByName('simulationServer');
-url = url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
-
-window.simulationServerUrl = url ? url : 'http://cloud.scxml.io';
-window.isSCXMLD = getParameterByName('isSCXMLD') === 'true';
+window.simulationServerUrl = window.location.href.split(/#/)[0].replace(/\/$/, '');
+window.isSCXMLD = true;
 
 var app = angular.module('deusExStateMachinePortalApp', [
     'ngAnimate',
@@ -34,21 +24,14 @@ var app = angular.module('deusExStateMachinePortalApp', [
     'highcharts-ng'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-    function checkLoggedin(Session, $state) {
-      return Session.refresh().then(function () {
-        if (Session.username) {
-          return Session.username;
-        } else {
-          $state.go('login');
-          return;
-        }
-      });
+    function checkLoggedin() {
+      return 'root';
     }
 
     if(!window.isSCXMLD)
       $httpProvider.defaults.withCredentials = true;
     
-    $urlRouterProvider.otherwise('/charts');
+    $urlRouterProvider.otherwise('/chart');
 
     $stateProvider
       .state('login', {
@@ -88,7 +71,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('main', {
-        url: '/charts',
+        url: '/chart',
         abstract: true,
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
@@ -96,76 +79,26 @@ var app = angular.module('deusExStateMachinePortalApp', [
           username: checkLoggedin
         }
       })
-      .state('main.charts', {
+      .state('main.detail', {
         url: '',
-        views: {
-          'chartlist': {
-            templateUrl: 'views/partials/charts.html',
-            controller: 'ChartsCtrl',
-            resolve: {
-              charts: function (dataService, username, $state) {
-                if (!username) {
-                  $state.go('login');
-                  return;
-                }
-
-                return dataService.getAllStateCharts(username);
-              }
-            }
-          }
-        }
-      })
-      .state('main.charts.new', {
-        url: '^/new-chart',
-        views: {
-          'editor@main': {
-            templateUrl: 'views/partials/editor.html',
-            controller: 'EditorCtrl',
-            resolve: {
-              chartName: function () {
-                return 'New Statechart';
-              },
-              chartContent: function () {
-                return {
-                  data: '<?xml version="1.0" encoding="UTF-8"?>\n' +
-                        '<scxml xmlns="http://www.w3.org/2005/07/scxml" name="helloworld" datamodel="ecmascript" version="1.0">\n' +
-                        '  <state id="a">\n' +
-                        '    <transition target="b" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="b">\n' +
-                        '    <transition target="c" event="t"/>\n' +
-                        '  </state>\n' +
-                        '  <state id="c">\n' +
-                        '    <transition target="a" event="t"/>\n' +
-                        '  </state>\n' +
-                        '</scxml>'
-                };
-              }
-            }
-          },
-          'simulation@main': {
-            templateUrl: 'views/partials/simulation.html',
-            controller: 'SimulationCtrl',
-            resolve: {
-              chartName: function () {
-                return null;
-              }
-            }
-          }
-        }
-      })
-      .state('main.charts.detail', {
-        url: '/:chartName/instances',
         views: {
           'instancelist@main': {
             templateUrl: 'views/partials/instances.html',
             controller: 'InstancesCtrl',
             resolve: {
-              instances: function (dataService, username, $stateParams) {
-                return dataService.getInstances(username, $stateParams.chartName);
-              },
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
+              instances: function (dataService, username, $stateParams, $q) {
+                return dataService.getInstances()
+                  .then(function(req) {
+                    return {
+                      data : {
+                        data : {
+                          instances : req.data.data.instances.map(function(instance) {
+                            return { id : instance };
+                          })
+                        }
+                      }
+                    }
+                  });
               }
             }
           },
@@ -173,37 +106,26 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/editor.html',
             controller: 'EditorCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               chartContent: function (dataService, username, $stateParams) {
-                return dataService.getStateChart(username, $stateParams.chartName);
+                return dataService.getStateChart();
               }
             }
           },
           'simulation@main': {
             templateUrl: 'views/partials/simulation.html',
-            controller: 'SimulationCtrl',
-            resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              }
-            }
+            controller: 'SimulationCtrl'
           }
         }
       })
-      .state('main.charts.detail.instance', {
+      .state('main.detail.instance', {
         url: '/:instanceId',
         views: {
           'instancedetail@main': {
             templateUrl: 'views/partials/instancedetail.html',
             controller: 'InstancedetailCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               instanceDetails: function (dataService, username, $stateParams) {
-                return dataService.getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId);
+                return dataService.getInstanceDetails($stateParams.instanceId);
               },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
@@ -215,9 +137,6 @@ var app = angular.module('deusExStateMachinePortalApp', [
             templateUrl: 'views/partials/events.html',
             controller: 'EventsCtrl',
             resolve: {
-              chartName: function ($stateParams) {
-                return $stateParams.chartName;
-              },
               instanceId: function ($stateParams) {
                 return $stateParams.instanceId;
               }
@@ -237,44 +156,29 @@ var app = angular.module('deusExStateMachinePortalApp', [
           }
         }
       })
-      .state('dashboard', {
-        url: '/dashboard',
-        templateUrl: 'views/dashboard.html',
-        controller: 'DashboardOverviewCtrl',
-        resolve: {
-          username: checkLoggedin,
-          charts: function(dataService, username) {
-            return dataService
-              .getAllStateCharts(username)
-              .then(function(req) {
-                return req.data.data.charts;
-              });
-          }
-        }
-      })
       .state('dashboardChart', {
-        url: '/dashboard/:chartName',
+        url: '/dashboard',
         templateUrl: 'views/dashboardChart.html',
         controller: 'DashboardChartCtrl',
         resolve: {
           username: checkLoggedin,
           chartContent: function (dataService, username, $stateParams) {
             return dataService
-              .getStateChart(username, $stateParams.chartName)
+              .getStateChart()
               .then(function(req) {
                 return req.data;
               });
           },
           instances: function (dataService, username, $stateParams, $q) {
             return dataService
-              .getInstances(username, $stateParams.chartName)
+              .getInstances()
               .then(function(req) {
-                return $q.all(req.data.data.instances.map(function(instance) {
+                return $q.all(req.data.data.instances.map(function(instanceId) {
                   return dataService
-                    .getInstanceDetails(username, $stateParams.chartName, instance.id)
+                    .getInstanceDetails(instanceId)
                     .then(function(req) {
                       return {
-                        id: instance.id,
+                        id: instanceId,
                         state: req.data.data.instance.snapshot[0],
                         datamodel: req.data.data.instance.snapshot[3]
                       };
@@ -285,7 +189,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           events: function (dataService, username, $stateParams, instances, $q) {
             return $q.all(instances.map(function(instance) {
               return dataService
-                .getInstanceEvents(username, $stateParams.chartName, instance.id)
+                .getInstanceEvents(instance.id)
                 .then(function(req) {
                   var events = req.data.data.events;
                   events.forEach(function(e) {
@@ -304,21 +208,21 @@ var app = angular.module('deusExStateMachinePortalApp', [
         }
       })
       .state('dashboardInstance', {
-        url: '/dashboard/:chartName/:instanceId',
+        url: '/dashboard/:instanceId',
         templateUrl: 'views/dashboardInstance.html',
         controller: 'DashboardInstanceCtrl',
         resolve: {
           username: checkLoggedin,
           chartContent: function (dataService, username, $stateParams) {
             return dataService
-              .getStateChart(username, $stateParams.chartName)
+              .getStateChart()
               .then(function(req) {
                 return req.data;
               });
           },
           instance: function(dataService, username, $stateParams) {
             return dataService
-              .getInstanceDetails(username, $stateParams.chartName, $stateParams.instanceId)
+              .getInstanceDetails($stateParams.instanceId)
               .then(function(req) {
                 return {
                   id: $stateParams.instanceId,
@@ -329,7 +233,7 @@ var app = angular.module('deusExStateMachinePortalApp', [
           },
           events: function(dataService, username, $stateParams) {
             return dataService
-              .getInstanceEvents(username, $stateParams.chartName, $stateParams.instanceId)
+              .getInstanceEvents($stateParams.instanceId)
               .then(function(req) {
                 return req.data.data.events;
               });

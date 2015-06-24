@@ -19,8 +19,8 @@ angular.module('deusExStateMachinePortalApp')
         $rootScope.$broadcast('simulationContentUploaded');
       },
       events: {
-        subscribe: function (username, chartName, instanceId, callback) {
-          this.eventSource = dataService.subscribeInstance(username, chartName, instanceId);
+        subscribe: function (username, instanceId, callback) {
+          this.eventSource = dataService.subscribeInstance(instanceId);
 
           this.eventSource.addEventListener('onEntry', function (e) {
             callback('onEntry', e);

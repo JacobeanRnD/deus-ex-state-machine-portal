@@ -10,9 +10,7 @@
 angular.module('deusExStateMachinePortalApp')
   .factory('dataService', function ($resource, $http) {
     var hostname = window.simulationServerUrl;
-    var baseUrl = function (username) {
-      return hostname + '/api/v1' + (window.isSCXMLD ? '' : '/' + username) + '/';
-    };
+    var baseUrl = hostname + '/api/v3/';
 
     return {
       createAccount: function (username, email, password) {
@@ -29,7 +27,7 @@ angular.module('deusExStateMachinePortalApp')
       login: function (username, password, emailtoken) {
         return $http({
           method: 'POST',
-          url: baseUrl(username) + '_session',
+          url: baseUrl + '_session',
           params: {
             username: username,
             password: password,
@@ -40,82 +38,53 @@ angular.module('deusExStateMachinePortalApp')
           }
         });
       },
-      logout: function (username) {
-        return $http.delete(baseUrl(username) + '_session');
+      logout: function () {
+        return $http.delete(baseUrl + '_session');
       },
-      checkAccount: function (username) {
-        return $http.get(baseUrl(username) + '_session');
+      checkAccount: function () {
+        return $http.get(baseUrl + '_session');
       },
-      getToken: function (username) {
-        return $http.get(baseUrl(username) + '_token');
+      getToken: function () {
+        return $http.get(baseUrl + '_token');
       },
-      refreshToken: function (username) {
-        return $http.post(baseUrl(username) + '_token');
+      refreshToken: function () {
+        return $http.post(baseUrl + '_token');
       },
-      getAllStateCharts: function (username) {
-        return $http.get(baseUrl(username) + '_all_statechart_definitions');
+      getStateChart: function () {
+        return $http.get(baseUrl);
       },
-      getStateChart: function (username, stateChartName) {
-        return $http.get(baseUrl(username) + stateChartName);
+      getInstances: function () {
+        return $http.get(baseUrl + '_all_instances');
       },
-      getInstances: function (username, stateChartName) {
-        return $http.get(baseUrl(username) + stateChartName + '/_all_instances');
+      getInstanceDetails: function (instanceId) {
+        return $http.get(baseUrl + instanceId);
       },
-      saveStateChart: function (stateChartName, username, content) {
-        if (stateChartName) {
-          //Update current statechart
-          return $http({
-            method: 'PUT',
-            url: baseUrl(username) + stateChartName,
-            headers: {
-              'Content-Type': 'application/xml'
-            },
-            data: content
-          });
-        } else {
-          //Insert new statechart
-          return $http({
-            method: 'POST',
-            url: baseUrl(username),
-            headers: {
-              'Content-Type': 'application/xml'
-            },
-            data: content
-          });
-        }
+      createInstance: function () {
+        return $http.post(baseUrl);
       },
-      deleteStateChart: function (username, stateChartName) {
-        return $http.delete(baseUrl(username) + stateChartName);
+      deleteInstance: function (instanceId) {
+        return $http.delete(baseUrl + instanceId);
       },
-      getInstanceDetails: function (username, stateChartName, instanceId) {
-        return $http.get(baseUrl(username) + stateChartName + '/' + instanceId);
-      },
-      createInstance: function (username, stateChartName) {
-        return $http.post(baseUrl(username) + stateChartName);
-      },
-      deleteInstance: function (username, stateChartName, instanceId) {
-        return $http.delete(baseUrl(username) + stateChartName + '/' + instanceId);
-      },
-      sendEvent: function (username, stateChartName, instanceId, eventname, eventdata) {
+      sendEvent: function (instanceId, eventname, eventdata) {
         return $http({
           method: 'POST',
-          url: baseUrl(username) + stateChartName + '/' + instanceId,
+          url: baseUrl + instanceId,
           data: {
             name: eventname,
             data: eventdata ? JSON.parse(eventdata) : ''
           }
         });
       },
-      getInstanceEvents: function (username, stateChartName, instanceId) {
-        return $http.get(baseUrl(username) + stateChartName + '/' + instanceId + '/_eventLog');
+      getInstanceEvents: function (instanceId) {
+        return $http.get(baseUrl + instanceId + '/_eventLog');
       },
-      subscribeInstance: function (username, stateChartName, instanceId) {
+      subscribeInstance: function (instanceId) {
         if (!!window.EventSource) {
           var options = { };
 
           if(!window.isSCXMLD) options = { withCredentials: true };
 
-          var source = new EventSource(baseUrl(username) + stateChartName + '/' + instanceId + '/_changes', options);
+          var source = new EventSource(baseUrl + instanceId + '/_changes', options);
 
           return source;
         } else {

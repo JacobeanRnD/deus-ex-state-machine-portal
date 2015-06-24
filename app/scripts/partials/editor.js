@@ -8,8 +8,7 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('EditorCtrl', function ($scope, $state, simulateService, dataService, chartName, chartContent, username) {
-    $scope.chartName = chartName;
+  .controller('EditorCtrl', function ($scope, $state, simulateService, dataService, chartContent, username) {
     $scope.chartContent = chartContent.data;
     $scope.username = username;
 
@@ -36,7 +35,6 @@ angular.module('deusExStateMachinePortalApp')
           simulateService.chartSaved(name);
 
           $state.go('main.charts.detail', {
-            chartName: name
           }, {
             reload: true
           });

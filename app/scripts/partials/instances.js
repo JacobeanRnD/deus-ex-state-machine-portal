@@ -8,18 +8,17 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('InstancesCtrl', function ($scope, $state, dataService, instances, chartName, username) {
+  .controller('InstancesCtrl', function ($scope, $state, dataService, instances, username) {
     $scope.instances = instances.data.data.instances;
 
-    $scope.chartName = chartName;
 
     $scope.createInstance = function () {
-      dataService.createInstance(username, chartName).then(function (result) {
+      dataService.createInstance().then(function (result) {
         var instanceId = result.data.data.id;
 
         //Just start as a convenience
-        dataService.sendEvent(username, chartName, instanceId, 'system.start', null).then(function () {
-          $state.go('main.charts.detail.instance', {
+        dataService.sendEvent(instanceId, 'system.start', null).then(function () {
+          $state.go('main.detail.instance', {
             instanceId: instanceId
           }, {
             reload: true
@@ -36,10 +35,9 @@ angular.module('deusExStateMachinePortalApp')
     };
 
     $scope.deleteInstance = function (instance) {
-      dataService.deleteInstance(username, chartName, instance.id).then(function () {
+      dataService.deleteInstance(instance.id).then(function () {
         if (instance.id === $state.params.instanceId) {
-          $state.go('main.charts.detail', {
-            chartName: chartName
+          $state.go('main.detail', {
           }, {
             reload: true
           });

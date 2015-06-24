@@ -8,12 +8,12 @@
  * Controller of the deusExStateMachinePortalApp
  */
 angular.module('deusExStateMachinePortalApp')
-  .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId, chartName) {
+  .controller('InstancedetailCtrl', function ($scope, $timeout, username, simulateService, dataService, instanceDetails, instanceId) {
     var instance = instanceDetails.data.data.instance;
 
-    $scope.chartName = chartName;
+    var snapshot = instance.snapshot;
     $scope.instanceId = instanceId;
-    $scope.dataModel = JSON.stringify(instance.snapshot[3], null, 4);
+    $scope.dataModel = snapshot && JSON.stringify(snapshot[3], null, 4);
     $scope.currentChartState = [];
 
     //Redraw to remove event changes
@@ -34,7 +34,7 @@ angular.module('deusExStateMachinePortalApp')
         $scope.currentChartState.splice(stateIndex, 1);
       }
 
-      dataService.getInstanceDetails(username, chartName, instanceId).then(function (instance) {
+      dataService.getInstanceDetails(instanceId).then(function (instance) {
         var dataModel = instance.data.data.instance.snapshot[3];
 
         $scope.dataModel = JSON.stringify(dataModel, null, 4);
@@ -56,15 +56,17 @@ angular.module('deusExStateMachinePortalApp')
 
     var dataModelLegend = [];
 
-    for (var item in instance.snapshot[3]) {
-      dataModelLegend.push({
-        name: item,
-        data: [],
-        connectNulls: true,
-        id: item,
-        type: 'spline',
-        dashStyle: 'Solid'
-      });
+    if(snapshot){
+      for (var item in snapshot[3]) {
+        dataModelLegend.push({
+          name: item,
+          data: [],
+          connectNulls: true,
+          id: item,
+          type: 'spline',
+          dashStyle: 'Solid'
+        });
+      }
     }
 
     $scope.dashOptions = {
