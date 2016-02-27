@@ -1,6 +1,6 @@
 {
-  "name": "deus-ex-state-machine-portal",
-  "version": "0.0.0",
+  "name": "expresscion-portal",
+  "version": "1.0.3",
   "dependencies": {
     "angular": "~1.2.0",
     "json3": "~3.3.1",
@@ -14,7 +14,7 @@
     "angular-ui-ace": "0.2.3",
     "alertifyjs": "~0.3.12",
     "angular-ui-router": "~0.2.11",
-    "desm-force-layout": "https://github.com/JacobeanRnD/SCHVIZ.git",
+    "desm-force-layout": "JacobeanRnD/SCHVIZ#1.0.0",
     "highcharts-ng": "~0.0.7",
     "moment": "~2.10.2",
     "datatables": "~1.10.6",
