@@ -1,6 +1,6 @@
 {
   "name": "expresscion-portal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "LGPL-3.0",
   "main": "./index.js",
   "dependencies": {
