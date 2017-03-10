@@ -1,6 +1,6 @@
 {
   "name": "expresscion-portal",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "dependencies": {
     "angular": "~1.2.0",
     "json3": "~3.3.1",
@@ -19,7 +19,6 @@
     "moment": "~2.10.2",
     "datatables": "~1.10.6",
     "ace-builds": "1.1.8",
-    "datatables-bootstrap3": "*",
     "bootstrap": "~3.3.4"
   },
   "overrides": {
